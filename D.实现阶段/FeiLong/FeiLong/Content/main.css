@@ -1,0 +1,138 @@
+/* CSS Document */
+body {
+    margin: 0;
+}
+
+a {
+    font-family: "微软雅黑";
+}
+
+.leftbg .iconfont {
+    margin-right: 5px;
+}
+
+.topmenu .iconfont:before {
+    display: block;
+    font-size: 30px;
+    text-align: center;
+}
+
+.topmenu .layui-nav-item a {
+    padding: 5px;
+    color: #fff;
+}
+
+.topmenu .layui-nav-item {
+    line-height: 1.5;
+    width: 100px;
+    text-align: center;
+    height: 85px;
+}
+
+    .topmenu .layui-nav-item:hover {
+        background: #bdbdbd;
+    }
+
+        .topmenu .layui-nav-item:hover a {
+            color: #aa1616;
+        }
+
+.topbg {
+    background: #015198;
+    font-family: "微软雅黑";
+}
+/*background: url(../images/topbg.png)*/
+.topmenu {
+    background: none;
+    padding: 0px 5px;
+}
+
+.layui-layout-admin .layui-logo {
+    line-height: 85px;
+    font-size: 30px;
+    margin-left: 10px;
+    width: auto;
+    color: #015198;
+}
+
+.leftbg {
+    background: #2a2a2b;
+}
+
+    .leftbg .layui-nav-tree {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+        .leftbg .layui-nav-tree .layui-nav-item {
+            background: #3e3c3c;
+            line-height: 50px;
+        }
+
+            .leftbg .layui-nav-tree .layui-nav-item a {
+                line-height: 50px;
+                height: 50px;
+            }
+
+            .leftbg .layui-nav-tree .layui-nav-item .layui-nav-child {
+                background: rgba(42,42,43,1) !important;
+            }
+
+                .leftbg .layui-nav-tree .layui-nav-item .layui-nav-child a {
+                    line-height: 42px;
+                    height: 42px;
+                }
+
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this > a, .layui-nav-tree .layui-this > a:hover {
+    background-color: #44c3f0;
+    color: #fff;
+}
+
+.main {
+    margin: 10px;
+}
+
+.page_nav {
+    border-bottom: 2px solid #015198;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+table.cum-table table {
+    border-spacing: 1px;
+    border-collapse: separate;
+}
+
+.cum-table td td {
+    padding: 5px;
+    line-height: 1.5;
+}
+
+.cum-table th {
+    padding: 6px 5px;
+    line-height: 2;
+    background: #015198;
+    color: #fff;
+}
+
+.layui-nav-tree .layui-nav-bar {
+    background-color: #1869b3;
+}
+
+.bordermain {
+    border: 1px solid #015198;
+    border-radius: 3px;
+    padding-top: 10px;
+}
+
+.cum-btn {
+    background: #015198;
+}
+
+.export-btn {
+    background: #e8b40c;
+}
+
+.add-btn{
+    background:#00ff21
+}

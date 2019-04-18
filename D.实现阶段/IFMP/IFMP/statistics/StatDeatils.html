@@ -1,0 +1,149 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="main bordermain">
+
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend>2018年5月8日-日报</legend>
+        </fieldset>
+
+        <form class="layui-form" style="width:45%;float:left;margin-top:10px" action="">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>本日工作回顾</legend>
+            </fieldset>
+            <ul class="layui-timeline">
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">09:20</h3>
+                        <p>
+                            审核切削液浓度表：通过
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">09:25</h3>
+                        <p>
+                            审核设备参数点检表：通过
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">14:30</h3>
+                        <p>
+                            填写合理化提案表
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">16:23</h3>
+                        <p>
+                            填写分层审核表
+                        </p>
+                    </div>
+                </li>
+                <li class="layui-timeline-item">
+                    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                    <div class="layui-timeline-content layui-text">
+                        <h3 class="layui-timeline-title">17:00</h3>
+                        <p>
+                            审核分层审核表：同意
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </form>
+
+        <form class="layui-form" style="width:45%;float:right;margin-top:10px" action="">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>今日班次</legend>
+            </fieldset>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">早班(08:00)</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">勤学班，奋进班</span>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">夜班(16:00)</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">勤学班</span>
+                </div>
+            </div>
+
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>今日异常数据</legend>
+            </fieldset>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">切削液浓度</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">PH：10（操作员1 07:52）</span>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">烘干机日常点检</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">温度：156（操作员3 09:37）</span>
+                </div>
+            </div>
+        </form>
+
+      
+
+        <form class="layui-form" style="width:100%;float:left;margin-top:10px" action="">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>明日工作计划</legend>
+            </fieldset>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">09:30</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">审核切削液浓度表</span>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">09:30</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">审核设备参数点检表</span>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">17:00</label>
+                <div class="layui-input-block">
+                    <span class="layui-form-mid">填写分层审核表</span>
+                </div>
+            </div>          
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    layui.use(['form', 'laydate', 'element'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+
+    });
+
+
+    function Back() {
+        var index = parent.layer.getFrameIndex(window.name);
+
+        parent.layer.close(index);
+    }
+</script>

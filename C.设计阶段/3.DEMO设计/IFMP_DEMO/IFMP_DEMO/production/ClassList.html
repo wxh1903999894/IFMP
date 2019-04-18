@@ -1,0 +1,166 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a>日常生产</a> <a><cite>班次管理</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">开始时间</label>
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <input type="text" name="date1" id="date1" lay-verify="date1" autocomplete="off" class="layui-input">
+                    </div>
+                    <label class="layui-form-label">结束时间</label>
+                    <div class="layui-input-inline" style="width: 200px;">
+                        <input type="text" name="date2" id="date2" lay-verify="date2" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">班次类型</label>
+                    <div class="layui-input-block">
+                        <select name="classtype" lay-filter="aihao">
+                            <option value="0">全部</option>
+                            <option value="1">早班</option>
+                            <option value="2">夜班</option>
+                            <option value="3">早夜班</option>
+                            <option value="4">其他</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn import-btn" onclick="add()">添加</button>
+                <button class="layui-btn cum-btn" lay-submit="" lay-filter="demo1">查询</button>
+                <button class="layui-btn export-btn" lay-submit="" lay-filter="demo1">导出</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="main">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <tr>
+                            <th>班次名称</th>
+                            <th>班次类型</th>
+                            <th>开始时间</th>
+                            <th>结束时间</th>
+                            <th>创建时间</th>
+                            <th>状态</th>
+                            <th width="160" align="center">操作</th>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#ffffff" align="center">5-10早班</td>
+                            <td style="background-color:#ffffff" align="center">早班</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-10 08:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-10 16:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-09 08:30</td>
+                            <td style="background-color:#ffffff" align="center">未开始</td>
+                            <td style="background-color:#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="查看" onclick="get()">
+                                    <i class="layui-icon layui-icon-about"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#ffffff" align="center">5-9早班</td>
+                            <td style="background-color:#ffffff" align="center">早班</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-09 08:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-09 16:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-08 15:30</td>
+                            <td style="background-color:#ffffff" align="center">工作中</td>
+                            <td style="background-color:#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="查看" onclick="get()">
+                                    <i class="layui-icon layui-icon-about"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#ffffff" align="center">5-8夜班</td>
+                            <td style="background-color:#ffffff" align="center">夜班</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-08 16:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-08 24:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-07 12:30</td>
+                            <td style="background-color:#ffffff" align="center">已结束</td>
+                            <td style="background-color:#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="查看" onclick="get()">
+                                    <i class="layui-icon layui-icon-about"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color:#ffffff" align="center">5-8早班</td>
+                            <td style="background-color:#ffffff" align="center">早班</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-08 08:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-08 16:00</td>
+                            <td style="background-color:#ffffff" align="center">2018-05-07 12:30</td>
+                            <td style="background-color:#ffffff" align="center">已结束</td>
+                            <td style="background-color:#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="查看" onclick="get()">
+                                    <i class="layui-icon layui-icon-about"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-10">&nbsp;<span class="layui-laypage-count">共 100 条</span><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><a href="javascript:;" data-page="4">4</a><a href="javascript:;" data-page="5">5</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="10">10</a><a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option></select></span><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span></div>  <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+</body>
+</html>
+<script>
+    layui.use(['form', 'laydate', 'element'], function () {
+        var element = layui.element, form = layui.form
+      , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date1'
+            , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#date2'
+            , type: 'datetime'
+        });
+
+    });
+
+
+    function get() {
+        //  layui.use('layer',
+        //function () {
+        //    layer.open({
+        //        title: '查看',
+        //        type: 2,
+        //        area: ['760px', '560px'],
+        //        fixed: false,
+        //        //不固定
+        //        maxmin: true,
+        //        content: 'ClassDetails.html'
+        //    });
+        //});
+        window.location.href = "ClassDetails.html";
+        return false;
+    }
+
+    function add() {
+        window.location.href = "ClassAdd.html";
+        return false;
+    }
+</script>

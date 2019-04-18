@@ -1,0 +1,268 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>任务管理</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <style>
+        .mui-bar-tab {
+            position: absolute;
+            margin-bottom: 0px;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>
+                    任务名称
+                </label>
+                <label id="lbl_TaskName"></label>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    责任人
+                </label>
+                <label id="lbl_TaskUser"></label>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    报名分数
+                </label>
+                <label id="lbl_SignScore"></label>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    悬赏分数
+                </label>
+                <label id="lbl_TScore"></label>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    汇报截止日期
+                </label>
+                <label id="lbl_EndDate"></label>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    任务内容
+                </label>
+                <textarea id="lbl_TaskContent"></textarea>
+            </div>
+            <div id="cs" style="display:none;">
+                <div class="mui-input-row">
+                    <label>初审人</label>
+                    <label id="lbl_FirstAduitUserName"></label>
+                </div>
+                <div class="mui-input-row">
+                    <label>初审日期</label>
+                    <label id="lbl_FirstAduitDate"></label>
+                </div>
+            </div>
+            <div id="zs" style="display:none;">
+                <div class="mui-input-row">
+                    <label>说明</label>
+                    <label id="lbl_FirstAduitMess"></label>
+                </div>
+                <div class="mui-input-row">
+                    <label>终审人</label>
+                    <label id="lbl_LastAduitUserName"></label>
+                </div>
+                <div class="mui-input-row">
+                    <label>终审日期</label>
+                    <label id="lbl_LastAduitDate"></label>
+                </div>
+                <div class="mui-input-row">
+                    <label>说明</label>
+                    <label id="lbl_LastAduitMess"></label>
+                </div>
+                <div class="mui-input-row">
+                    <label>
+                        状态
+                    </label>
+                    <label id="lbl_TState"></label>
+                </div>
+            </div>
+            <div id="divsh" style="display:none;">
+                <div class="mui-input-row" style="color: #2abbb4;">
+                    <label>审核状态</label>
+                    <select style="font-size: 16px; color: #2abbb4; width: 68% !important; padding-left: 0px" class="mui-btn mui-btn-block sel" id="AduitState"></select>
+                </div>
+                <div contenteditable="true" id="div_AduitMark" class="multipletext mui-input-row" placeholder="请在此填写审核意见"></div>
+            </div>
+            <div class="btn_Sumbit-a" style="display:none;">
+                <input type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" onclick='tj()' value="提交" />
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+</body>
+</html>
+<script type="text/javascript" charset="utf-8">
+    var suid = getUrlParam("id");
+    var flag = getUrlParam("flag");
+    $(function () {
+        if (flag == 1) {  //审核
+            $("#divsh").attr("style", "display:block");
+            $(".btn_Sumbit-a").attr("style", "display:block");
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET",
+                data: "method=GetAuditState",
+                dataType: "json",
+                success: function (d) {
+                    if (d.result == "true") {
+                        var item = "<option value=\"-2\" >请选择</option>";
+                        for (var i = 2; i < d.data.length - 1; i++) {
+                            item += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                        }
+                        $("#AduitState").html(item);
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试"); }
+            });
+        }
+        else if (flag == 3 || flag == 4) {
+            $("#divsh").attr("style", "display:none");
+            $(".btn_Sumbit-a").attr("style", "display:block");
+        }
+        else {
+            $(".btn_Sumbit-a").attr("style", "display:none");
+            $("#divsh").attr("style", "display:none");
+        }
+
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET",
+            data: "method=GetTaskByid&SUID=" + suid,
+            dataType: "json",
+            success: function (data) {
+                if (data.result == "true") {
+                    $("#lbl_TaskName").text(data.data[0].TaskName).attr("readonly", "readonly");
+                    $("#lbl_TaskUser").text(data.data[0].TaskUserName).attr("readonly", "readonly");
+                    $("#lbl_TScore").text(data.data[0].TScore).attr("readonly", "readonly");
+                    $("#lbl_SignScore").text(data.data[0].SignScore).attr("readonly", "readonly");
+                    $("#lbl_EndDate").text(data.data[0].EndDate).attr("readonly", "readonly");
+                    $("#lbl_TaskContent").text(data.data[0].TaskContent).attr("readonly", "readonly");
+                    if (flag == 1) {
+                        if (data.data[0].TState == "1") {
+                            $("#cs").attr("style", "display:none");
+                            $("#zs").attr("style", "display:none");
+                        }
+                        if (data.data[0].TState == "2") {
+                            $("#cs").attr("style", "display:block");
+                            $("#zs").attr("style", "display:none");
+                            $("#lbl_FirstAduitUserName").text(data.data[0].FirstAduitUserName).attr("readonly", "readonly");
+                            $("#lbl_FirstAduitDate").text(data.data[0].FirstAduitDate).attr("readonly", "readonly");
+                        }
+                    }
+                    else if (flag == 3 || flag == 4) {    
+                        $("#cs").attr("style", "display:none");
+                        $("#zs").attr("style", "display:none");
+                    }
+                    else {
+                        $("#cs").attr("style", "display:block");
+                        $("#zs").attr("style", "display:block");
+                        $("#lbl_FirstAduitUserName").text(data.data[0].FirstAduitUserName).attr("readonly", "readonly");
+                        $("#lbl_FirstAduitDate").text(data.data[0].FirstAduitDate).attr("readonly", "readonly");
+                        $("#lbl_FirstAduitMess").text(data.data[0].FirstAduitMess).attr("readonly", "readonly");
+                        $("#lbl_LastAduitUserName").text(data.data[0].LastAduitUserName).attr("readonly", "readonly");
+                        $("#lbl_LastAduitDate").text(data.data[0].LastAduitDate).attr("readonly", "readonly");
+                        $("#lbl_LastAduitMess").text(data.data[0].LastAduitMess).attr("readonly", "readonly");
+                        $("#lbl_TState").text(data.data[0].TStateName).attr("readonly", "readonly");
+                    }
+                }
+            },
+            error: function () { alert("查询出错，请稍候再试"); }
+        });
+    })
+    function tj() {
+        if (flag == 1) {
+            if ($("#AduitState").find("option:selected").val() == -2) {
+                alert("请选择审核状态");
+            }
+            else {
+                if ($("#AduitState").find("option:selected").val() == 4 && $("#div_AduitMark").text() == "") {
+                    alert("驳回请输入审核意见");
+                }
+                else {
+                    $.ajax({
+                        url: "../ashx/GetMainData.ashx",
+                        cache: false, type: "GET",
+                        data: "method=TaskAudit&SUID=" + suid + "&AduitState=" + $("#AduitState").find("option:selected").val() + "&AduitMark=" + $("#div_AduitMark").text(),
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result == "true") {
+                                alert("审核成功");
+                                window.location.href = "TaskAudit.html";
+                            }
+                            else {
+                                alert("审核失败");
+                            }
+                        },
+                        error: function () { alert("查询出错，请稍候再试"); }
+                    });
+                }
+            }
+        }
+        if (flag == 3) {    //抢单
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET",
+                data: "method=TaskQD&SUID=" + suid,
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "true") {
+                        alert("抢单成功");
+                        window.location.href = "TaskAll.html";
+                    }
+                    else {
+                        alert("抢单失败");
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试"); }
+            });
+        }
+        if (flag == 4) {    //完成
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET",
+                data: "method=TaskWC&SUID=" + suid,
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "true") {
+                        alert("任务完成成功");
+                        window.location.href = "TaskAll.html";
+                    }
+                    else {
+                        alert("任务完成失败");
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试"); }
+            });
+        }
+    }
+</script>

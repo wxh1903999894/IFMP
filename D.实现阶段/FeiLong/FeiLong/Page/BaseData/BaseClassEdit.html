@@ -1,0 +1,439 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../../Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../Content/iconfont.css" rel="stylesheet" />
+    <link href="../../Content/main.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>班次添加</legend>
+        </fieldset>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item layui-form-text">
+                <div class="layui-input-inline">
+                    <input type="text" name="senduser" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次名称</label>
+                <div class="layui-input-block">
+                    <input id="name" type="text" name="title" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select id="classtype"></select>
+                </div>
+            </div>
+
+        </form>
+
+        <div id="Data">
+
+            <form class="layui-form" style="width:45%;float:left;margin-top:10px" action="">
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>切削液浓度表</legend>
+                </fieldset>
+
+                <div class="layui-form-item layui-form-text">
+                    <label style="color:#ff0000;font-size:larger;" class="layui-form-label">流程1</label>
+                    <div class="layui-input-block">
+                        <span style="color:#ff0000;font-size:larger;" class="layui-form-mid">填写切削液浓度点检表</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">默认时间(08:00)</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="BaseDate" lay-text="是|否">
+                    </div>
+                </div>
+
+
+                <div id="timeList" style="display:none">
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">开始时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="date1-1" id="date1-1" lay-verify="date1-1" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">结束时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="date1-2" id="date1-2" lay-verify="date1-2" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item layui-form-text">
+                        <label class="layui-form-label">提醒时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="date1-3" id="date1-3" lay-verify="date1-3" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="UserSelClass" class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">人员选择</label>
+                    <div class="layui-input-block">
+                        <select id="ExpertType" name="ExpertType" lay-filter="ExpertType">
+                            <option value="0">操作工1</option>
+                            <option value="1">操作工2</option>
+                            <option value="2">操作工3</option>
+                            <option value="3">操作工4</option>
+                            <option value="4">操作工5</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label style="color:#ff0000;font-size:larger;" class="layui-form-label">流程2</label>
+                    <div class="layui-input-block">
+                        <span style="color:#ff0000;font-size:larger;" class="layui-form-mid">工装管理员审核</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">默认时间(08:30)</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="BaseDate2" lay-text="是|否">
+                    </div>
+                </div>
+
+                <div id="UserSelClass2" class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">人员选择</label>
+                    <div class="layui-input-block">
+                        <select id="ExpertType2" name="ExpertType2" lay-filter="ExpertType2">
+                            <option value="1">工装管理员1</option>
+                            <option value="2">工装管理员2</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label style="color:#ff0000;font-size:larger;" class="layui-form-label">流程3</label>
+                    <div class="layui-input-block">
+                        <span style="color:#ff0000;font-size:larger;" class="layui-form-mid">班长审核</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">默认时间(09:00)</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="BaseDate3" lay-text="是|否">
+                    </div>
+                </div>
+
+                <div id="UserSelClass3" class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">人员选择</label>
+                    <div class="layui-input-block">
+                        <select id="ExpertType3" name="ExpertType3" lay-filter="ExpertType3">
+                            <option value="1">勤学班长</option>
+                            <option value="2">奋进班长</option>
+                            <option value="3">拼搏班长</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label style="color:#ff0000;font-size:larger;" class="layui-form-label">流程4</label>
+                    <div class="layui-input-block">
+                        <span style="color:#ff0000;font-size:larger;" class="layui-form-mid">车间主任审核</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">默认时间(09:30)</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="BaseDate4" lay-text="是|否">
+                    </div>
+                </div>
+
+                <div id="UserSelClass4" class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">人员选择</label>
+                    <div class="layui-input-block">
+                        <select id="ExpertType4" name="ExpertType4" lay-filter="ExpertType4">
+                            <option value="1">车间主任</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label style="color:#ff0000;font-size:larger;" class="layui-form-label">流程5</label>
+                    <div class="layui-input-block">
+                        <span style="color:#ff0000;font-size:larger;" class="layui-form-mid">生产设备部部长审核</span>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">默认时间(10:00)</label>
+                    <div class="layui-input-block">
+                        <input type="checkbox" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="BaseDate5" lay-text="是|否">
+                    </div>
+                </div>
+
+                <div id="UserSelClass5" class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">人员选择</label>
+                    <div class="layui-input-block">
+                        <select id="ExpertType5" name="ExpertType5" lay-filter="ExpertType5">
+                            <option value="1">陈科长</option>
+                        </select>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="Back()">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="../../Scripts/jquery-3.3.1.js"></script>
+<script src="../../Scripts/layui/layui.js"></script>
+<script src="../../Scripts/Common.js"></script>
+<script>
+
+    $(document).ready(function () {
+        InitEnum("ClassType", false, $("#classtype"));
+        InitTableType($("#classtype").val());
+    });
+
+
+    function InitTableType(ClassType) {
+        $.ajax({
+            url: "/base/getFullTableList",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                ClassType: ClassType
+            },
+            success: function (data) {
+                if (data.Status == 0) {
+                    var html = "";
+                    for (var i = 0; i < data.Data.length; i++) {
+                        var form = unity.InitNode("form", "layui-form");
+                        form.style.width = "45%";
+                        form.style.marginTop = "10px";
+                        if (1 % 2 == 1) {
+                            form.style.styleFloat = "left";
+                            form.style.cssFloat = "left";
+                        } else {
+                            form.style.styleFloat = "right";
+                            form.style.cssFloat = "right";
+                        }
+
+                        var fieldset = unity.InitNode("fieldset", "layui-elem-field layui-field-title");
+                        fieldset.innerHTML = "<legend>" + data.Data[i].Name + "</legend>";
+
+                        form.appendChild(fieldset);
+
+                        for (var j = 0; j < data.Data[i].FullFlowList.length; j++) {
+                            var titlenode = unity.InitNode("div", "layui-form-item layui-form-text");
+                            titlenode.innerHTML = "<label style=\"color:#ff0000;font-size:larger;\" class=\"layui-form-label\">流程"
+                                + parseInt(i + 1)
+                                + "</label>"
+                                + "<div class=\"layui-input-block\">"
+                                + "<span style=\"color:#ff0000;font-size:larger;\" class=\"layui-form-mid\">" + data.Data[i].FullFlowList[j].FlowName + "</span></div>"
+
+                            var defaulttime = unity.InitNode("div", "layui-form-item layui-form-text");
+                            titlenode.innerHTML = "<label class=\"layui-form-label\">默认结束时间(" + data.Data[i].FullFlowList[j].EndDate + ")</label>"
+                                + "<div class=\"layui-input-block\">"
+                                + "<span style=\"color:#ff0000;font-size:larger;\" class=\"layui-form-mid\">" + data.Data[i].FullFlowList[j].FlowName + "</span></div>"
+
+                        }
+                        //html = html + "<form class=\"layui-form\" style=\"width:45%;float:left;margin-top:10px\">";
+                        //html = html + "<fieldset class=\"layui-elem-field layui-field-title\">";
+                        //html = html + "<legend>" + data.Data[i].Name + "</legend></fieldset>";
+
+
+
+                    }
+
+                } else {
+                    layer.ready(function () {
+                        title: false
+                        layer.alert(data.Data, {
+                            title: false
+                        });
+                    });
+                }
+            },
+            error: function () {
+                layer.ready(function () {
+                    title: false
+                    layer.alert("当前网络可能有错误", {
+                        title: false
+                    });
+                });
+            }
+        });
+    }
+
+    layui.config({
+        base: '../../Scripts/layui/'
+    }).extend({
+        formSelects: 'formSelects'
+    });
+
+
+
+    layui.use(['form', 'layedit', 'laydate', 'element', 'formSelects'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+
+        var formExpertTypeSelects = layui.formSelects;
+
+        formExpertTypeSelects.selects({
+            name: 'ExpertTypeselect',
+            el: 'select[name=ExpertType]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'ExpertType',
+            separator: ',',
+            reset: true,
+        });
+
+        formExpertTypeSelects.selects({
+            name: 'ExpertTypeselect2',
+            el: 'select[name=ExpertType2]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'ExpertType2',
+            separator: ',',
+            reset: true,
+        });
+
+
+        formExpertTypeSelects.selects({
+            name: 'ExpertTypeselect3',
+            el: 'select[name=ExpertType3]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'ExpertType3',
+            separator: ',',
+            reset: true,
+        });
+
+
+        formExpertTypeSelects.selects({
+            name: 'ExpertTypeselect4',
+            el: 'select[name=ExpertType4]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'ExpertType4',
+            separator: ',',
+            reset: true,
+        });
+
+
+        formExpertTypeSelects.selects({
+            name: 'ExpertTypeselect5',
+            el: 'select[name=ExpertType5]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'ExpertType5',
+            separator: ',',
+            reset: true,
+        });
+
+
+        formExpertTypeSelects.selects({
+            name: 'UserSelselect',
+            el: 'select[name=UserSel]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'UserSel',
+            separator: ',',
+            reset: true,
+        });
+
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+          , pass: [/(.+){6,12}$/, '密码必须6到12位']
+          , content: function (value) {
+              layedit.sync(editIndex);
+          }
+        });
+
+        //监听指定开关
+        form.on('switch(BaseClass)', function (data) {
+            //layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            //    offset: '6px'
+            //});
+            //layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            if (this.checked) {
+                document.getElementById("BaseClass").style.display = "block";
+                document.getElementById("UserChoose").style.display = "none";
+            } else {
+                document.getElementById("BaseClass").style.display = "none";
+                document.getElementById("UserChoose").style.display = "block";
+
+            }
+        });
+
+        form.on('switch(BaseDate)', function (data) {
+            //layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            //    offset: '6px'
+            //});
+            //layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            if (this.checked) {
+
+                document.getElementById("timeList").style.display = "none";
+            } else {
+                document.getElementById("timeList").style.display = "block";
+
+            }
+        });
+
+
+        laydate.render({
+            elem: '#date1-1'
+          , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#date1-2'
+            , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#date1-3'
+           , type: 'datetime'
+        });
+
+    });
+
+    function Back() {
+        window.location.href = "baseclasslist.html";
+    }
+</script>

@@ -1,0 +1,216 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../../Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../Content/iconfont.css" rel="stylesheet" />
+    <link href="../../Content/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">基础数据管理</a> <a><cite>基础时间设置</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div id="ClassType" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select id="classtype"></select>
+                </div>
+            </div>
+
+            <div id="ClassType" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">表单类型</label>
+                <div class="layui-input-block">
+                    <select id="tabletype"></select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="begindate" id="begindate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="enddate" id="enddate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </form>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn import-btn" onclick="add()">添加</button>
+                <button class="layui-btn cum-btn">查询</button>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table id="table" width="100%" border="0" cellpadding="1" cellspacing="1"></table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-box layui-laypage layui-laypage-default" id="pager">
+    </div>
+
+</body>
+</html>
+
+<script src="../../Scripts/jquery-3.3.1.js"></script>
+<script src="../../Scripts/layui/layui.js"></script>
+<script src="../../Scripts/Common.js"></script>
+<script>
+
+    $(document).ready(function () {
+        InitEnum("ClassType", true, $("#classtype"));
+        InitEnum("TableType", true, $("#tabletype"));
+        GetBaseDate($("#classtype").val(), $("#tabletype").val(), $("#begindate").val(), $("#enddate").val());
+        //InitRole(1);
+        //GetUser();
+    });
+
+    var nowpage = 1;
+    var pagesize = 10;
+
+    layui.use(['form', 'laydate', 'element'], function () {
+        var element = layui.element, form = layui.form
+      , laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#begindate',
+            type: 'time'
+        });
+        laydate.render({
+            elem: '#enddate',
+            type: 'time'
+        });
+    });
+
+    function dopage()
+    {
+        GetBaseDate($("#classtype").val(), $("#tabletype").val(), $("#begindate").val(), $("#enddate").val());
+    }
+
+    function GetBaseDate(ClassType, TableType, BeginDate, EndDate) {
+        var data = new Array();
+
+        data = {
+            "ClassType": ClassType,
+            "TableType": TableType,
+            "BeginDate": BeginDate,
+            "EndDate": EndDate,
+            "pageindex": nowpage,
+            "pagesize": pagesize,
+        };
+
+        $.ajax({
+            url: "/baseDate/getAll",
+            type: "GET",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data.Status == 0) {
+                    //填充table的数据
+                    var table = $("#table");
+                    var html = "";
+                    var head = new Array();
+                    head = new Array("流程名称", "表单类型", "班次类型", "开始时间", "结束时间", "提醒时间", "操作");
+                    //标题
+                    html = html + buildth(head, 0);
+
+                    //内容
+                    for (var i = 0; i < data.Data.List.length; i++) {
+                        html = html + " <tr>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].Name + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].TableType + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].ClassType + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].BeginDate + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].EndDate + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].RemindDate + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" title=\"设置\" onclick=\"detail()\"><i class=\"layui-icon layui-icon-bianji\"></i></button>";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" title=\"删除\" onclick=\"detail()\"><i class=\"layui-icon\"></i></button>";
+                        html = html + "</td>";
+                        html = html + "</tr>";
+                    }
+                    html = html + "</tbody></table>";
+                    table.html(html);
+                    pagerunity.getpages(data.Data.Total);
+                } else {
+
+                    layer.ready(function () {
+                        title: false
+                        layer.alert(data.Data, {
+                            title: false
+                        });
+                    });
+                }
+            },
+            error: function () {
+                layer.ready(function () {
+                    title: false
+                    layer.alert("当前网络可能有错误", {
+                        title: false
+                    });
+                });
+            }
+        });    
+    }
+
+    function detail() {
+        layui.use('layer',
+        function () {
+            //弹出即全屏
+            layer.open({
+                title: "详情",
+                type: 2,
+                content: 'basedatedetails.html',
+                area: ['760px', '560px'],
+                maxmin: true,
+                offset: 'auto'
+            });
+            //layer.full(index);
+        });
+        return false;
+    }
+
+    function set() {
+        layui.use('layer',
+        function () {
+            //弹出即全屏
+            layer.open({
+                title: "详情",
+                type: 2,
+                content: 'basedateset.html',
+                area: ['760px', '560px'],
+                maxmin: true,
+                offset: 'auto'
+            });
+            //layer.full(index);
+        });
+        return false;
+    }
+
+    function msgalert() {
+        layui.use('layer',
+        function () {
+            layer.confirm('确认删除信息吗？', {
+                btn: ['确定', '取消'] //按钮
+            });
+        });
+        return false;
+    }
+
+    function add() {
+        window.location.href = "basedateadd.html";
+        return false;
+    }
+</script>

@@ -1,0 +1,459 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+    <script src="../plugins/layui/formSelects.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a>数据统计</a> <a><cite>表单统计</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+
+        <form class="layui-form" action="">
+
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>表单统计</legend>
+            </fieldset>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">表单类型</label>
+                <div class="layui-input-block">
+                    <select name="classtype" lay-filter="aihao">
+                        <option value="1">切削液浓度表</option>
+                        <option value="2">设备参数点检表</option>
+                        <option value="3">设备点检表</option>
+                        <option value="4">分层审核表</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">统计数据</label>
+                <div class="layui-input-block">
+                    <select name="classtype" lay-filter="aihao">
+                        <option value="1">PH值</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="ClassType" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select name="classtype" lay-filter="aihao">
+                        <option value="0">全部</option>
+                        <option value="1">早班</option>
+                        <option value="2">夜班</option>
+                        <option value="3">早夜班</option>
+                        <option value="4">其他</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="date1" id="date1" lay-verify="date1" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="date2" id="date2" lay-verify="date2" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">图表类型</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" checked title="折线图">
+                    <input type="checkbox" checked title="柱状图">
+                    <input type="checkbox" checked title="饼图">
+                </div>
+            </div>
+
+        </form>
+
+
+        <div class="layui-form-item">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>统计图表</legend>
+            </fieldset>
+
+            <div id="Chart" style="height:500px" class="layui-input-block">
+            </div>
+
+            <div class="layui-input-block">
+                <button type="reset" class="layui-btn">生成</button>
+                <button type="reset" class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/echarts.js"></script>
+<script>
+
+    var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+    ];
+
+    var app = {};
+
+    app.configParameters = {
+        rotate: {
+            min: -90,
+            max: 90
+        },
+        align: {
+            options: {
+                left: 'left',
+                center: 'center',
+                right: 'right'
+            }
+        },
+        verticalAlign: {
+            options: {
+                top: 'top',
+                middle: 'middle',
+                bottom: 'bottom'
+            }
+        },
+        position: {
+            options: echarts.util.reduce(posList, function (map, pos) {
+                map[pos] = pos;
+                return map;
+            }, {})
+        },
+        distance: {
+            min: 0,
+            max: 100
+        }
+    };
+
+    app.config = {
+        rotate: 90,
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
+        distance: 15,
+        onChange: function () {
+            var labelOption = {
+                normal: {
+                    rotate: app.config.rotate,
+                    align: app.config.align,
+                    verticalAlign: app.config.verticalAlign,
+                    position: app.config.position,
+                    distance: app.config.distance
+                }
+            };
+            myChart.setOption({
+                series: [{
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }]
+            });
+        }
+    };
+
+
+    var labelOption = {
+        normal: {
+            show: true,
+            position: app.config.position,
+            distance: app.config.distance,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            rotate: app.config.rotate,
+            formatter: '{a}',
+            fontSize: 20,
+            rich: {
+
+                name: {
+
+                    textBorderColor: '#fff'
+                }
+            }
+        }
+    };
+
+    var myChart = echarts.init(document.getElementById('Chart'));
+
+
+    var option = {
+        color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+        tooltip: {
+            trigger: 'item',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['操作员1', '操作员2', '操作员3', '操作员4']
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: { show: true },
+                dataView: { show: true, readOnly: false },
+                magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                restore: { show: true },
+                saveAsImage: { show: true }
+            }
+        },
+        dataZoom: [
+                 {
+                     type: 'inside'
+                 }
+        ],
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: { show: false },
+                data: ['2018-05-06', '2018-05-07', '2018-05-08', '2018-05-09'],
+                z: 10
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        visualMap: {
+            show: false,
+            min: 0,
+            max: 100,
+            z: 100,
+            inRange: {
+                colorLightness: [0.4, 0.8]
+            }
+        },
+        series: [
+             {
+                 name: '操作员1',
+                 type: 'bar',
+                 barGap: 0,
+                 label: labelOption,
+                 data: [7, 6, 6, 7]
+             },
+             {
+                 name: '操作员2',
+                 type: 'bar',
+                 label: labelOption,
+                 data: [6, 6, 7, 7]
+             },
+             {
+                 name: '操作员3',
+                 type: 'bar',
+                 label: labelOption,
+                 data: [6, 7, 6, 7]
+             },
+             {
+                 name: '操作员4',
+                 type: 'bar',
+                 label: labelOption,
+                 data: [7, 7, 7, 8]
+             },
+             {
+                 name: '平均值',
+                 data: [6.5, 6.5, 6.5, 7.25],
+                 type: 'line',
+                 linestyle: {
+                     width: 5,
+                     type: 'solid',
+
+                 },
+                 label: {
+                     show: true
+                 }
+             },
+            {
+                name: "PH统计",
+                type: 'pie',
+                center: ['15%', '35%'],
+                radius: '28%',
+                data: [
+                { value: 6, name: 'PH:6' },
+                { value: 9, name: 'PH:7' },
+                { value: 1, name: 'PH:8' }
+                ],
+                z: 100,
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(0, 0, 0, 0.3)'
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(0, 0, 0, 0.3)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#c23531',
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+    myChart.setOption(option);
+
+    layui.config({
+        base: '../plugins/layui/'
+    }).extend({
+        formSelects: 'formSelects'
+    });
+
+
+    layui.use(['form', 'layedit', 'laydate', 'element', 'formSelects'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+
+        var formExpertTypeSelects = layui.formSelects;
+
+        laydate.render({
+            elem: '#date1'
+          , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#date2'
+            , type: 'datetime'
+        });
+
+        formExpertTypeSelects.selects({
+            name: 'Taskselect',
+            el: 'select[name=Task]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'Task',
+            separator: ',',
+            reset: true,
+        });
+
+        formExpertTypeSelects.selects({
+            name: 'Userselect',
+            el: 'select[name=User]',
+            show: '#select-result',
+            model: 'select',
+            filter: 'User',
+            separator: ',',
+            reset: true,
+        });
+
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+          , pass: [/(.+){6,12}$/, '密码必须6到12位']
+          , content: function (value) {
+              layedit.sync(editIndex);
+          }
+        });
+
+        //监听指定开关
+        form.on('switch(CompareType)', function (data) {
+            //layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            //    offset: '6px'
+            //});
+            //layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            if (this.checked) {
+                document.getElementById("UserList").style.display = "none";
+            } else {
+                document.getElementById("UserList").style.display = "block";
+            }
+        });
+
+        form.on('switch(BaseDate)', function (data) {
+            //layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            //    offset: '6px'
+            //});
+            //layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            if (this.checked) {
+                document.getElementById("timeList").style.display = "none";
+            } else {
+                document.getElementById("timeList").style.display = "block";
+            }
+        });
+
+    });
+
+    function ShowFormDetails() {
+        layui.use('layer',
+      function () {
+          layer.open({
+              title: '查看',
+              type: 2,
+              area: ['760px', '560px'],
+              fixed: false,
+              //不固定
+              maxmin: true,
+              content: 'FormDetails.html'
+          });
+      });
+    }
+
+    function ShowTableDataList() {
+        layui.use('layer',
+      function () {
+          layer.open({
+              title: '查看',
+              type: 2,
+              area: ['760px', '560px'],
+              fixed: false,
+              //不固定
+              maxmin: true,
+              content: 'TableDataList2.html'
+          });
+      });
+    }
+
+    function Back() {
+        window.location.href = "ClassList.html";
+    }
+</script>

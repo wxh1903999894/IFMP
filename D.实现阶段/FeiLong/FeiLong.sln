@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeiLong", "FeiLong\FeiLong.csproj", "{05AA0089-3C07-4729-A9E2-68827E947941}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeiLong.Tests", "FeiLong.Tests\FeiLong.Tests.csproj", "{B695D719-CF03-45A4-8392-A5847107C30B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeiLongLibrary", "FeiLongLibrary\FeiLongLibrary.csproj", "{8F8EAE05-AABC-4711-8B5F-3A06B954C836}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeiLongService", "FeiLongService\FeiLongService.csproj", "{087E8D61-9B7D-4A5D-9457-267DC9CEFAEB}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.10.20:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = FeiLong\\FeiLong.csproj
+		SccProjectName1 = FeiLong
+		SccLocalPath1 = FeiLong
+		SccProjectUniqueName2 = FeiLong.Tests\\FeiLong.Tests.csproj
+		SccProjectName2 = FeiLong.Tests
+		SccLocalPath2 = FeiLong.Tests
+		SccProjectUniqueName3 = FeiLongLibrary\\FeiLongLibrary.csproj
+		SccProjectName3 = FeiLongLibrary
+		SccLocalPath3 = FeiLongLibrary
+		SccProjectUniqueName4 = FeiLongService\\FeiLongService.csproj
+		SccProjectName4 = FeiLongService
+		SccLocalPath4 = FeiLongService
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05AA0089-3C07-4729-A9E2-68827E947941}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05AA0089-3C07-4729-A9E2-68827E947941}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05AA0089-3C07-4729-A9E2-68827E947941}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05AA0089-3C07-4729-A9E2-68827E947941}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B695D719-CF03-45A4-8392-A5847107C30B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B695D719-CF03-45A4-8392-A5847107C30B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B695D719-CF03-45A4-8392-A5847107C30B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B695D719-CF03-45A4-8392-A5847107C30B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F8EAE05-AABC-4711-8B5F-3A06B954C836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8EAE05-AABC-4711-8B5F-3A06B954C836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8EAE05-AABC-4711-8B5F-3A06B954C836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8EAE05-AABC-4711-8B5F-3A06B954C836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{087E8D61-9B7D-4A5D-9457-267DC9CEFAEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{087E8D61-9B7D-4A5D-9457-267DC9CEFAEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{087E8D61-9B7D-4A5D-9457-267DC9CEFAEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{087E8D61-9B7D-4A5D-9457-267DC9CEFAEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

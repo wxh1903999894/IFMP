@@ -1,0 +1,225 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">生产管理</a> <a><cite>设备维修报告管理</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备编号</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">设备名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">发生时间</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" style="width: 100px;">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" style="width: 100px;">
+                    </div>
+
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">修复时间</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" style="width: 100px;">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" style="width: 100px;">
+                    </div>
+                </div>
+
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn cum-btn" lay-submit="" lay-filter="demo1">查询</button>
+                    <button class="layui-btn export-btn" lay-submit="" lay-filter="demo1">导出</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="main">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <tr>
+                            <th bgcolor="#ffffff">设备编号</th>
+                            <th bgcolor="#ffffff">设备名称</th>
+                            <th bgcolor="#ffffff">使用单位</th>
+                            <th bgcolor="#ffffff">操作工</th>
+                            <th bgcolor="#ffffff">维修员</th>
+                            <th bgcolor="#ffffff">故障发生时间</th>
+                            <th bgcolor="#ffffff">故障修复时间</th>
+                            <th bgcolor="#ffffff">状态</th>
+                            <th width="160" align="center" bgcolor="#ffffff">操作</th>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">QT00001</td>
+                            <td bgcolor="#ffffff" align="center">高频焊管机</td>
+                            <td bgcolor="#ffffff" align="center">1008031-13生产组</td>
+                            <td bgcolor="#ffffff" align="center">马小乐</td>
+                            <td bgcolor="#ffffff" align="center">李敏</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 11:23</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 13:50</td>
+                            <td bgcolor="#ffffff" align="center">完成</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">QT00001</td>
+                            <td bgcolor="#ffffff" align="center">高频焊管机</td>
+                            <td bgcolor="#ffffff" align="center">1008031-13生产组</td>
+                            <td bgcolor="#ffffff" align="center">马小乐</td>
+                            <td bgcolor="#ffffff" align="center">李敏</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 11:23</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 13:50</td>
+                            <td bgcolor="#ffffff" align="center">完成</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">QT00001</td>
+                            <td bgcolor="#ffffff" align="center">高频焊管机</td>
+                            <td bgcolor="#ffffff" align="center">1008031-13生产组</td>
+                            <td bgcolor="#ffffff" align="center">马小乐</td>
+                            <td bgcolor="#ffffff" align="center">李敏</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 11:23</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 13:50</td>
+                            <td bgcolor="#ffffff" align="center">完成</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">QT00001</td>
+                            <td bgcolor="#ffffff" align="center">高频焊管机</td>
+                            <td bgcolor="#ffffff" align="center">1008031-13生产组</td>
+                            <td bgcolor="#ffffff" align="center">马小乐</td>
+                            <td bgcolor="#ffffff" align="center">李敏</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 11:23</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 13:50</td>
+                            <td bgcolor="#ffffff" align="center">完成</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">QT00001</td>
+                            <td bgcolor="#ffffff" align="center">高频焊管机</td>
+                            <td bgcolor="#ffffff" align="center">1008031-13生产组</td>
+                            <td bgcolor="#ffffff" align="center">马小乐</td>
+                            <td bgcolor="#ffffff" align="center">李敏</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 11:23</td>
+                            <td bgcolor="#ffffff" align="center">2018-04-02 13:50</td>
+                            <td bgcolor="#ffffff" align="center">完成</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-10">&nbsp;<span class="layui-laypage-count">共 100 条</span><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><a href="javascript:;" data-page="4">4</a><a href="javascript:;" data-page="5">5</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="10">10</a><a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option></select></span><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span></div>  <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+        layui.use(['form', 'laydate', 'element'], function () {
+            var element = layui.element, form = layui.form
+          , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+        });
+        function fullalert() {
+            layui.use('layer',
+            function () {
+                //弹出即全屏
+                var index = layer.open({
+                    type: 2,
+                    content: 'from.html',
+                    area: ['500px', '195px'],
+                    maxmin: true,
+                    offset: 'auto'
+                });
+                layer.full(index);
+            });
+            return false;
+        }
+        function minalert() {
+            layui.use('layer',
+            function () {
+                layer.open({
+                    type: 2,
+                    area: ['760px', '560px'],
+                    fixed: false,
+                    //不固定
+                    maxmin: true,
+                    content: 'equipmentmaintedit.html'
+                });
+            });
+            return false;
+        }
+        function msgalert() {
+            layui.use('layer',
+            function () {
+                layer.confirm('您是如何看待前端开发？', {
+                    btn: ['确定', '取消'] //按钮
+                });
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>

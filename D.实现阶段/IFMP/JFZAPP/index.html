@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/iconfont.css" rel="stylesheet" />
+    <link href="css/mui.min.css" rel="stylesheet" />
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+</head>
+<body>
+</body>
+<div class="mui-content padbot">
+    <div id="slider" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+            <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                    <img src="images/1.jpg">
+                </a>
+            </div>
+            <!-- 第一张 -->
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="images/2.jpg">
+                </a>
+            </div>
+            <!-- 第二张 -->
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="images/3.jpg">
+                </a>
+            </div>
+            <!-- 第二张 -->
+            <div class="mui-slider-item">
+                <a href="#">
+                    <img src="images/4.jpg">
+                </a>
+            </div>
+            <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+            <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                    <img src="images/1.jpg">
+                </a>
+            </div>
+        </div>
+        <div class="mui-slider-indicator">
+            <div class="mui-indicator mui-active"></div>
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
+            <div class="mui-indicator"></div>
+        </div>
+    </div>
+    <div class="pading5">
+
+
+        <ul class="mui-table-view mui-grid-view mui-grid-9">
+
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/MyIntegral.html">
+                    <span class="mui-icon iconfont icon-ziyuan"></span>
+                    <div class="mui-media-body">我的积分</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/RegistrationEdit.html">
+                    <span class="mui-icon iconfont icon-jianglijilu"></span>
+                    <div class="mui-media-body">奖扣登记</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/IntergralAudit.html">
+                    <span class="mui-icon iconfont icon-iconddsh"></span>
+                    <div class="mui-media-body">我的审核</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/YearRanking.html?flag=1">
+                    <span class="mui-icon iconfont icon-paimingkaoqian-01"></span>
+                    <div class="mui-media-body">积分排名</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/MyTicket.html">
+                    <span class="mui-icon iconfont icon-menpiao1"></span>
+                    <div class="mui-media-body">我的奖票</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/TaskEdit.html">
+                    <span class="mui-icon iconfont icon-fabu"></span>
+                    <div class="mui-media-body">任务发布</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/TaskAudit.html">
+                    <span class="mui-icon iconfont icon-shenhetongguo1"></span>
+                    <div class="mui-media-body">任务审核</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="app/TaskAll.html">
+                    <span class="mui-icon iconfont icon-msnui-task"></span>
+                    <div class="mui-media-body">任务大厅</div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+                <a href="#">
+                    <span class="mui-icon iconfont icon-ziyuan1"></span>
+                    <div class="mui-media-body">意见反馈</div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-tab-item" href="index.html">
+        <span class="mui-icon iconfont icon-zhuye"></span>
+        <span class="mui-tab-label">主页</span>
+    </a>
+    <a class="mui-tab-item" href="app/MyIntegral.html">
+        <span class="mui-icon iconfont icon-04"></span>
+        <span class="mui-tab-label">我的</span>
+    </a>
+</nav>
+</html>
+<script type="text/javascript" charset="utf-8">
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    var slider = mui("#slider");
+    slider.slider({
+        interval: 3000
+    });
+</script>

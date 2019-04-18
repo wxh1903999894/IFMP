@@ -1,0 +1,670 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+    <script src="../plugins/layui/formSelects.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a>数据统计</a> <a><cite>班次统计</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+
+        <form class="layui-form" action="">
+
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>班次统计</legend>
+            </fieldset>
+
+
+            <div id="ClassType" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select name="classtype" lay-filter="aihao">
+                        <option value="0">全部</option>
+                        <option value="1">早班</option>
+                        <option value="2">夜班</option>
+                        <option value="3">早夜班</option>
+                        <option value="4">其他</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="date1" id="date1" lay-verify="date1" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="date2" id="date2" lay-verify="date2" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">图表类型</label>
+                <div class="layui-input-block">
+                    <select id="StatType" name="StatType" lay-filter="StatType">
+                        <option value="1">饼图</option>
+                        <option value="2">柱状图</option>
+                        <option value="3">比例图</option>
+                    </select>
+                </div>
+            </div>
+
+        </form>
+
+
+        <div class="layui-form-item">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>统计图表</legend>
+            </fieldset>
+
+            <div id="Chart" style="height:500px" class="layui-input-block">
+            </div>
+
+            <div id="Chart2" style="height:500px;" class="layui-input-block">
+            </div>
+
+            <div id="Chart3" style="height:500px;" class="layui-input-block">
+            </div>
+
+            <div class="layui-input-block">
+                <button type="reset" class="layui-btn">生成</button>
+                <button type="reset" class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/echarts.js"></script>
+<script>
+
+    var posList = [
+   'left', 'right', 'top', 'bottom',
+   'inside',
+   'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+   'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+    ];
+
+    var app = {};
+    app.configParameters = {
+        rotate: {
+            min: -90,
+            max: 90
+        },
+        align: {
+            options: {
+                left: 'left',
+                center: 'center',
+                right: 'right'
+            }
+        },
+        verticalAlign: {
+            options: {
+                top: 'top',
+                middle: 'middle',
+                bottom: 'bottom'
+            }
+        },
+        position: {
+            options: echarts.util.reduce(posList, function (map, pos) {
+                map[pos] = pos;
+                return map;
+            }, {})
+        },
+        distance: {
+            min: 0,
+            max: 100
+        }
+    };
+
+    app.config = {
+        rotate: 90,
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
+        distance: 15,
+        onChange: function () {
+            var labelOption = {
+                normal: {
+                    rotate: app.config.rotate,
+                    align: app.config.align,
+                    verticalAlign: app.config.verticalAlign,
+                    position: app.config.position,
+                    distance: app.config.distance
+                }
+            };
+            myChart.setOption({
+                series: [{
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }]
+            });
+        }
+    };
+
+
+    var labelOption = {
+        normal: {
+            show: true,
+            position: app.config.position,
+            distance: app.config.distance,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            rotate: app.config.rotate,
+            formatter: '{a}',
+            fontSize: 20,
+            rich: {
+
+                name: {
+
+                    textBorderColor: '#fff'
+                }
+            }
+        }
+    };
+
+    var myChart = echarts.init(document.getElementById('Chart'));
+
+
+    var option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            //data: ['勤学班', '奋进班', '拼搏班', '邮件营销', '联盟广告', '视频广告', '百度', '谷歌', '必应', '其他']
+        },
+        series: {
+            type: 'sunburst',
+            highlightPolicy: 'ancestor',
+            data: [{
+                name: '勤学班',
+                value: 15,
+                itemStyle: {
+                    color: '#7171C6'
+                },
+                children: [
+                    {
+                        name: '勤学班-早班',
+                        value: 10,
+                        itemStyle: {
+                            color: '#79CDCD'
+                        }
+                    },
+                    {
+                        name: '勤学班-夜班',
+                        value: 5,
+                        itemStyle: {
+                            color: '#76EE00'
+                        }
+                    }]
+            },
+            {
+                name: '奋进班',
+                value: 12,
+                itemStyle: {
+                    color: '#7171C6'
+                },
+                children: [
+                    {
+                        name: '奋进班-早班',
+                        value: 4,
+                        itemStyle: {
+                            color: '#79CDCD'
+                        }
+                    },
+                    {
+                        name: '奋进班-夜班',
+                        value: 4,
+                        itemStyle: {
+                            color: '#76EE00'
+                        }
+                    },
+                    {
+                        name: '奋进班-其他',
+                        value: 4,
+                        itemStyle: {
+                            color: '#EE30A7'
+                        }
+                    }]
+            },
+            {
+                name: '拼搏班',
+                value: 15,
+                itemStyle: {
+                    color: '#da0d68'
+                },
+                children: [
+                    {
+                        name: '拼搏班-早班',
+                        value: 10,
+                        itemStyle: {
+                            color: '#79CDCD'
+                        }
+                    },
+                    {
+                        name: '拼搏班-夜班',
+                        value: 4,
+                        itemStyle: {
+                            color: '#76EE00'
+                        }
+                    },
+                    {
+                        name: '拼搏班-其他',
+                        value: 2,
+                        itemStyle: {
+                            color: '#EE30A7'
+                        }
+                    }]
+            }],
+
+            radius: [0, '95%'],
+            sort: null,
+            levels: [{}, {
+                r0: '15%',
+                r: '35%',
+                itemStyle: {
+                    borderWidth: 2
+                },
+                label: {
+                    rotate: 'tangential'
+                }
+            }, {
+                r0: '35%',
+                r: '70%',
+                label: {
+                    align: 'right'
+                }
+            }, {
+                r0: '70%',
+                r: '72%',
+                label: {
+                    position: 'outside',
+                    padding: 3,
+                    silent: false
+                },
+                itemStyle: {
+                    borderWidth: 3
+                }
+            }]
+        }
+        //series: [
+        //    {
+        //        name: '班次比例',
+        //        type: 'pie',
+        //        selectedMode: 'single',
+        //        radius: [0, '30%'],
+
+        //        label: {
+        //            normal: {
+        //                position: 'inner'
+        //            }
+        //        },
+        //        labelLine: {
+        //            normal: {
+        //                show: false
+        //            }
+        //        },
+        //        data: [
+        //            { value: 15, name: '勤学班' },
+        //            { value: 12, name: '奋进班' },
+        //            { value: 16, name: '拼搏班' }
+        //        ]
+        //    },
+        //    {
+        //        name: '时段比例',
+        //        type: 'pie',
+        //        radius: ['40%', '55%'],
+        //        label: {
+        //            normal: {
+        //                formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+        //                backgroundColor: '#eee',
+        //                borderColor: '#aaa',
+        //                borderWidth: 1,
+        //                borderRadius: 4,
+        //                color: '#000000',
+        //                rich: {
+        //                    a: {
+        //                        color: '#999',
+        //                        lineHeight: 22,
+        //                        align: 'center'
+        //                    },
+        //                    hr: {
+        //                        borderColor: '#aaa',
+        //                        width: '100%',
+        //                        borderWidth: 0.5,
+        //                        height: 0,
+        //                        color: '#000000',
+        //                    },
+        //                    b: {
+        //                        fontSize: 16,
+        //                        color: '#000000',
+        //                        lineHeight: 33
+
+        //                    },
+        //                    per: {
+        //                        color: '#eee',
+        //                        backgroundColor: '#334455',
+        //                        padding: [2, 4],
+        //                        borderRadius: 2
+        //                    }
+        //                }
+        //            }
+        //        },
+        //        data: [
+        //            { value: 10, name: '勤学班-早班' },
+        //            { value: 5, name: '勤学班-夜班' },
+        //            { value: 4, name: '奋进班-早班' },
+        //            { value: 4, name: '奋进班-夜班' },
+        //            { value: 4, name: '奋进班-其他' },
+        //            { value: 10, name: '拼搏班-早班' },
+        //            { value: 4, name: '拼搏班-夜班' },
+        //            { value: 2, name: '拼搏班-其他' }
+        //        ]
+        //    }
+        //]
+    };
+    myChart.setOption(option);
+
+
+    var myChart2 = echarts.init(document.getElementById('Chart2'));
+
+
+    var option2 = {
+        color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+        tooltip: {
+            trigger: 'item',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        toolbox: {
+            show: true,
+            orient: 'vertical',
+            left: 'right',
+            top: 'center',
+            feature: {
+                mark: { show: true },
+                dataView: { show: true, readOnly: false },
+                magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                restore: { show: true },
+                saveAsImage: { show: true }
+            }
+        },
+        dataZoom: [
+                 {
+                     type: 'inside'
+                 }
+        ],
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: { show: false },
+                data: ['早班', '夜班', '其他'],
+                z: 10
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+
+        series: [
+             {
+                 name: '勤学班',
+                 type: 'bar',
+                 barGap: 0,
+                 label: labelOption,
+                 data: [10, 5, '']
+             },
+             {
+                 name: '奋进班',
+                 type: 'bar',
+                 label: labelOption,
+                 data: [4, 4, 4]
+             },
+             {
+                 name: '拼搏班',
+                 type: 'bar',
+                 label: labelOption,
+                 data: [10, 4, 2]
+             }
+        ]
+    };
+
+    myChart2.setOption(option2);
+
+
+
+
+    var myChart3 = echarts.init(document.getElementById('Chart3'));
+
+
+    var option3 = {
+        series: [{
+            type: 'treemap',
+            levels: [
+                {
+                    itemStyle: {
+                        normal: {
+                            borderWidth: 3,
+                            borderColor: '#333',
+                            gapWidth: 3
+                        }
+                    }
+                },
+                {
+                    color: ['#6495ED', '#da0d68', '#8B1A1A'],
+                    colorMappingBy: 'value',
+                    itemStyle: {
+                        normal: {
+                            gapWidth: 1
+                        }
+                    }
+                }
+            ],
+            data: [{
+                name: '班次',            // Second tree
+                value: 43,
+                children: [{
+                    name: '勤学班',       // Son of first tree
+                    value: 15,
+                    itemStyle: {
+                        normal: {
+                            borderColor: '#fff'
+                        }
+                    },
+                    children: [{
+                        name: '勤学班-早班',  // Granson of first tree
+                        value: 10
+                    }, {
+                        name: '勤学班-夜班',  // Granson of first tree
+                        value: 5
+                    }]
+                }, {
+                    name: '奋进班',       // Son of first tree
+                    value: 12,
+                    itemStyle: {
+                        normal: {
+                            borderColor: '#fff'
+                        }
+                    },
+                    children: [{
+                        name: '奋进班-早班',  // Granson of first tree
+                        value: 4
+                    }, {
+                        name: '奋进班-夜班',  // Granson of first tree
+                        value: 4
+                    }, {
+                        name: '奋进班-其他',  // Granson of first tree
+                        value: 4
+                    }]
+                }, {
+                    name: '拼搏班',       // Son of first tree
+                    value: 16,
+                    itemStyle: {
+                        normal: {
+                            borderColor: '#fff'
+                        }
+                    },
+                    children: [{
+                        name: '拼搏班-早班',  // Granson of first tree
+                        value: 10
+                    }, {
+                        name: '拼搏班-夜班',  // Granson of first tree
+                        value: 4
+                    }, {
+                        name: '拼搏班-其他',  // Granson of first tree
+                        value: 2
+                    }]
+                }]
+            }]
+        }]
+    }
+
+
+    myChart3.setOption(option3)
+
+
+
+    layui.use(['form', 'layedit', 'laydate', 'element'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+
+        $("#Chart2").hide();
+        $("#Chart3").hide();
+
+        laydate.render({
+            elem: '#date1'
+          , type: 'datetime'
+        });
+        laydate.render({
+            elem: '#date2'
+            , type: 'datetime'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function (value) {
+                if (value.length < 5) {
+                    return '标题至少得5个字符啊';
+                }
+            }
+          , pass: [/(.+){6,12}$/, '密码必须6到12位']
+          , content: function (value) {
+              layedit.sync(editIndex);
+          }
+        });
+
+        form.on('select(StatType)', function (data) {
+
+            console.log(data);
+            if (data.value == 1) {
+                $("#Chart").show();
+                $("#Chart2").hide();
+                $("#Chart3").hide();
+            } else if (data.value == 2) {                
+                $("#Chart").hide();
+                $("#Chart2").show();
+                //myChart2.setOption(option2);
+                $("#Chart3").hide();
+            } else if (data.value == 3) {
+                $("#Chart").hide();
+                $("#Chart2").hide();
+                $("#Chart3").show();
+                //myChart3.setOption(option3);
+
+            }
+
+        })
+
+        //监听指定开关
+        form.on('switch(CompareType)', function (data) {
+            //layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            //    offset: '6px'
+            //});
+            //layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            if (this.checked) {
+                document.getElementById("UserList").style.display = "none";
+            } else {
+                document.getElementById("UserList").style.display = "block";
+            }
+        });
+
+        form.on('switch(BaseDate)', function (data) {
+            //layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
+            //    offset: '6px'
+            //});
+            //layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+            if (this.checked) {
+                document.getElementById("timeList").style.display = "none";
+            } else {
+                document.getElementById("timeList").style.display = "block";
+            }
+        });
+
+    });
+
+
+
+    function ShowFormDetails() {
+        layui.use('layer',
+      function () {
+          layer.open({
+              title: '查看',
+              type: 2,
+              area: ['760px', '560px'],
+              fixed: false,
+              //不固定
+              maxmin: true,
+              content: 'FormDetails.html'
+          });
+      });
+    }
+
+    function ShowTableDataList() {
+        layui.use('layer',
+      function () {
+          layer.open({
+              title: '查看',
+              type: 2,
+              area: ['760px', '560px'],
+              fixed: false,
+              //不固定
+              maxmin: true,
+              content: 'TableDataList2.html'
+          });
+      });
+    }
+
+    function Back() {
+        window.location.href = "ClassList.html";
+    }
+</script>

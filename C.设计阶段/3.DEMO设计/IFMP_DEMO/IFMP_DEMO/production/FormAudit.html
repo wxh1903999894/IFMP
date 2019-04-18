@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>表单审核</legend>
+        </fieldset>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">审核状态</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" checked="" name="open" lay-verify="required" lay-skin="switch" lay-filter="switchTest" lay-text="通过|驳回">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">审核意见</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" lay-verify="required" class="layui-textarea">通过</textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" onclick="Back()">提交</button>
+                    <button class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    layui.use(['form', 'laydate', 'element'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+
+    });
+
+
+    function Back() {
+        var index = parent.layer.getFrameIndex(window.name);
+
+        parent.layer.close(index);
+    }
+</script>

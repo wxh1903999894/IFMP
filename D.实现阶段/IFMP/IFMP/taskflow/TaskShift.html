@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../css/formSelects-v4.css" rel="stylesheet" />
+</head>
+<body class="daiban">
+    <form class="layui-form" action="">
+
+        <h1>代班选择</h1>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">选择</label>
+            <div class="layui-input-block">
+                <input type="checkbox" id="AlertType" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="AlertType" lay-text="一并|分项">
+            </div>
+        </div>
+
+        <div id="allchange" class="layui-form-item layui-form-text">
+            <label class="layui-form-label">一并修改</label>
+            <div id="UserSelect" class="layui-input-block">
+            </div>
+        </div>
+
+        <div id="flowchange" style="display:none">
+            <label class="layui-form-label">流程修改</label>
+            <div id="FlowSelect" class="layui-input-block">
+
+            </div>
+        </div>
+    </form>
+
+
+    <div class="layui-input-block">
+        <button style="background-color:blue" class="layui-btn layui-btn-primary submit" onclick="Confirm()">确定</button>
+    </div>
+</body>
+</html>
+
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/Common.js"></script>
+<script src="../plugins/echarts.js"></script>
+<script src="../plugins/layui/layui.js"></script>
+<script>
+
+    var fulluserdata = "";
+
+    $(document).ready(function () {
+        var id = unity.getURL("id");
+        if (id != null && id != "") {
+            InitFullUser();
+            InitTaskShift(id);
+        }
+    })
+
+
+    layui.config({
+        base: '../plugins/layui/'
+    }).extend({
+        formSelects: 'formSelects-v4'
+    });
+
+    layui.use(['form', 'laydate', 'element', 'formSelects'], function () {
+
+        var form = layui.form
+        , layer = layui.layer
+        , laydate = layui.laydate;
+
+
+        var formExpertTypeSelects = layui.formSelects;
+
+        form.on('switch(AlertType)', function (data) {
+            if (this.checked) {
+                document.getElementById("allchange").style.display = "block";
+                document.getElementById("flowchange").style.display = "none";
+            } else {
+                document.getElementById("allchange").style.display = "none";
+                document.getElementById("flowchange").style.display = "block";
+            }
+        });
+    });
+
+    function InitFullUser() {
+        $.ajax({
+            url: "../ashx/GetBaseDate.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetUserByDepLayUI",
+            success: function (data) {
+                fulluserdata = data;
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+
+    function InitTaskShift(taskid) {
+        $.ajax({
+            url: "../ashx/BaseData.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetShiftTask&taskid=" + taskid,
+            success: function (data) {
+                if (data.result == "success") {
+                    var UserSelect = document.getElementById("UserSelect");
+                    var UserArray = [];
+                    var DefaultUserArray = [];
+                    for (var i = 0; i < data.User.length; i++) {
+                        var userdata = unity.InitNode("lable", "");
+                        userdata.innerText = data.User[i].Name;
+                        userdata.id = data.User[i].UserID;
+                        UserSelect.appendChild(userdata);
+
+                        var userselect = unity.InitNode("select", "");
+                        userselect.id = "full-" + data.User[i].UserID;
+                        userselect.name = "full-" + data.User[i].UserID;
+                        userselect.setAttribute("xm-select", "full-" + data.User[i].UserID);
+                        userselect.setAttribute("xm-select-search-type", "dl");
+                        userselect.setAttribute("xm-select-radio", "");
+                        userselect.setAttribute("xm-select-search", "");
+                        UserSelect.appendChild(userselect);
+                        UserArray.push(userselect.id);
+                        DefaultUserArray.push(userdata.id);
+                    }
+
+                    var FlowSelect = document.getElementById("FlowSelect");
+                    ////流程部分
+                    for (var i = 0; i < data.Flow.length; i++) {
+                        var flownode = unity.InitNode("fieldset", "layui-elem-field layui-field-title");
+                        flownode.innerHTML = "<legend>" + data.Flow[i].Name + "</legend>";
+                        FlowSelect.appendChild(flownode);
+
+                        for (var j = 0; j < data.Flow[i].UserList.length; j++) {
+                            var userdata = unity.InitNode("lable", "");
+                            userdata.innerText = data.Flow[i].UserList[j].Name;
+                            userdata.id = data.Flow[i].UserList[j].UserID;
+                            FlowSelect.appendChild(userdata);
+
+                            var flowselect = unity.InitNode("select", "");
+                            flowselect.id = "flow-" + data.Flow[i].FlowID + "-" + data.Flow[i].UserList[j].UserID;
+                            flowselect.name = "flow-" + data.Flow[i].FlowID + "-" + data.Flow[i].UserList[j].UserID;
+                            flowselect.setAttribute("xm-select", "flow-" + data.Flow[i].FlowID + "-" + data.Flow[i].UserList[j].UserID);
+                            flowselect.setAttribute("xm-select-search-type", "dl");
+                            flowselect.setAttribute("xm-select-radio", "");
+                            flowselect.setAttribute("xm-select-search", "");
+                            FlowSelect.appendChild(flowselect);
+
+                            UserArray.push(flowselect.id);
+                            DefaultUserArray.push(userdata.id);
+                        }
+                    }
+
+                    layui.use(['formSelects'], function () {
+                        for (var i = 0; i < UserArray.length; i++) {
+                            layui.formSelects.data(UserArray[i], 'local', {
+                                arr: fulluserdata
+                            });
+
+                            var seluserdata = [];
+                            seluserdata.push(DefaultUserArray[i]);
+                            layui.formSelects.value(UserArray[i], seluserdata);
+                        }
+                    })
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+
+    function Confirm() {
+        var id = unity.getURL("id");
+        if (document.getElementById("AlertType").checked == true) {
+            //一并
+            var UserList = [];
+            var OldUserList = [];
+            //遍历UserSelect
+            var fullselectnode = document.getElementById("UserSelect").childNodes;
+            for (var i = 0; i < fullselectnode.length; i++) {
+                if (fullselectnode[i].nodeName == "LABLE") {
+                    var olduser = {};
+                    olduser.id = fullselectnode[i].getAttribute("id");
+                    OldUserList.push(olduser);
+                }
+                if (fullselectnode[i].nodeName == "DIV") {
+                    var selid = fullselectnode[i].getAttribute("fs_id");
+                    var user = {};
+                    user.id = layui.formSelects.value(selid)[0].val;
+                    UserList.push(user);
+                }
+            }
+
+            $.ajax({
+                url: "../ashx/BaseData.ashx",
+                type: "GET",
+                dataType: "json",
+                async: false,
+                data: "method=ShiftTaskFull&taskid=" + id + "&olduserlist=" + JSON.stringify(OldUserList) + "&userlist=" + JSON.stringify(UserList),
+                success: function (data) {
+                    if (data.result == "success") {
+                        alert("提交成功!");
+                    } else {
+                        alert("获取数据失败，请联系系统管理员");
+                    }
+                },
+                error: function () {
+                    alert("当前网络可能有错误");
+                }
+            });
+
+
+        } else {
+            //分步
+            var flowselectnode = document.getElementById("FlowSelect").childNodes;
+            //console.log(flowselectnode[1]);
+            var UserList = [];
+            var OldUserList = [];
+            var FlowList = [];
+            for (var i = 0; i < flowselectnode.length; i++) {
+                if (flowselectnode[i].nodeName == "LABLE") {
+                    var olduser = {};
+                    olduser.id = flowselectnode[i].getAttribute("id");
+                    OldUserList.push(olduser);
+                }
+                if (flowselectnode[i].nodeName == "DIV") {
+                    var selid = flowselectnode[i].getAttribute("fs_id");
+                    var user = {};
+                    user.id = layui.formSelects.value(selid)[0].val;
+                    UserList.push(user);
+                    FlowList.push(selid.split('-')[1]);
+                }
+
+            }
+
+
+            $.ajax({
+                url: "../ashx/BaseData.ashx",
+                type: "GET",
+                dataType: "json",
+                async: false,
+                data: "method=ShiftTaskFlow&taskid=" + id + "&olduserlist=" + JSON.stringify(OldUserList) + "&userlist=" + JSON.stringify(UserList) + "&flowlist=" + JSON.stringify(FlowList),
+                success: function (data) {
+                    if (data.result == "success") {
+                        alert("提交成功!");
+                    } else {
+                        alert("获取数据失败，请联系系统管理员");
+                    }
+                },
+                error: function () {
+                    alert("当前网络可能有错误");
+                }
+            });
+        }
+
+
+    }
+</script>

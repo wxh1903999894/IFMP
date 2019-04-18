@@ -1,0 +1,71 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+    <script src="../plugins/layui/formSelects.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>机床日常点检</legend>
+        </fieldset>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item layui-form-text">
+                <div class="layui-input-inline">
+                    <input type="text" name="senduser" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">字典类型</label>
+                <div class="layui-input-block">
+                    <span style="" class="layui-form-mid">选择</span>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">字典数据</label>
+                <div class="layui-input-block">
+                    <span style="" class="layui-form-mid">√</span>
+                    <span style="" class="layui-form-mid">△</span>
+                    <span style="" class="layui-form-mid">×</span>
+                    <span style="" class="layui-form-mid">⊕</span>
+                </div>
+            </div>
+
+        </form>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="Back()">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+    layui.use(['form', 'layedit', 'laydate', 'element'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , layedit = layui.layedit
+        , laydate = layui.laydate;
+
+    });
+
+
+    function Back() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>

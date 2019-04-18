@@ -1,0 +1,133 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>飞龙大屏</title>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <style>
+        html, body, .mui-slider, .mui-slider .mui-slider-group.mui-slider-loop, .mui-slider .mui-slider-group .mui-slider-item > a:not(.mui-control-item) {
+            height: 100%;
+        }
+
+            .mui-slider .mui-slider-group .mui-slider-item img {
+                width: 100%;
+                height: auto;
+                vertical-align: middle;
+            }
+
+            .mui-slider .mui-slider-group .mui-slider-item > a:not(.mui-control-item) {
+                text-align: center;
+            }
+
+        i {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+        body {
+            background: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="slider" class="mui-slider">
+        <div class="mui-slider-group mui-slider-loop">
+
+        </div>
+        <div class="mui-slider-indicator">
+
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="../plugins/Common.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function () {
+        InitScrollPic();
+
+
+        $('.mui-slider .mui-slider-group .mui-slider-item img').each(function () {
+            if ($(window).height() < $(this).height()) {
+                $(this).css({ "width": "auto", "height": "100%" });
+            }
+        });
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+        var slider = mui("#slider");
+
+        slider.slider({
+            interval: 1000
+        });
+    })
+
+    function InitScrollPic() {
+
+        $.ajax({
+            url: "../ashx/Resource.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetFullResourceData",
+            },
+            success: function (data) {
+                if (data.result == "success") {
+
+                    //console.log(data.ResourceData);
+                    $(".mui-slider-group").html("");
+                    var html = "";
+                    var pointhtml = "";
+                    for (var i = 0; i < data.ResourceData.length; i++) {
+                        if (i == 0) {
+                            html = html + "<div class=\"mui-slider-item mui-slider-item-duplicate\">";
+                            html = html + "<a href=\"#\">";
+                            html = html + "<img src=\"" + data.ResourceData[data.ResourceData.length - 1].Path + "\">";
+                            html = html + " </a></div>";
+
+                            pointhtml = pointhtml + "<div class=\"mui-indicator mui-active\"></div>";
+                        } else {
+                            pointhtml = pointhtml + "<div class=\"mui-indicator\"></div>";
+                        }
+
+                        html = html + "<div class=\"mui-slider-item\">";
+                        html = html + "<a href=\"#\">";
+                        html = html + "<img src=\"" + data.ResourceData[i].Path + "\">";
+                        html = html + " </a></div>";
+
+                        if (i == data.ResourceData.length - 1) {
+                            html = html + "<div class=\"mui-slider-item mui-slider-item-duplicate\">";
+                            html = html + "<a href=\"#\">";
+                            html = html + "<img src=\"" + data.ResourceData[0].Path + "\">";
+                            html = html + " </a></div>";
+                        }
+
+
+                    }
+
+                    //console.log(html);
+                    console.log($(".mui-slider-group").html());
+
+
+                    $(".mui-slider-group").html(html);
+                    $(".mui-slider-indicator").html(pointhtml);
+                }
+            }
+        })
+    }
+
+
+    $("#slider").click(function () {
+        window.location.href = "FileList.html";
+        //alert("1");
+    })
+</script>

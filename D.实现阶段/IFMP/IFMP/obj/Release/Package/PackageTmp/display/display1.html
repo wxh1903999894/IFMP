@@ -1,0 +1,358 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="description" content="不超过150个字符" />
+    <meta name="keywords" content="" />
+    <meta content="caibaojian" name="author" />
+    <title>飞龙大屏</title>
+    <link rel="stylesheet" href="css/layui.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"><!--时钟-->
+    <link rel="stylesheet" href="css/fl-daping.css">
+    <!--自适应插件-->
+    <script src="js/flexible.js"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin fl-daping">
+        <!--第一行-->
+        <div class="header">
+            <div class="logo ib"><img src="images/fl_03_2.png" /> </div>
+            <span class="data ib"></span>
+            <main class="ib">
+                <!-- 星期几 -->
+                <div class="days">
+                    <div class="day">
+                        <p class="sunday">周日</p>
+                    </div>
+                    <div class="day">
+                        <p class="monday">周一</p>
+                    </div>
+                    <div class="day">
+                        <p class="tuesday">周二</p>
+                    </div>
+                    <div class="day">
+                        <p class="wednesday">周三</p>
+                    </div>
+                    <div class="day">
+                        <p class="thursday">周四</p>
+                    </div>
+                    <div class="day">
+                        <p class="friday">周五</p>
+                    </div>
+                    <div class="day">
+                        <p class="saturday">周六</p>
+                    </div>
+                </div>
+                <!-- CLOCK -->
+                <div class="clock">
+                    <!-- 小时 -->
+                    <div class="numbers">
+                        <p class="hours"></p>
+                        <p class="placeholder">88</p>
+                    </div>
+                    <div class="colon">
+                        <p>:</p>
+                    </div>
+                    <!-- 分 -->
+                    <div class="numbers">
+                        <p class="minutes"></p>
+                        <p class="placeholder">88</p>
+                    </div>
+
+                    <div class="colon">
+                        <p>:</p>
+                    </div>
+                    <!-- 秒 -->
+                    <div class="numbers">
+                        <p class="seconds"></p>
+                        <p class="placeholder">88</p>
+                    </div>
+                    <!-- 上午 / 下午 -->
+                    <div class="am-pm">
+                        <!-- AM -->
+                        <div>
+                            <p class="am">am</p>
+                        </div>
+                        <!-- PM -->
+                        <div>
+                            <p class="pm">pm</p>
+                        </div>
+                    </div>
+                </div><!-- END CLOCK -->
+            </main>
+            <marquee behavior="scroll" direction="left" class="ib frt">
+                <p id="time"></p>
+            </marquee>
+        </div>
+        <div class="fl-main">
+            <div class="fl-main-in fc">
+                <div class="flm1 flt">
+                    <div id="container1" style="width: 100%;height: 100%"></div>
+                </div>
+                <div class="flm1 flt">
+                    <div id="container2" style="width: 100%;height: 100%"></div>
+                </div>
+                <div class="flm2 flt">
+                    <div class="warn">
+                        <div style="height: 3%"></div>
+                        <h3>本月报警：2件</h3>
+                        <div class="warn-list">
+                            <ul>
+                                <li>高科班<i>18-9-20</i></li>
+                                <li>填写切削液浓度表<i>07:50</i></li>
+                                <li>填写三检表<i>07:50</i></li>
+                                <li>填写XBAR表<i>07:50</i></li>
+                                <li>切削液浓度表班长审核<i>08:30</i></li>
+                                <li>三检表班长审核<i>08:30</i></li>
+                                <li>XBAR表班长审核<i>08:30</i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/layui.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/echarts.common.min.js"></script>
+    <script src="js/fl-daping.js"></script>
+    <script>
+        //一般直接写在一个js文件中
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+
+        //表单启用
+        layui.use('form', function () {
+            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+        })
+
+        //年份选择器启用
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            //年份选择器常规用法
+            laydate.render({
+                elem: '#test1',
+            });
+
+        })
+    </script>
+   
+</body>
+</html>
+
+<script type="text/javascript">
+    /*图表-柱图*/
+    var dom = document.getElementById("container1");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null
+    var dataAxis = ['', '', '', '', '', ''];
+    var data = [480, 485, 486, 482, 492, 487];
+    var yMax = 700;
+    var dataShadow = [];
+
+    for (var i = 0; i < data.length; i++) {
+        dataShadow.push(yMax);
+    }
+
+    option = {
+        title: {
+            text: '生产件数',
+            textStyle: {
+                color: '#fff'
+            }
+        },
+        xAxis: {
+            data: dataAxis,
+            axisLabel: {
+                inside: true,
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            axisTick: {
+                show: false
+            },
+            axisLine: {
+                show: false
+            },
+            z: 10
+        },
+        yAxis: {
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        dataZoom: [
+            {
+                type: 'inside'
+            }
+        ],
+        series: [
+            { // For shadow
+                type: 'bar',
+                itemStyle: {
+                    normal: { color: 'rgba(0,0,0,0.05)' }
+                },
+                barGap: '-100%',
+                barCategoryGap: '40%',
+                data: dataShadow,
+                animation: false
+            },
+            {
+                type: 'bar',
+                label: {
+                    normal: {
+                        show: true,
+                        rotate: {
+                            min: -90,
+                            max: 90
+                        },
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                { offset: 0, color: '#83bff6' },
+                                { offset: 0.5, color: '#188df0' },
+                                { offset: 1, color: '#188df0' }
+                            ]
+                        ),
+                    },
+                    emphasis: {
+                        color: new echarts.graphic.LinearGradient(
+                            0, 0, 0, 1,
+                            [
+                                { offset: 0, color: '#2378f7' },
+                                { offset: 0.7, color: '#2378f7' },
+                                { offset: 1, color: '#83bff6' }
+                            ]
+                        )
+                    }
+                },
+                data: data
+            }
+        ]
+    };
+
+    // Enable data zoom when user click bar.
+    var zoomSize = 6;
+    myChart.on('click', function (params) {
+        console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+        myChart.dispatchAction({
+            type: 'dataZoom',
+            startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+            endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+        });
+    });;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+
+<script type="text/javascript">
+    /*饼图*/
+    var dom = document.getElementById("container2");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+
+        title: {
+            text: 'PH值',
+            left: 'center',
+            top: 20,
+            textStyle: {
+                color: '#fff'
+            }
+        },
+
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+
+        visualMap: {
+            show: false,
+            min: 80,
+            max: 600,
+            inRange: {
+                colorLightness: [0, 1]
+            }
+        },
+        series: [
+            {
+                name: 'ph值',
+                type: 'pie',
+                radius: '70%',
+                center: ['50%', '50%'],
+                data: [
+                    { value: 2, name: '低于5' },
+                    { value: 35, name: '5-6' },
+                    { value: 45, name: '6-7' },
+                    { value: 52, name: '7-8' },
+                    { value: 12, name: '8-9' },
+                    { value: 1, name: '高于9' }
+                ].sort(function (a, b) { return a.value - b.value; }),
+                roseType: 'radius',
+                label: {
+                    normal: {
+                        textStyle: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            fontWeight: 'bold',
+                            fontSize: 20
+                        }
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        lineStyle: {
+                            color: 'rgba(255,  255, 255, 0.7)'
+                        },
+                        smooth: 0.2,
+                        length: 10,
+                        length2: 20
+                    }
+                },
+                itemStyle: {
+                    normal: {
+                        color: '#c23531',
+                        shadowBlur: 50,
+                        shadowColor: 'rgba(0, 0, 0, 0.7)'
+                    }
+                },
+
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+

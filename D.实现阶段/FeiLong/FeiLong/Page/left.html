@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>飞龙系统左侧文件</title>
+    <link href="../Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="../Content/iconfont.css" rel="stylesheet" />
+    <link href="../Content/main.css" rel="stylesheet" />
+</head>
+
+<body class="leftbg">
+    <ul class="layui-nav layui-nav-tree layui-inline" lay-filter="demo">
+        <li class="layui-nav-item layui-nav-itemed">
+            <a href="sysmanage/sysnoticelist.html" target="main">系统消息</a>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">日常生产</a>
+            <dl class="layui-nav-child">
+                <dd><a href="production/FormList.html" target="main"><span class="iconfont icon-icon-test"></span>表单管理</a></dd>
+                <dd><a href="production/ClassList.html" target="main"><span class="iconfont icon-jiaojieqingkuang"></span>班次管理</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">数据统计</a>
+            <dl class="layui-nav-child">
+                <dd><a href="statistics/Compare.html" target="main"><span class="iconfont icon-jiaojieqingkuang"></span>数据对比</a></dd>
+                <dd><a href="statistics/Statistics.html" target="main"><span class="iconfont icon-kaoqin"></span>表单统计</a></dd>
+                <dd><a href="statistics/Class.html" target="main"><span class="iconfont icon-kaoqin"></span>班次统计</a></dd>
+                <dd><a href="statistics/StatList.html" target="main"><span class="iconfont icon-msnui-plan-time"></span>报表查看</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">基础数据管理</a><dl class="layui-nav-child">
+                <dd><a href="sysmanage/flowlist.html" target="main"><span class="iconfont icon-jiaojieqingkuang"></span>流程查看</a></dd>
+                <dd><a href="BaseData/BaseClassList.html" target="main"><span class="iconfont icon-icon-test"></span>基础班次设置</a></dd>
+                <dd><a href="BaseData/BaseDateList.html" target="main"><span class="iconfont icon-icon-test1"></span>基础时间设置</a></dd>
+                <dd><a href="sysmanage/dictionarylist.html" target="main"><span class="iconfont icon-icon-test1"></span>字典管理</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">人事管理</a><dl class="layui-nav-child">
+                <dd><a href="SystemManage/UserList.html" target="main"><span class="iconfont icon-fl-renshi"></span>用户列表</a></dd>
+              <!--  <dd><a href="" target="main"><span class="iconfont icon-bumenguanli"></span>权限查看</a></dd>-->
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">系统管理</a><dl class="layui-nav-child">
+                <dd><a href="sysmanage/logmanage.html" target="main"><span class="iconfont icon-fl-renshi"></span>日志查看</a></dd>
+            </dl>
+        </li>
+
+    </ul>
+    
+</body>
+</html>
+<script src="../Scripts/layui/layui.js"></script>
+<script>
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //  //监听导航点击
+        //  element.on('nav(demo)', function(elem){
+        //    //console.log(elem)
+        //    layer.msg(elem.text());
+        //  });
+    });
+</script>

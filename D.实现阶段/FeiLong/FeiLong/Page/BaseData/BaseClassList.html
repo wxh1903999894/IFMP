@@ -1,0 +1,247 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../../Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../Content/iconfont.css" rel="stylesheet" />
+    <link href="../../Content/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">基础数据管理</a> <a><cite>基础班次设置</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">班次名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" id="name" name="name" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div id="ClassType" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select id="classtype"></select>
+                </div>
+            </div>
+        </form>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn import-btn" onclick="add()">添加</button>
+                <button class="layui-btn cum-btn">查询</button>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <table id="table" width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <tr>
+                            <th bgcolor="#ffffff">班次名称</th>
+                            <th bgcolor="#ffffff">班次类型</th>
+                            <th bgcolor="#ffffff">人数</th>
+                            <th bgcolor="#ffffff">班长</th>
+                            <th width="160" align="center" bgcolor="#ffffff">操作</th>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">勤学班早班</td>
+                            <td bgcolor="#ffffff" align="center">早班</td>
+                            <td bgcolor="#ffffff" align="center">5</td>
+                            <td bgcolor="#ffffff" align="center">勤学班长</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="设置" onclick="set()">
+                                    <i class="layui-icon layui-icon-bianji"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()">
+                                    <i class="layui-icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">奋进班早班</td>
+                            <td bgcolor="#ffffff" align="center">早班</td>
+                            <td bgcolor="#ffffff" align="center">7</td>
+                            <td bgcolor="#ffffff" align="center">奋进班长</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="设置" onclick="set()">
+                                    <i class="layui-icon layui-icon-bianji"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()">
+                                    <i class="layui-icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">拼搏班早班</td>
+                            <td bgcolor="#ffffff" align="center">早班</td>
+                            <td bgcolor="#ffffff" align="center">6</td>
+                            <td bgcolor="#ffffff" align="center">拼搏班长</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="设置" onclick="set()">
+                                    <i class="layui-icon layui-icon-bianji"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()">
+                                    <i class="layui-icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">勤学班夜班</td>
+                            <td bgcolor="#ffffff" align="center">夜班</td>
+                            <td bgcolor="#ffffff" align="center">5</td>
+                            <td bgcolor="#ffffff" align="center">勤学班长</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()">
+                                    <i class="layui-icon layui-icon-search"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="设置" onclick="set()">
+                                    <i class="layui-icon layui-icon-bianji"></i>
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()">
+                                    <i class="layui-icon"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-10">&nbsp;<span class="layui-laypage-count">共 100 条</span><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><a href="javascript:;" data-page="4">4</a><a href="javascript:;" data-page="5">5</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="10">10</a><a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option></select></span><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span></div>  <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+</body>
+</html>
+
+<script src="../../Scripts/jquery-3.3.1.js"></script>
+<script src="../../Scripts/layui/layui.js"></script>
+<script src="../../Scripts/Common.js"></script>
+<script>
+
+    $(document).ready(function () {
+        InitEnum("ClassType", true, $("#classtype"));
+        GetBaseDate($("#classtype").val(), $("#tabletype").val(), $("#begindate").val(), $("#enddate").val());
+        //InitRole(1);
+        //GetUser();
+    });
+
+
+    function dopage() {
+        GetBaseDate($("#classtype").val(), $("#tabletype").val(), $("#begindate").val(), $("#enddate").val());
+    }
+
+    function GetBaseClass(ClassType, TableType, BeginDate, EndDate) {
+        var data = new Array();
+
+        data = {
+            "ClassType": ClassType,
+            "Name": Name,
+            "pageindex": nowpage,
+            "pagesize": pagesize,
+        };
+
+        $.ajax({
+            url: "/baseClass/getAll",
+            type: "GET",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data.Status == 0) {
+                    //填充table的数据
+                    var table = $("#table");
+                    var html = "";
+                    var head = new Array();
+                    head = new Array("班次名称", "班次类型", "人数", "操作");
+                    //标题
+                    html = html + buildth(head, 0);
+
+                    //内容
+                    for (var i = 0; i < data.Data.List.length; i++) {
+                        html = html + " <tr>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].Name + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].ClassType + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].UserCount + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" title=\"详情\" onclick=\"detail()\"><i class=\"layui-icon layui-icon-search\"></i></button>";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" title=\"设置\" onclick=\"detail()\"><i class=\"layui-icon layui-icon-bianji\"></i></button>";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" title=\"删除\" onclick=\"detail()\"><i class=\"layui-icon\"></i></button>";
+                        html = html + "</td>";
+                        html = html + "</tr>";
+                    }
+                    html = html + "</tbody></table>";
+                    table.html(html);
+                    pagerunity.getpages(data.Data.Total);
+                } else {
+
+                    layer.ready(function () {
+                        title: false
+                        layer.alert(data.Data, {
+                            title: false
+                        });
+                    });
+                }
+            },
+            error: function () {
+                layer.ready(function () {
+                    title: false
+                    layer.alert("当前网络可能有错误", {
+                        title: false
+                    });
+                });
+            }
+        });
+    }
+
+
+
+    layui.use(['form', 'laydate', 'element'], function () {
+        var element = layui.element, form = layui.form;
+
+
+    });
+
+    function detail() {
+        layui.use('layer',
+        function () {
+            //弹出即全屏
+            //var index =
+            layer.open({
+                title: "详情",
+                type: 2,
+                content: 'baseclassdetails.html',
+                area: ['760px', '560px'],
+                maxmin: true,
+                offset: 'auto'
+            });
+            //layer.full(index);
+        });
+        return false;
+    }
+
+    function msgalert() {
+        layui.use('layer',
+        function () {
+            layer.confirm('确认删除信息吗？', {
+                btn: ['确定', '取消'] //按钮
+            });
+        });
+        return false;
+    }
+
+    function add() {
+        window.location.href = "baseclassadd.html";
+        return false;
+    }
+</script>

@@ -1,0 +1,264 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a>智能设备</a> <a><cite>数据统计</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>数据统计</legend>
+            </fieldset>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">数据类型</label>
+                <div class="layui-input-block">
+                    <select lay-filter="devicetype" id="devicetype"></select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">设备</label>
+                <div class="layui-input-block">
+                    <select lay-filter="device" id="device"></select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="begin" id="begin" lay-verify="begin" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="end" id="end" lay-verify="end" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <!--<div class="layui-input-block">
+                <button style="background-color:blue" type="reset" class="layui-btn   layui-btn-primary submit" onclick="Init()">生成</button>
+            </div>-->
+        </form>
+
+        <div class="layui-form-item">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>统计图表</legend>
+            </fieldset>
+
+            <div id="Chart" style="height:500px" class="layui-input-block">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/Common.js"></script>
+<script src="../plugins/echarts.js"></script>
+<script src="../plugins/layui/layui.js"></script>
+<script>
+    $(document).ready(function () {
+        InitDeviceDataType();
+        InitDevice();
+        Init($("#begin").val(), $("#end").val());
+    })
+
+    layui.use(['form', 'laydate', 'element'], function () {
+        var form = layui.form
+        , layer = layui.layer
+        , laydate = layui.laydate;
+
+        form.on('select(devicetype)', function (data) {
+            InitDevice();
+            form.render('select');
+            Init($("#begin").val(), $("#end").val());
+        });
+
+        form.on('select(device)', function (data) {
+            Init($("#begin").val(), $("#end").val());
+        });
+
+        laydate.render({
+            elem: '#begin'
+            , type: 'datetime'
+            , done: function (value, date, endDate) {
+                Init(value, $("#end").val());
+            }
+        });
+
+        laydate.render({
+            elem: '#end'
+            , type: 'datetime'
+            , done: function (value, date, endDate) {
+                Init($("#begin").val(), value);
+            }
+        });
+    });
+
+    function InitDeviceDataType() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetStatisticsDeviceDataType",
+            success: function (data) {
+                if (data.result == "success") {
+                    var tabletypesel = document.getElementById("devicetype");
+                    tabletypesel.innerHTML = "";
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tabletypesel.appendChild(optionnode);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function InitDevice() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetStatisticsDevice&devicetype=" + $("#devicetype").val(),
+            success: function (data) {
+                if (data.result == "success") {
+                    var tabletypesel = document.getElementById("device");
+                    tabletypesel.innerHTML = "";
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tabletypesel.appendChild(optionnode);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function Init(begin, end) {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetStatisticsDeviceData",
+                "device": $("#device").val(),
+                "begin": begin,
+                "end": end
+            },
+            success: function (data) {
+                if (data.result == "success") {
+                    BuildLine(document.getElementById("devicetype").options[document.getElementById("devicetype").selectedIndex].text, data);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function BuildLine(title, data) {
+        var myChart = echarts.init(document.getElementById('Chart'));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                position: function (pt) {
+                    return [pt[0], '10%'];
+                }
+            },
+            title: {
+                left: 'center',
+                text: title + '折线图',
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: data.Date
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%']
+            },
+            dataZoom: [{
+                type: 'inside',
+                start: 0,
+                end: 10
+            }, {
+                start: 0,
+                end: 10,
+                handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                handleSize: '80%',
+                handleStyle: {
+                    color: '#fff',
+                    shadowBlur: 3,
+                    shadowColor: 'rgba(0, 0, 0, 0.6)',
+                    shadowOffsetX: 2,
+                    shadowOffsetY: 2
+                }
+            }],
+            series: [
+                {
+                    name: title,
+                    type: 'line',
+                    smooth: true,
+                    symbol: 'none',
+                    sampling: 'average',
+                    itemStyle: {
+                        normal: {
+                            color: 'rgb(255, 70, 131)'
+                        }
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            }, {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }])
+                        }
+                    },
+                    data: data.Data
+                }
+            ]
+        };
+        myChart.setOption(option);
+    }
+</script>

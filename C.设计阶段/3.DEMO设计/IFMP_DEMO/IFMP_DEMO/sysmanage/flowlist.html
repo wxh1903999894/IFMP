@@ -1,0 +1,136 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">基础数据管理</a> <a><cite>流程查看</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">流程名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="senduser" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn cum-btn" lay-submit="" lay-filter="demo1">查询</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="main">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <tr>
+                            <th bgcolor="#ffffff">流程名称</th>
+                            <th bgcolor="#ffffff">是否启用</th>
+                            <th width="160" align="center" bgcolor="#ffffff">操作</th>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">切削液浓度表</td>
+                            <td bgcolor="#ffffff" align="center">启用</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()"><i class="layui-icon layui-icon-search"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">设备参数点检表</td>
+                            <td bgcolor="#ffffff" align="center">启用</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()"><i class="layui-icon layui-icon-search"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">设备点检表</td>
+                            <td bgcolor="#ffffff" align="center">启用</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()"><i class="layui-icon layui-icon-search"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">分层审核表</td>
+                            <td bgcolor="#ffffff" align="center">启用</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="详情" onclick="detail()"><i class="layui-icon layui-icon-search"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" title="删除" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-10">&nbsp;<span class="layui-laypage-count">共 100 条</span><a href="javascript:;" class="layui-laypage-prev layui-disabled" data-page="0">上一页</a><span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span><a href="javascript:;" data-page="2">2</a><a href="javascript:;" data-page="3">3</a><a href="javascript:;" data-page="4">4</a><a href="javascript:;" data-page="5">5</a><span class="layui-laypage-spr">…</span><a href="javascript:;" class="layui-laypage-last" title="尾页" data-page="10">10</a><a href="javascript:;" class="layui-laypage-next" data-page="2">下一页</a><span class="layui-laypage-limits"><select lay-ignore=""><option value="10" selected="">10 条/页</option><option value="20">20 条/页</option><option value="30">30 条/页</option><option value="40">40 条/页</option><option value="50">50 条/页</option></select></span><span class="layui-laypage-skip">到第<input type="text" min="1" value="1" class="layui-input">页<button type="button" class="layui-laypage-btn">确定</button></span></div>  <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+        layui.use(['form', 'laydate', 'element'], function () {
+            var element = layui.element, form = layui.form
+          , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+        });
+        function detail() {
+            layui.use('layer',
+            function () {
+                //弹出即全屏
+                //var index =
+                layer.open({
+                    title: "详情",
+                    type: 2,
+                    content: 'flowdetail.html',
+                    area: ['760px', '560px'],
+                    maxmin: true,
+                    offset: 'auto'
+                });
+                //layer.full(index);
+            });
+            return false;
+        }
+        function minalert() {
+            layui.use('layer',
+            function () {
+                layer.open({
+                    type: 2,
+                    area: ['760px', '560px'],
+                    fixed: false,
+                    //不固定
+                    maxmin: true,
+                    content: 'equipmentmaintedit.html'
+                });
+            });
+            return false;
+        }
+        function msgalert() {
+            layui.use('layer',
+            function () {
+                layer.confirm('确认删除信息吗？', {
+                    btn: ['确定', '取消'] //按钮
+                });
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>
+

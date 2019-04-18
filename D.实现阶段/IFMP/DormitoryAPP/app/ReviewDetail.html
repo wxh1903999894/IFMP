@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>宿舍点检</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    
+    <style>
+        .halfbut {
+            width: 49.5%;
+            box-sizing: border-box;
+            float: left;
+        }
+
+            .halfbut + .halfbut {
+                margin-left: 1%;
+            }
+
+        .qk {
+            background-color: #ff5a92;
+        }
+
+            .qk input {
+                border: 1px solid #ff5a92 !important;
+                background-color: #ff5a92 !important;
+            }
+
+        .mui-table-view-cell:last-child:after {
+            height: 1px;
+        }
+
+        .mui-table-view:after {
+            height: 0px;
+        }
+
+        #demo2 {
+            width: 68%;
+            display: inline-block;
+            border: 0;
+            margin: 0;
+            margin-top: -25px;
+            font-size: 16px;
+            text-align: left;
+            height: 50px;
+            margin-bottom: -20px;
+        }
+
+        .ui-alert {
+            display: inline-block;
+            width: 70%;
+            background: #1296db;
+        }
+
+        .mui-content-padded {
+            margin-left: 3px;
+            margin-top: 20px !important;
+        }
+
+            .mui-content-padded:first-child {
+                margin-top: 12px !important;
+            }
+
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .sel {
+            width: 68% !important;
+        }
+
+        .mui-input-row .mui-btn {
+            padding: 0px;
+        }
+
+        .mui-input-row select {
+            font-size: 15px;
+        }
+
+        .xsuser {
+            display: block;
+        }
+
+
+        .selectdiv, .selectdivEventName {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #fff;
+            color: #494949;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .mui-content-padded {
+            margin-top: 0px;
+        }
+
+        /*--------------选人修改样式-------------------*/
+        #sfxs {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            overflow-y: scroll;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 0px;
+        }
+
+        #close {
+            float: right;
+            display: block;
+            border: 1px solid #989898;
+            border-radius: 2px;
+            padding: 3px 10px;
+            margin: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <ul class="mui-table-view" id="sfxs"></ul>
+        <form class="mui-input-group">
+            <input type="hidden" id="hf_begin" />
+            <div class="mui-input-row">
+                <label>宿舍</label>
+                <input type="text" id="dormitory" readonly="true" />
+            </div>
+
+            <div class="mui-input-row">
+                <label>
+                    问题描述
+                </label><input type="text" id="ProDesc" readonly="true" />
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    问题责任人
+                </label><input type="text" id="DutyUser" readonly="true" />
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    点检人
+                </label><input type="text" id="CreateUser" readonly="true" />
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    复查意见
+                </label><input type="text" id="Review" placeholder="请在此填写复查意见(必填)" />
+            </div>
+            <div class="fn-clear">
+                <div class="btn_Sumbit-a  halfbut">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" style="color:#fff !important;" onclick='tj()' value="提交">
+                </div>
+                <div class="btn_Sumbit-a  halfbut qk">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="color:#fff !important;" onclick='qk()' value="清空">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <!--<a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>-->
+    </nav>
+    
+</body>
+
+</html>
+<script type="text/javascript">
+    var isks = true;
+
+    var SpId = getUrlParam("SpId");
+
+    $.ajax({
+        url: "../ashx/GetMainData.ashx",
+        cache: false, type: "GET", async: false,
+        data: "method=GetReviewDetail&SpId=" + SpId,
+        dataType: "json",
+        success: function (d) {
+            if (d.result == "true") {
+                $("#dormitory").val(d.data[0].dormitory);
+                $("#ProDesc").val(d.data[0].ProDesc);
+                $("#DutyUser").val(d.data[0].DutyUser);
+                $("#CreateUser").val(d.data[0].CreateUser);
+            }
+        },
+        error: function () { alert("查询出错，请稍候再试"); }
+    });
+
+    function tj() {
+        isks = false;
+        
+        if ($("#Review").val() == null || $("#Review").val() == "") {
+            alert("请填写复查意见");
+            bl = false;
+            return;
+        }
+        $("#xs input").each(function () {
+            if ($(this).attr("id") != "txt-0") {
+                if ($("#" + $(this).attr("id")).val() == "0") {
+                    bl = false;
+                    return bl;
+                }
+            }
+        });
+
+        $("#bt").attr("style", "display:none");
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            dataType: "json",
+            type: "get",
+            data: "method=SaveReviewDetail&Review=" + $("#Review").val() + "&SpId=" + SpId,
+            success: function (data) {
+                if (data.result == 'true') {
+                    alert("保存成功");
+                    window.location.href = "../index.html"
+                }
+                else {
+                    alert("保存失败");
+                }
+                $("#bt").attr("style", "display:block");
+            }
+        })
+    }
+    function fj(obj) {
+        var arr = $(obj).val().split('\\');
+        $("#textName").html(arr[arr.length - 1]);
+    }
+    function kjsz() {
+        $("#xs input").each(function () {
+            $(this).val($("#txt-0").val());
+        });
+    }
+    function jiaorjian(obj) {
+        if ($(obj).attr("src") == "../images/allpic.png") {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allinpic.png");
+                }
+            });
+        }
+        else {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allpic.png");
+                }
+            });
+        }
+    }
+
+    function qk() {
+        var curr_time = new Date();
+        document.getElementById("hf_begin").value = myformatter(curr_time);
+
+        $("#SpotScore").val("");
+
+
+    }
+</script>
+

@@ -1,0 +1,47 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+a {
+    color: #007bc4 /*#424242*/;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+ol, ul {
+    list-style: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+img {
+    border: none;
+}
+
+#main {
+    width: 95%;
+    min-height: 300px;
+    margin: 30px auto 0 auto;
+    background: #fff;
+    -moz-border-radius: 12px;
+    -khtml-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;
+    border: #e6e6e6 1px solid;
+}
+
+h2.top_title {
+    margin: 4px 20px;
+    padding-top: 15px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d3d3d3;
+    font-size: 18px;
+    color: #a84c10;
+}

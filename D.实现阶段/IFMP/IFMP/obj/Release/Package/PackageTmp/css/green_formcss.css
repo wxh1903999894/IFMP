@@ -1,0 +1,263 @@
+/* CSS Document */
+a{
+    text-decoration:none;
+}
+
+body{ background:#f5f5f5; margin:0px; padding:0px;font-family: 微软雅黑体; font-size:12px;}
+
+.listbtn {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 10px;
+    color: #326ae6;
+    text-decoration: none;
+    -webkit-box-shadow: 3px 3px 5px #585858;
+    -moz-box-shadow: 3px 3px 5px #585858;
+     background: #ffffff;
+}
+
+select {
+    height: 30px;
+    border: 1px solid #88b9ea;
+    border-radius: 2px;
+}
+/*tree开始*/
+.positionc {
+    line-height: 26px;
+    width: 98%;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.positiona a {
+}
+
+.positiona span {
+    padding: 0px 3px;
+}
+
+.positionc img {
+    position: relative;
+    top: 5px;
+}
+div,li,ul{ list-style:none; margin:0px; padding:0px;}
+a,img{ border:none}
+.listcent{ width:98%; border:1px solid #88b9ea; border-radius:2px; margin:auto; margin-top:15px;box-shadow: 0px 0 0px red, /*左边阴影*/  0px 0 0px yellow, /*右边阴影*/  0 0px 0px blue, /*顶部阴影*/  0 5px 15px #dadada; padding:0px}
+.listcent1{ width:98%; border:1px solid #88b9ea; border-radius:2px; margin:auto; box-shadow: 0px 0 0px red, /*左边阴影*/  0px 0 0px yellow, /*右边阴影*/  0 0px 0px blue, /*顶部阴影*/  0 5px 15px #dadada; padding:0px}
+input:focus {outline:none}
+input{ border:1px solid #88b9ea; height:26px; border-radius:2px; text-indent:5px}
+textarea{ border:1px solid #88b9ea; border-radius:2px; margin-top:5px
+}
+
+/*select样式开始*/
+.sel{ float:left; margin-right:10px; height:32px; margin-top:4px}
+/*select{ filter:alpha(opacity=0);-moz-opacity:0;-khtml-opacity:0;opacity: 0; position:relative; z-index:-1000; position:relative;top:-30px; display:none}*/
+.select_box{font-family: "微软雅黑"; font-size: 12px;color: #999999;width: 100%;margin: 0px auto;height:30px;border-radius:2px;line-height:30px; text-indent:5px; background:url(../images/green_jt_03.png) right center no-repeat #fff;}
+.select_showbox{border: 1px solid #94e7a3;height: 30px;padding-left: 5px; box-sizing:border-box; position:relative;z-index:0;border-radius:2px; padding-right:25px; width:100%}
+.select_option{border: 1px solid #94e7a3;border-top: none;display: none; position:relative; z-index:1000; background:#fff;
+    text-align: left;}
+.select_option li{padding-left: 5px; position:relative; z-index:1000}
+.select_option li.selected{background-color: #F3F3F3;color: #999;}
+.select_option li.hover{background:#48bd81;color:#fff}
+/*select样式结束*/
+/*checkbox样式开始*/
+.wxz input,.yxz input{filter:alpha(opacity=0);/* IE */-moz-opacity:0;/* 老版Mozilla */-khtml-opacity:0;/* 老版Safari */opacity: 0;/* 支持opacity的浏览器*/ margin:0px;}
+.wxz{ border:1px solid #b8c4d0; border-radius:2px; width:16px; height:16px; padding:0px; overflow:hidden; display:block; margin:auto; background:#fff}
+.yxz{ border:1px solid #3b9a63; border-radius:2px; width:16px; height:16px; padding:0px; overflow:hidden; display:block; background:url(../images/green_check.png) left top no-repeat; margin:auto}
+/*checkbox样式结束*/
+/*radio样式开始*/
+.rwxz input,.ryxz input{ filter:alpha(opacity=0);/* IE */-moz-opacity:0;/* 老版Mozilla */-khtml-opacity:0;/* 老版Safari */opacity: 0;/* 支持opacity的浏览器*/ margin:0px; }
+.rwxz{border-radius:9px;width:18px; height:18px; padding:0px; overflow:hidden; display:block; box-sizing:border-box; background:url(../images/green_radion.png) left top no-repeat; margin:auto}
+.ryxz{border-radius:9px; width:18px; height:18px; padding:0px; overflow:hidden; display:block; background:url(../images/green_radio.png) left top no-repeat; box-sizing:border-box; margin:auto}
+/*radio样式结束*/
+.operationd{ width:50px; margin:auto}
+.editora{ display:block; width:20px; height:20px; background:url(../images/green_yjqt_35.png) center center no-repeat; float:left; margin-right:10px}
+.editora:hover{background:url(../images/green_yjqt_47.png) center center no-repeat}
+.viewa{ display:block; width:20px; height:20px; background:url(../images/green_yjqt_37.png) center center no-repeat; float:left;}
+.viewa:hover{background:url(../images/green_yjqt_48.png) center center no-repeat}
+
+
+/*tree开始*/
+.positionc{ line-height:26px; width:98%; margin:auto; margin-top:15px} 
+.positiona a{}
+.positiona span{ padding:0px 3px}
+.positionc img{ position:relative; top:5px}
+.treeleft{ width:239px; height:100%; border:1px solid #94e7a3; border-radius:2px; min-height:500px; margin-top:15px;box-shadow: 0px 0 0px red, /*左边阴影*/  0px 0 0px yellow, /*右边阴影*/  0 0px 0px blue, /*顶部阴影*/  0 5px 15px #dadada;}
+/*Tree结束*/
+
+.zcbz{ display:block; width:100%; height:90%; background:url(../images/green_yjqh_27.png) center center no-repeat}
+
+
+.listinfo{ background:#fff}
+.listinfo th{ color:#086fcb; font-size:14px; font-weight:bold; text-indent:16px; border-bottom:1px solid #88b9ea; line-height:46px;border-top: #e4e4e4 1px solid;border-left: #e4e4e4 1px solid;}
+.listinfo td{ line-height:39px;border-top:#e4e4e4 1px solid ; border-left:#e4e4e4 1px solid; padding-left:10px; padding-right:10px;}
+/*.listinfo tr:nth-child(2n+1) td{background:#f5f5f5}*/
+.listinfo tr:last-child td{background:#fff}
+.listinfo span{ float:none; margin-right:10px}
+/*.listinfo label{ margin-top:10px;float:left; margin-right:3px}*/
+.note{ line-height:26px;}
+.submit{ border-style: none;
+    border-color: inherit;
+    border-width: medium;
+    width:98px; height:39px; color:#fff; background:url(../images/green_sb_07.png); font-size:18px; padding:0px;text-indent:0px;text-align:center;cursor:pointer;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+        margin-top: 5px;
+}
+.editor{ width:98px; height:39px; color:#fff; border:none; background:url(../images/green_sb_11.png); font-size:18px; margin:10px;padding:0px;text-indent:0px;text-align:center;cursor:pointer}
+.print{ width:98px; height:39px; color:#fff; border:none; background:url(../images/green_sb_07.png); font-size:18px; margin:10px;padding:0px;text-indent:0px;text-align:center;cursor:pointer}
+.deletebtn{ width:98px; height:39px; color:#fff; border:none; background:url(../images/green_sb_09.png); font-size:18px; margin:10px;padding:0px;text-indent:0px;text-align:center;cursor:pointer}
+.addbtn{width:98px; height:39px; color:#fff; border:none; background:url(../images/green_sb_11.png); font-size:18px; margin:10px;padding:0px;text-indent:0px;text-align:center;cursor:pointer}
+:focus
+.selbtn{ position:relative; top:10px; left:3px;cursor:pointer}
+.listinfo1{ background:#fff}
+.listinfo1 th{ color:#48bd81; font-size:14px; font-weight:bold; text-indent:16px; border-bottom:1px solid #3fa96b; line-height:46px;}
+.listinfo1 td{ line-height:39px;border-top:#e4e4e4 1px solid ; border-left:#e4e4e4 1px solid; padding-left:10px; padding-right:10px;}
+/*常用提示语*/
+.wbjj {
+	height: 100px;position:static;
+    margin:5px;
+}
+.slwb {
+	width: 306px;
+	height: 107px;
+	line-height: 25px;
+	padding: 3px;
+	outline: none;
+    display:inline;
+    color:#333;
+    z-index:1; position:static;
+    opacity:1;
+    margin:5px;
+    border:1px solid #94e7a3; border-radius:2px
+}
+.slwb option {
+	vertical-align: middle;
+	font-size: 12px;
+	margin: 2px 0px;
+	padding: 3px 2px;
+}
+
+.xxsm {
+margin-top:10px;
+}
+.xxsm ul,.xxsm li{ list-style:none; margin:0px; padding:0px}
+.xxsm li{ float:left; height:32px; line-height:32px; border:1px solid #aaaaaa; border-bottom:none; border-top-left-radius:4px;border-top-right-radius:4px; margin-right:6px; padding:0px 28px; background:url(../images/SEARCH_06.png) repeat-x center center}
+.xxsm li a{ color:#808080; font-size:14px; font-weight:bold; text-decoration:none}
+.xxsm li.selected{ float:left; height:33px; line-height:34px; border:0px; border-bottom:none; border-top-left-radius:4px;border-top-right-radius:4px; margin-right:6px; padding:0px 28px; background:url(../images/green_xxsm.png) repeat-x center center}
+.xxsm li.selected a{ color:#fff}
+.xxsm li:first-child{ margin-left:11px;}
+
+
+
+.Validform_checktip {
+    margin-left: 2px;
+    overflow: hidden;
+    color: #999;
+    font-size: 12px;
+}
+
+.Validform_right {
+    color: #71b83d;
+    padding-left: 2px;
+    background: url(images/right.png) no-repeat left center;
+}
+
+.Validform_wrong {
+    color: red;
+    padding-left: 2px;
+    white-space: nowrap;
+    background: url(images/error.png) no-repeat left center;
+}
+
+.Validform_loading {
+    padding-left: 2px;
+    background: url(images/onLoad.gif) no-repeat left center;
+}
+
+.Validform_error {
+    background-color: #eff3ff;
+    border: 1px solid #57a0d2;
+}
+
+#Validform_msg {
+    color: #7d8289;
+    font: 12px/1.5 tahoma, arial, \5b8b\4f53, sans-serif;
+    width: 280px;
+    -webkit-box-shadow: 2px 2px 3px #aaa;
+    -moz-box-shadow: 2px 2px 3px #aaa;
+    background: #fff;
+    position: absolute;
+    top: 0px;
+    right: 50px;
+    z-index: 99999;
+    display: none;
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=3, Direction=135, Color='#999999');
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+    #Validform_msg .iframe {
+        position: absolute;
+        left: 0px;
+        top: -1px;
+        z-index: -1;
+    }
+
+    #Validform_msg .Validform_title {
+        line-height: 25px;
+        height: 25px;
+        text-align: left;
+        font-weight: bold;
+        padding: 0 8px;
+        color: #fff;
+        position: relative;
+        background-color: #999;
+        background: -moz-linear-gradient(top, #999, #666 100%);
+        background: -webkit-gradient(linear, 0 0, 0 100%, from(#999), to(#666));
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#999999', endColorstr='#666666');
+    }
+
+    #Validform_msg a.Validform_close:link, #Validform_msg a.Validform_close:visited {
+        line-height: 22px;
+        position: absolute;
+        right: 8px;
+        top: 0px;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    #Validform_msg a.Validform_close:hover {
+        color: #ccc;
+    }
+
+    #Validform_msg .Validform_info {
+        padding: 8px;
+        border: 1px solid #bbb;
+        border-top: none;
+        text-align: left;
+    }
+
+.winboot {
+    position: fixed;
+    bottom: -2px;
+    left: 0px;
+    height: 35px;
+    background: #e2fbda;
+    width: 100%;
+    text-align: right;
+    z-index: 100;
+}
+
+    .winboot input {
+        border-style: none;
+        border-color: inherit;
+        border-width: medium;
+        text-align: right;
+        padding: 5px 10px;
+        color: #FFF;
+        height: 25px;
+        margin-right: 20px;
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }

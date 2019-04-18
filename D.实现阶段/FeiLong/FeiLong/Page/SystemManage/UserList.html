@@ -1,0 +1,227 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../../Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../Content/iconfont.css" rel="stylesheet" />
+    <link href="../../Content/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">人事管理</a> <a><cite>用户列表</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-inline">
+                <select name="role"></select>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">姓名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="senduser" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn add-btn" onclick="Show()">添加</button>
+                <button class="layui-btn cum-btn">查询</button>
+                <button class="layui-btn export-btn">导出</button>
+                <button class="layui-btn import-btn">导入</button>
+                <button class="layui-btn resetpwd-btn">密码重置</button>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table id="table" width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <!--<tr>
+                            <th bgcolor="#ffffff">用户名</th>
+                            <th bgcolor="#ffffff">姓名</th>
+                            <th bgcolor="#ffffff">手机号码</th>
+                            <th bgcolor="#ffffff">角色</th>
+                            <th width="160" align="center" bgcolor="#ffffff">操作</th>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">13000000000</td>
+                            <td bgcolor="#ffffff" align="center">马小乐</td>
+                            <td bgcolor="#ffffff" align="center">13000000000</td>
+                            <td bgcolor="#ffffff" align="center">操作工</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">13100000000</td>
+                            <td bgcolor="#ffffff" align="center">刘晓飞</td>
+                            <td bgcolor="#ffffff" align="center">13100000000</td>
+                            <td bgcolor="#ffffff" align="center">操作工</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">13200000000</td>
+                            <td bgcolor="#ffffff" align="center">陈娟</td>
+
+                            <td bgcolor="#ffffff" align="center">13200000000</td>
+                            <td bgcolor="#ffffff" align="center">班长</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">13300000000</td>
+                            <td bgcolor="#ffffff" align="center">袁凯</td>
+                            <td bgcolor="#ffffff" align="center">13300000000</td>
+                            <td bgcolor="#ffffff" align="center">操作员</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="minalert()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff" align="center">13400000000</td>
+                            <td bgcolor="#ffffff" align="center">王金梅</td>
+                            <td bgcolor="#ffffff" align="center">13400000000</td>
+                            <td bgcolor="#ffffff" align="center">设备修理工</td>
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="Edit()"><i class="layui-icon"></i></button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="msgalert()"><i class="layui-icon"></i></button>
+                            </td>
+                        </tr>-->
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="layui-box layui-laypage layui-laypage-default" id="pager">
+    </div>
+
+</body>
+</html>
+<script src="../../Scripts/jquery-3.3.1.js"></script>
+<script src="../../Scripts/layui/layui.js"></script>
+<script src="../../Scripts/Common.js"></script>
+<script>
+    layui.use(['form', 'laydate', 'layer', 'element'], function () {
+        var element = layui.element, form = layui.form, layer = layui.layer;
+
+    });
+
+    $(document).ready(function () {
+        InitRole(true);
+        GetUser();
+    })
+
+    var nowpage = 1;
+    var pagesize = 10;
+
+
+    function GetUser() {
+        var data = new Array();
+
+        data = {
+            "RoleID": RoleID,
+            "RealName": RealName,
+            "pageindex": nowpage,
+            "pagesize": pagesize,
+        };
+
+        $.ajax({
+            url: "/user/getAll",
+            type: "GET",
+            data: data,
+            dataType: "json",
+            success: function (data) {
+                if (data.Status == 0) {
+                    //填充table的数据
+                    var table = $("#table");
+                    var html = "";
+                    var head = new Array();
+                    head = new Array("用户名", "姓名", "手机号码", "角色", "操作");
+                    //标题
+                    html = html + buildth(head, 0);
+
+                    //内容
+                    for (var i = 0; i < data.Data.List.length; i++) {
+                        html = html + " <tr>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].UserName + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].RealName + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].TelNumber + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">" + data.Data.List[i].RoleList + "</td>";
+                        html = html + "<td bgcolor=\"#ffffff\" align=\"center\">";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" onclick=\"Edit(" + data.Data.List[i].ID + ")\"><i class=\"layui-icon\"></i></button>";
+                        html = html + "<button class=\"layui-btn layui-btn-primary layui-btn-sm\" onclick=\"Delete(" + data.Data.List[i].ID + ")\"><i class=\"layui-icon\"></i></button>";
+                        html = html + "</td>";
+                        html = html + "</tr>";
+                    }
+                    html = html + "</tbody></table>";
+                    table.html(html);
+                    pagerunity.getpages(data.Data.Total);
+                } else {
+
+                    layer.ready(function () {
+                        title: false
+                        layer.alert(data.Data, {
+                            title: false
+                        });
+                    });
+                }
+            },
+            error: function () {
+                layer.ready(function () {
+                    title: false
+                    layer.alert("当前网络可能有错误", {
+                        title: false
+                    });
+                });
+            }
+        });
+    }
+
+    function dopage() {
+        GetUser();
+    }
+
+    function Edit(id) {
+
+    }
+
+    function Delete(id) {
+
+    }
+
+    function Show() {
+        layui.use('layer',
+        function () {
+            layer.open({
+                type: 2,
+                area: ['760px', '650px'],
+                fixed: false,
+                //不固定
+                maxmin: true,
+                content: 'UserEdit.html'
+            });
+        });
+        return false;
+    }
+    function msgalert() {
+        layui.use('layer',
+        function () {
+            layer.confirm('确认删除信息吗？', {
+                btn: ['确定', '取消'] //按钮
+            });
+        });
+        return false;
+    }
+</script>

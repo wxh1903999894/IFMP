@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{000AB45C-F84F-4B46-A647-D1519048E2EC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JFZAPP</RootNamespace>
+    <AssemblyName>JFZAPP</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\iconfont.eot" />
+    <Content Include="fonts\iconfont.ttf" />
+    <Content Include="fonts\iconfont.woff" />
+    <Content Include="fonts\mui.ttf" />
+    <Content Include="ashx\GetMainData.ashx" />
+    <Content Include="ashx\Identity.ashx" />
+    <Content Include="ashx\Integral.ashx" />
+    <Content Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\IntegralRanking.html" />
+    <Content Include="app\IntergralAll.html" />
+    <Content Include="app\IntergralAudit.html" />
+    <Content Include="app\IntergralAudited.html" />
+    <Content Include="app\IntergralDetailList.html" />
+    <Content Include="app\MonthRanking.html" />
+    <Content Include="app\MyIntegral.html" />
+    <Content Include="app\MyTicket.html" />
+    <Content Include="app\RegistrationDetail.html" />
+    <Content Include="app\RegistrationEdit.html" />
+    <Content Include="app\RegistrationSHZList.html" />
+    <Content Include="app\RegistrationYWCList.html" />
+    <Content Include="app\TaskAll.html" />
+    <Content Include="app\TaskAudit.html" />
+    <Content Include="app\TaskAuditAll.html" />
+    <Content Include="app\TaskAudited.html" />
+    <Content Include="app\TaskDetail.html" />
+    <Content Include="app\TaskEdit.html" />
+    <Content Include="app\TaskSHZList.html" />
+    <Content Include="app\TaskYWCList.html" />
+    <Content Include="app\YearRanking.html" />
+    <Content Include="css\animate.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\demo.css" />
+    <Content Include="css\easyui.css" />
+    <Content Include="css\iconfont.css" />
+    <Content Include="css\jifenzhi.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\mobile.css" />
+    <Content Include="css\mui.css" />
+    <Content Include="css\mui.min.css" />
+    <Content Include="css\mui.picker.css" />
+    <Content Include="css\mui.picker.min.css" />
+    <Content Include="css\mui.poppicker.css" />
+    <Content Include="css\new_file.css" />
+    <Content Include="css\style.css" />
+    <Content Include="DDLogin.aspx" />
+    <Content Include="fonts\iconfont.js" />
+    <Content Include="fonts\iconfont.svg" />
+    <Content Include="Identity.aspx" />
+    <Content Include="images\1.jpg" />
+    <Content Include="images\10.png" />
+    <Content Include="images\11.png" />
+    <Content Include="images\12.png" />
+    <Content Include="images\2.jpg" />
+    <Content Include="images\3.jpg" />
+    <Content Include="images\4.jpg" />
+    <Content Include="images\9.png" />
+    <Content Include="images\adduser.png" />
+    <Content Include="images\allinpic.png" />
+    <Content Include="images\allpic.png" />
+    <Content Include="images\bg01.gif" />
+    <Content Include="images\cdb.jpg" />
+    <Content Include="images\del.png" />
+    <Content Include="images\menu_bg %281%29.gif" />
+    <Content Include="images\menu_bg.gif" />
+    <Content Include="images\muwu.jpg" />
+    <Content Include="images\nopic.png" />
+    <Content Include="images\pm.png" />
+    <Content Include="images\quanzi.png" />
+    <Content Include="images\selectinfo.png" />
+    <Content Include="images\shuijiao.jpg" />
+    <Content Include="images\yuantiao.jpg" />
+    <Content Include="images\zwsj.png" />
+    <Content Include="index.html" />
+    <Content Include="js\Common.js" />
+    <Content Include="js\echarts-all.js" />
+    <Content Include="js\jifenzhi.js" />
+    <Content Include="js\jquery-1.11.0.min.js" />
+    <Content Include="js\jquery-3.3.1.min.js" />
+    <Content Include="js\jquery.cookie.js" />
+    <Content Include="js\mui.js" />
+    <Content Include="js\mui.min.js" />
+    <Content Include="js\mui.picker.js" />
+    <Content Include="js\mui.picker.min.js" />
+    <Content Include="js\mui.poppicker.js" />
+    <Content Include="js\mui.pullToRefresh.js" />
+    <Content Include="js\mui.pullToRefresh.material.js" />
+    <Content Include="Login.aspx" />
+    <Content Include="Regex.html" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ashx\GetMainData.ashx.cs">
+      <DependentUpon>GetMainData.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Identity.ashx.cs">
+      <DependentUpon>Identity.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Integral.ashx.cs">
+      <DependentUpon>Integral.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DDLogin.aspx.cs">
+      <DependentUpon>DDLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DDLogin.aspx.designer.cs">
+      <DependentUpon>DDLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Identity.aspx.cs">
+      <DependentUpon>Identity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Identity.aspx.designer.cs">
+      <DependentUpon>Identity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IFMPLibrary\IFMPLibrary.csproj">
+      <Project>{d7c7e9e4-996c-4df3-94aa-a39e16d4f6fe}</Project>
+      <Name>IFMPLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>14578</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:14578/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

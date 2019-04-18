@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>宿舍点检</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function () {
+            //绑定宿舍
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET", async: false,
+                data: "method=GetDormitory",
+                dataType: "json",
+                success: function (d) {
+                    if (d.result == "true") {
+                        var item1 = "<option value=\"-2\">请选择</option>";
+                        for (var i = 0; i < d.data.length; i++) {
+                            item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                        }
+                        $("#DormitorySel").html(item1);
+                    }
+                },
+                error: function () { alert("宿舍查询出错，请稍候再试"); }
+            });
+        })
+    </script>
+    <style>
+        .halfbut {
+            width: 49.5%;
+            box-sizing: border-box;
+            float: left;
+        }
+
+            .halfbut + .halfbut {
+                margin-left: 1%;
+            }
+
+        .qk {
+            background-color: #ff5a92;
+        }
+
+            .qk input {
+                border: 1px solid #ff5a92 !important;
+                background-color: #ff5a92 !important;
+            }
+
+        .mui-table-view-cell:last-child:after {
+            height: 1px;
+        }
+
+        .mui-table-view:after {
+            height: 0px;
+        }
+
+        #demo2 {
+            width: 68%;
+            display: inline-block;
+            border: 0;
+            margin: 0;
+            margin-top: -25px;
+            font-size: 16px;
+            text-align: left;
+            height: 50px;
+            margin-bottom: -20px;
+        }
+
+        .ui-alert {
+            display: inline-block;
+            width: 70%;
+            background: #1296db;
+        }
+
+        .mui-content-padded {
+            margin-left: 3px;
+            margin-top: 20px !important;
+        }
+
+            .mui-content-padded:first-child {
+                margin-top: 12px !important;
+            }
+
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .sel {
+            width: 68% !important;
+        }
+
+        .mui-input-row .mui-btn {
+            padding: 0px;
+        }
+
+        .mui-input-row select {
+            font-size: 15px;
+        }
+
+        .xsuser {
+            display: block;
+        }
+
+
+        .selectdiv, .selectdivEventName {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #fff;
+            color: #494949;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .mui-content-padded {
+            margin-top: 0px;
+        }
+
+        /*--------------选人修改样式-------------------*/
+        #sfxs {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            overflow-y: scroll;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 0px;
+        }
+
+        #close {
+            float: right;
+            display: block;
+            border: 1px solid #989898;
+            border-radius: 2px;
+            padding: 3px 10px;
+            margin: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <ul class="mui-table-view" id="sfxs"></ul>
+        <form class="mui-input-group">
+            <input type="hidden" id="hf_begin" />
+            <div class="mui-input-row">
+                <label>宿舍</label>
+                <select class="mui-btn mui-btn-block sel" id="DormitorySel"></select>
+            </div>
+            
+            <div class="mui-input-row">
+                <label>
+                    宿舍评分
+                </label><input type="text" id="SpotScore" placeholder="请在此填写分数(必填)" />
+            </div>
+            <div class="fn-clear">
+                <div class="btn_Sumbit-a  halfbut">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" style="color:#fff !important;" onclick='tj()' value="提交">
+                </div>
+                <div class="btn_Sumbit-a  halfbut qk">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="color:#fff !important;" onclick='qk()' value="清空">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <!--<a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>-->
+    </nav>
+    <script>
+      
+        mui('#segmentedControl').on('tap', 'a', function () {
+            document.location.href = this.href;
+        });
+        (function ($) {
+            $.init();
+            var result = $('#demo2')[0];
+            var btns = $('.btn');
+            var curr_time = new Date();
+            var a = myformatter(curr_time);
+            result.innerText = a;
+            document.getElementById("hf_begin").value = a;
+            btns.each(function (i, btn) {
+                btn.addEventListener('tap', function () {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    /*
+                     * 首次显示时实例化组件
+                     * 示例为了简洁，将 options 放在了按钮的 dom 上
+                     * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+                     */
+                    var picker = new $.DtPicker(options);
+                    picker.show(function (rs) {
+                        /*
+                         * rs.value 拼合后的 value
+                         * rs.text 拼合后的 text
+                         * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+                         * rs.m 月，用法同年
+                         * rs.d 日，用法同年
+                         * rs.h 时，用法同年
+                         * rs.i 分（minutes 的第二个字母），用法同年
+                         */
+
+                        result.innerText = rs.text;
+                        document.getElementById("hf_begin").value = rs.value;
+                        /*
+                         * 返回 false 可以阻止选择框的关闭
+                         * return false;
+                         */
+                        /*
+                         * 释放组件资源，释放后将将不能再操作组件
+                         * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+                         * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+                         * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+                         */
+                        picker.dispose();
+                    });
+                }, false);
+            });
+        })(mui);
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+    </script>
+</body>
+
+</html>
+<script type="text/javascript">
+    var isks = true;
+    function tj() {
+        isks = false;
+        if ($("#DormitorySel").find("option:selected").val() == "-2") {
+            alert("请选择宿舍");
+            bl = false;
+            return;
+        }
+        
+        if ($("#SpotScore").val() == null || $("#SpotScore").val() == "") {
+            alert("请填写分数");
+            bl = false;
+            return;
+        }
+        $("#xs input").each(function () {
+            if ($(this).attr("id") != "txt-0") {
+                if ($("#" + $(this).attr("id")).val() == "0") {
+                    bl = false;
+                    return bl;
+                }
+            }
+        });
+
+        $("#bt").attr("style", "display:none");
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            dataType: "json",
+            type: "get",
+            data: "method=GetGrade&SpotScore=" + $("#SpotScore").val() + "&DormitorySel=" + $("#DormitorySel").find("option:selected").val(),
+            success: function (data) {
+                if (data.result == 'true') {
+                    alert("保存成功");
+                    window.location.href = "../app/DormitoryScore.html?id=" + data.data[0].id + "&dormitoryid=" + data.data[0].dormitoryid
+                }
+                else {
+                    alert("保存失败");
+                }
+                $("#bt").attr("style", "display:block");
+            }
+        })
+    }
+    function fj(obj) {
+        var arr = $(obj).val().split('\\');
+        $("#textName").html(arr[arr.length - 1]);
+    }
+    function kjsz() {
+        $("#xs input").each(function () {
+            $(this).val($("#txt-0").val());
+        });
+    }
+    function jiaorjian(obj) {
+        if ($(obj).attr("src") == "../images/allpic.png") {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allinpic.png");
+                }
+            });
+        }
+        else {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allpic.png");
+                }
+            });
+        }
+    }
+   
+    function qk() {
+        var curr_time = new Date();
+        document.getElementById("hf_begin").value = myformatter(curr_time);
+       
+        $("#SpotScore").val("");
+
+
+    }
+</script>
+

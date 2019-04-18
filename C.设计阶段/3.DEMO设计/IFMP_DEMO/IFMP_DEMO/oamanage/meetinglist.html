@@ -1,0 +1,183 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>列表页面</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">OA办公</a> <a><cite>会议管理</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+
+
+
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">单选框</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="sex" value="男" title="男" checked="">
+                    <input type="radio" name="sex" value="女" title="女">
+                    <input type="radio" name="sex" value="禁" title="禁用" disabled="">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">普通文本域</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn cum-btn" lay-submit="" lay-filter="demo1">查询</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="main">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="cum-table">
+            <tr>
+                <td bgcolor="#d9d9d9">
+                    <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                        <tr>
+                            <th bgcolor="#ffffff">会议主题</th>
+                            <th bgcolor="#ffffff">会议时间</th>
+                            <th bgcolor="#ffffff">会议地点</th>
+                            <th bgcolor="#ffffff">主持人</th>
+                            <th bgcolor="#ffffff">会议负责人</th>
+                            <th width="160" align="center" bgcolor="#ffffff">操作</th>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff">2018年经营例会</td>
+                        
+                            <td bgcolor="#ffffff">2017-12-30 14:30</td>
+                            <td bgcolor="#ffffff">大会议室</td>
+                            <td bgcolor="#ffffff">李莹</td>
+                            <td bgcolor="#ffffff">马小荣</td>
+
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff">2018年经营例会</td>
+
+                            <td bgcolor="#ffffff">2017-12-30 14:30</td>
+                            <td bgcolor="#ffffff">大会议室</td>
+                            <td bgcolor="#ffffff">李莹</td>
+                            <td bgcolor="#ffffff">马小荣</td>
+
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff">2018年经营例会</td>
+
+                            <td bgcolor="#ffffff">2017-12-30 14:30</td>
+                            <td bgcolor="#ffffff">大会议室</td>
+                            <td bgcolor="#ffffff">李莹</td>
+                            <td bgcolor="#ffffff">马小荣</td>
+
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff">2018年经营例会</td>
+
+                            <td bgcolor="#ffffff">2017-12-30 14:30</td>
+                            <td bgcolor="#ffffff">大会议室</td>
+                            <td bgcolor="#ffffff">李莹</td>
+                            <td bgcolor="#ffffff">马小荣</td>
+
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td bgcolor="#ffffff">2018年经营例会</td>
+
+                            <td bgcolor="#ffffff">2017-12-30 14:30</td>
+                            <td bgcolor="#ffffff">大会议室</td>
+                            <td bgcolor="#ffffff">李莹</td>
+                            <td bgcolor="#ffffff">马小荣</td>
+
+                            <td bgcolor="#ffffff" align="center">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="fullalert()"><i class="layui-icon"></i></button>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+        layui.use(['form', 'laydate', 'element'], function () {
+            var element = layui.element, form = layui.form
+          , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+        });
+        function fullalert() {
+            layui.use('layer',
+            function () {
+                //弹出即全屏
+                var index = layer.open({
+                    type: 2,
+                    content: 'from.html',
+                    area: ['500px', '195px'],
+                    maxmin: true,
+                    offset: 'auto'
+                });
+                layer.full(index);
+            });
+            return false;
+        }
+        function minalert() {
+            layui.use('layer',
+            function () {
+                layer.open({
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false,
+                    //不固定
+                    maxmin: true,
+                    content: 'from.html'
+                });
+            });
+            return false;
+        }
+        function msgalert() {
+            layui.use('layer',
+            function () {
+                layer.confirm('您是如何看待前端开发？', {
+                    btn: ['确定', '取消'] //按钮
+                });
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>

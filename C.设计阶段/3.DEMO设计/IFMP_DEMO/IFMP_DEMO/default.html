@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+
+    <link href="css/login.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        function login() {
+            var name = document.getElementById("username").value;
+            if (name == "admin") {
+                window.location.href = "index.html";
+            }
+            else {
+                alert("请输入正确的用户名和密码！");
+                return;
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="mtop">
+        <div class="ld1200"> <img src="images/fl_03_1.png"> </div>
+        <div class="ldiv">
+            <div class="ld1200">
+                <div class="bgdiv"><img src="images/fl_07.png"></div>
+                <div class="logindiv">
+                    <div class="flname">智慧工厂管理平台</div>
+                    <div><input type="text" id="username"></div>
+                    <div><input type="password"></div>
+                    <div><input type="button" value="登录" onclick="login()"></div>
+                </div>
+            </div>
+        </div>
+        <div class="lgdes">
+            版权所有权：芜湖市高科电子有限公司 皖ICP备0123231号<br>
+            All Rights Reserved
+        </div>
+        <div class="by"></div>
+    </div>
+</body>
+</html>

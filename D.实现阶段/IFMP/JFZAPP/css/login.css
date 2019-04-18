@@ -1,0 +1,97 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background:  #4bb8f8;
+    font-size: 16px;font-family: "Î¢ÈíÑÅºÚ";
+}
+
+.logincent {
+    margin-top: -278px;
+    margin-left: -600px;
+top:50%;left:50%;
+    width: 1200px;
+    position: absolute; height: 556px;
+    background: url(../images/loginbg.png);
+}
+
+.logindiv {
+    position: absolute;
+    top: 148px;
+    right: 210px;
+    width: 318px;
+    height: 292px;
+    background:rgba(51,158,221,0.8);
+    border-radius: 5px;
+    -webkit-box-shadow: 10px 5px 10px rgba(42,142,202,0.9);
+    -moz-box-shadow:10px 5px 10px rgba(42,142,202,0.9);
+    box-shadow: 10px 5px 10px rgba(42,142,202,0.9);
+    behavior: url(/PIE.htc);
+}
+
+    .logindiv div {
+        width: 258px;
+        height: 32px;
+        /*border: 1px solid #e7e7e7;*/
+        float: left;
+        font-size: 16px;
+        color: #fff;
+    }
+
+        .logindiv div .logintxt {
+            padding: 0px 10px;
+            display: block;
+            float: left;
+            line-height: 25px;
+            margin-top: 5px;
+            letter-spacing: 0px;
+        }
+
+        .logindiv div .loginin {
+            padding: 0px;
+            display: block;
+            float: left;
+            line-height: 25px;
+            margin-top: 5px;
+        }
+
+            .logindiv div .loginin input {
+                border: none;
+                width: 175px;
+                height: 25px;
+                line-height: 25px;
+                outline: medium;
+                font-size: 16px;
+                color: #7B7B7B;
+                letter-spacing: 1px;
+            }
+
+.userin {
+    margin-left: 25px;
+    margin-top: 25px;
+    /*background: #FFFFFF;*/
+}
+
+.pwdin {
+    margin-left: 25px;
+    margin-top: 22px;
+    /*background: #FFFFFF;*/
+}
+h2{text-align:center;color:#fff}
+
+.btn {
+    margin-left: 25px;
+    margin-top: 29px;
+    background: #29bb15;
+    border-radius: 3px;
+}
+
+    .btn input {
+        width: 100%;
+        height: 32px;
+        line-height: 32px;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        outline: medium;    font-weight: bold;
+    }

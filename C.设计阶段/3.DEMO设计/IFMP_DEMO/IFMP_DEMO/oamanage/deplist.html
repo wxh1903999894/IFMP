@@ -1,0 +1,150 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>列表页面</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <script src="../plugins/layui/layui.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a href="/demo/">人事管理</a> <a><cite>部门管理</cite></a> </span> </div>
+    </div>
+  
+    <div class="layui-collapse" lay-accordion="">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">行政副总经理<i class="layui-icon layui-colla-icon"></i></h2>
+            <div class="layui-colla-content">
+
+                <div class="layui-collapse" lay-accordion="">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">基建部<i class="layui-icon layui-colla-icon"></i></h2>
+                        <div class="layui-colla-content">
+
+                            <div class="layui-collapse" lay-accordion="">
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">基建部<i class="layui-icon layui-colla-icon"></i></h2>
+                                   
+                                </div>
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">人力资源部<i class="layui-icon layui-colla-icon"></i></h2>
+                                    <div class="layui-colla-content">
+                                        <p>王红</p>
+                                    </div>
+                                </div>
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">招标办<i class="layui-icon layui-colla-icon"></i></h2>
+                                    <div class="layui-colla-content">
+                                        <p>厚勤</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">公司办<i class="layui-icon layui-colla-icon"></i></h2>
+                   
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">人力资源部<i class="layui-icon layui-colla-icon"></i></h2>
+                        
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">招标办<i class="layui-icon layui-colla-icon"></i></h2>
+
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">财务副总经理<i class="layui-icon layui-colla-icon"></i></h2>
+            <div class="layui-colla-content">
+                <p>伟大的科学家</p>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">技术副总经理<i class="layui-icon layui-colla-icon"></i></h2>
+            <div class="layui-colla-content">
+                <p>浑身散发着艺术细胞</p>
+            </div>
+        </div>
+
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">生产销售副总经理<i class="layui-icon layui-colla-icon"></i></h2>
+            <div class="layui-colla-content">
+                <p>浑身散发着艺术细胞</p>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">质量副总经理<i class="layui-icon layui-colla-icon"></i></h2>
+            <div class="layui-colla-content">
+                <p>浑身散发着艺术细胞</p>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">副总经理<i class="layui-icon layui-colla-icon"></i></h2>
+            <div class="layui-colla-content">
+                <p>浑身散发着艺术细胞</p>
+            </div>
+        </div>
+    </div>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script>
+        layui.use(['form', 'laydate', 'element'], function () {
+            var element = layui.element, form = layui.form
+          , laydate = layui.laydate;
+
+            //日期
+            laydate.render({
+                elem: '#date'
+            });
+            laydate.render({
+                elem: '#date1'
+            });
+        });
+        function fullalert() {
+            layui.use('layer',
+            function () {
+                //弹出即全屏
+                var index = layer.open({
+                    type: 2,
+                    content: 'from.html',
+                    area: ['500px', '195px'],
+                    maxmin: true,
+                    offset: 'auto'
+                });
+                layer.full(index);
+            });
+            return false;
+        }
+        function minalert() {
+            layui.use('layer',
+            function () {
+                layer.open({
+                    type: 2,
+                    area: ['700px', '450px'],
+                    fixed: false,
+                    //不固定
+                    maxmin: true,
+                    content: 'from.html'
+                });
+            });
+            return false;
+        }
+        function msgalert() {
+            layui.use('layer',
+            function () {
+                layer.confirm('您是如何看待前端开发？', {
+                    btn: ['确定', '取消'] //按钮
+                });
+            });
+            return false;
+        }
+    </script>
+</body>
+</html>

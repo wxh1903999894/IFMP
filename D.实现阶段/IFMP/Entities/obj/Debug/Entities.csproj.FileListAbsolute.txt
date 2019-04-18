@@ -1,0 +1,4 @@
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\bin\Debug\Entities.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\bin\Debug\Entities.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\obj\Debug\Entities.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\obj\Debug\Entities.pdb

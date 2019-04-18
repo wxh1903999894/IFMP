@@ -1,0 +1,680 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="description" content="不超过150个字符" />
+    <meta name="keywords" content="" />
+    <meta content="caibaojian" name="author" />
+    <title>飞龙大屏</title>
+    <link rel="stylesheet" href="css/layui.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"><!--时钟-->
+    <link rel="stylesheet" href="css/fl-daping.css">
+    <!--自适应插件-->
+    <script src="js/flexible.js"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin fl-daping2">
+        <!--第一行-->
+        <div class="dpbox dpbox1">
+            <div id="container3" style="width: 90%;height: 90%;margin: 5% auto 0"></div>
+        </div>
+        <div class="dpbox dpbox2">
+            <div id="container4" style="width: 90%;height: 90%;margin: 5% auto 0"></div>
+        </div>
+        <div class="dpbox dpbox3">
+            <div class="header2-1">
+                <div class="logo ib"><img src="images/fl_03_2.png" /> </div>
+                <span class="data ib"></span>
+                <div class="flclock ib">
+                    <main class="ib">
+                        <!-- 星期几 -->
+                        <div class="days">
+                            <div class="day">
+                                <p class="sunday">周日</p>
+                            </div>
+                            <div class="day">
+                                <p class="monday">周一</p>
+                            </div>
+                            <div class="day">
+                                <p class="tuesday">周二</p>
+                            </div>
+                            <div class="day">
+                                <p class="wednesday">周三</p>
+                            </div>
+                            <div class="day">
+                                <p class="thursday">周四</p>
+                            </div>
+                            <div class="day">
+                                <p class="friday">周五</p>
+                            </div>
+                            <div class="day">
+                                <p class="saturday">周六</p>
+                            </div>
+                        </div>
+                        <!-- CLOCK -->
+                        <div class="clock">
+                            <!-- 小时 -->
+                            <div class="numbers">
+                                <p class="hours"></p>
+                                <p class="placeholder">88</p>
+                            </div>
+                            <div class="colon">
+                                <p>:</p>
+                            </div>
+                            <!-- 分 -->
+                            <div class="numbers">
+                                <p class="minutes"></p>
+                                <p class="placeholder">88</p>
+                            </div>
+
+                            <div class="colon">
+                                <p>:</p>
+                            </div>
+                            <!-- 秒 -->
+                            <div class="numbers">
+                                <p class="seconds"></p>
+                                <p class="placeholder">88</p>
+                            </div>
+                            <!-- 上午 / 下午 -->
+                            <div class="am-pm">
+                                <!-- AM -->
+                                <div>
+                                    <p class="am">am</p>
+                                </div>
+                                <!-- PM -->
+                                <div>
+                                    <p class="pm">pm</p>
+                                </div>
+                            </div>
+                        </div><!-- END CLOCK -->
+                    </main>
+                </div>
+                <div class="ib" style="width: 1px;height: 100%"></div>
+            </div>
+            <div class="header2-2">
+                <marquee behavior="scroll" direction="left" class="ib frt">
+                    <p id="time"></p>
+                </marquee>
+            </div>
+            <div class="lb2-main">
+                <div id="container1" style="width: 100%;height: 100%"></div>
+            </div>
+        </div>
+        <div class="dpbox dpbox4">
+            <div id="container2" style="width: 90%;height: 90%;margin: 5% auto 0"></div>
+        </div>
+        <div class="dpbox dpbox5">
+            <div id="container5" style="width: 90%;height: 90%;margin: 6% auto 0"></div>
+        </div>
+
+    </div>
+
+    <script src="js/layui.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/echarts.common.min.js"></script>
+    <script src="js/fl-daping.js"></script>
+    <script>
+        //一般直接写在一个js文件中
+        //JavaScript代码区域
+        layui.use('element', function () {
+            var element = layui.element;
+
+        });
+
+        //表单启用
+        layui.use('form', function () {
+            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+        })
+
+        //年份选择器启用
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            //年份选择器常规用法
+            laydate.render({
+                elem: '#test1',
+            });
+
+        });
+        var tt = $("marquee").height();
+        $("#time").css("line-height", tt + "px");
+    </script>
+    <script type="text/javascript">
+        /*图表-柱图*/
+        var dom = document.getElementById("container1");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        var dataAxis = ['', '', '', '', '', ''];
+        var data = [480, 485, 486, 482, 492, 487];
+        var yMax = 700;
+        var dataShadow = [];
+
+        for (var i = 0; i < data.length; i++) {
+            dataShadow.push(yMax);
+        }
+
+        option = {
+            title: {
+                text: '生产件数',
+                textStyle: {
+                    color: '#fff'
+                }
+            },
+            xAxis: {
+                data: dataAxis,
+                axisLabel: {
+                    inside: true,
+                    textStyle: {
+                        color: '#D6EB3B'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                z: 10
+            },
+            yAxis: {
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#D6EB3B'
+                    }
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'inside'
+                }
+            ],
+            series: [
+                { // For shadow
+                    type: 'bar',
+                    itemStyle: {
+                        normal: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    barGap: '-100%',
+                    barCategoryGap: '40%',
+                    data: dataShadow,
+                    animation: false
+                },
+                {
+                    type: 'bar',
+                    label: {
+                        normal: {
+                            show: true,
+                            rotate: {
+                                min: -90,
+                                max: 90
+                            },
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    { offset: 0, color: '#BBFFFF' },
+                                    { offset: 0.5, color: '#00EEEE' },
+                                    { offset: 1, color: '#00C5CD' }
+                                ]
+                            )
+                        },
+                        emphasis: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    { offset: 0, color: '#2378f7' },
+                                    { offset: 0.7, color: '#2378f7' },
+                                    { offset: 1, color: '#83bff6' }
+                                ]
+                            )
+                        }
+                    },
+                    data: data
+                }
+            ]
+        };
+
+        // Enable data zoom when user click bar.
+        var zoomSize = 6;
+        myChart.on('click', function (params) {
+            console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+            myChart.dispatchAction({
+                type: 'dataZoom',
+                startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+            });
+        });;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        /*饼图*/
+        var dom = document.getElementById("container2");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+            //backgroundColor: '#fff',
+
+            title: {
+                text: 'PH值',
+                left: 'center',
+                textStyle: {
+                    color: '#00D7DB',
+                }
+            },
+
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+
+            visualMap: {
+                show: false,
+                min: 80,
+                max: 600,
+                inRange: {
+                    colorLightness: [0, 1]
+                }
+            },
+
+            series: [
+                {
+                    name: 'ph值',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '50%'],
+                    data: [
+                        { value: 2, name: '低于5' },
+                        { value: 35, name: '5-6' },
+                        { value: 45, name: '6-7' },
+                        { value: 52, name: '7-8' },
+                        { value: 12, name: '8-9' },
+                        { value: 1, name: '高于9' }
+                    ].sort(function (a, b) { return a.value - b.value; }),
+                    roseType: 'radius',
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#00D7DB'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: '#00D7DB'
+                            },
+                            smooth: 0.2,
+                            length: 10,
+                            length2: 20
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#3EA8FE',
+                            shadowBlur: 50,
+                            shadowColor: 'rgba(0, 0, 0, 0.7)'
+                        }
+                    },
+
+                    animationType: 'scale',
+                    animationEasing: 'elasticOut',
+                    animationDelay: function (idx) {
+                        return Math.random() * 200;
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        /*右下折线图*/
+        var colorL=['#01D8DB','#FFBB44','#3EA8FE','#7BCE4C','rgb(0 ,0 ,255)','rgb(70 ,130 ,180)','rgb(0 ,139 ,139)','rgb(0, 255, 255)','rgb(78 ,238 ,148)','rgb(0,191 ,255)','rgb(46 ,139 ,87)'];
+        var dom = document.getElementById("container5");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        option = {
+            title: {
+                text: 'XBAR平均值',
+
+                left: 'center',
+                textStyle: {
+                    color: '#00D7DB'
+                }
+            },
+            legend: {
+                top: '10%',
+                data: ['【一号线】李明', '刘枫'],
+                textStyle: {
+                    color: '#ccc'
+                }
+            },
+            grid: {
+                top: '25%',
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['9-20早班', '9-21早班', '9-21晚班', '9-22早班'],
+                boundaryGap: false,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ccc' //控制颜色
+                    }
+                },
+            },
+            yAxis: {
+                type: 'value',
+                min: 29.92,
+                max: 29.96,
+                maxInterval: 0.005,
+                axisLine: {
+                    lineStyle: {
+                        color: '#ccc' //控制颜色
+                    }
+                },
+            },
+            series: [
+                {
+                    itemStyle : {
+                        normal : {
+                            color : colorL[0]
+                        },
+                    },
+                    data: [29.945, 29.947, 29.946, 29.948],
+                    smooth: true,
+                    name: "【一号线】李明",
+                    type: 'line'
+                },
+                {
+                    data: [29.944, 29.945, 29.945, 29.942],
+                    smooth: true,
+                    name: "刘枫",
+
+                    type: 'line',
+                    markLine: {
+                        data: [{
+                            name: "最大值",
+                            yAxis: 29.955,
+                            lineStyle: {
+                                color: "#f44444"
+                            }
+                        },
+                        {
+                            name: "最小值",
+                            yAxis: 29.935,
+                            lineStyle: {
+                                color: "#f44444"
+                            }
+                        }]
+                    }
+                }]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        /*左上柱图*/
+        var colorL=['#01D8DB','#FFBB44','#3EA8FE','#7BCE4C','rgb(0 ,0 ,255)','rgb(70 ,130 ,180)','rgb(0 ,139 ,139)','rgb(0, 255, 255)','rgb(78 ,238 ,148)','rgb(0,191 ,255)','rgb(46 ,139 ,87)'];
+        var dom = document.getElementById("container3");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        app.title = '换刀频次表';
+
+        option = {
+            title: {
+                text: '换刀频次',
+                left: 'center',
+                textStyle: {
+                    color: '#00D7DB'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                top: '10%',
+                data: ['CCGT09T304-AK', 'CCGT09T304-PCD', 'Φ6直钻', 'DCGT11T304R-A3'],
+                textStyle: {
+                    color: '#8ec4ed',
+                }
+            },
+            grid: {
+                top: '25%',
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                axisLine: {
+                    lineStyle: {
+                        color: '#ccc' //控制颜色
+                    }
+                },
+            },
+            yAxis: {
+                type: 'category',
+                data: ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周'],
+                axisLine: {
+                    lineStyle: {
+                        color: '#D6EB3B' //控制颜色
+                    }
+                },
+            },
+            series: [
+                {
+                    name: 'CCGT09T304-AK',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'insideRight'
+
+                        }
+                    },
+                    itemStyle : {
+                        normal : {
+                            color : colorL[0]
+                        },
+                    },
+                    data: [320, 302, 301, 334, 390, 330, 320]
+                },
+                {
+                    name: 'CCGT09T304-PCD',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'insideRight'
+                        }
+                    },
+                    itemStyle : {
+                        normal : {
+                            color : colorL[1]
+                        },
+                    },
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: 'Φ6直钻',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'insideRight'
+                        }
+                    },
+                    itemStyle : {
+                        normal : {
+                            color : colorL[2]
+                        },
+                    },
+
+                    data: [220, 182, 191, 234, 290, 330, 310]
+                },
+                {
+                    name: 'DCGT11T304R-A3',
+                    type: 'bar',
+                    stack: '总量',
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'insideRight'
+                        }
+                    },
+                    itemStyle : {
+                        normal : {
+                            color : colorL[3]
+                        },
+                    },
+                    data: [150, 212, 201, 154, 190, 330, 410]
+                }
+
+            ]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+    <script type="text/javascript">
+        /*左下柱图*/
+        var dom = document.getElementById("container4");
+        var myChart = echarts.init(dom);
+        var app = {};
+        var colorL=['#01D8DB','#FFBB44','#3EA8FE','#7BCE4C','rgb(0 ,0 ,255)','rgb(70 ,130 ,180)','rgb(0 ,139 ,139)','rgb(0, 255, 255)','rgb(78 ,238 ,148)','rgb(0,191 ,255)','rgb(46 ,139 ,87)'];
+        option = null;
+        app.title = '换刀数';
+        option = {
+            title: {
+                text: '换刀数',
+                left: 'center',
+                textStyle: {
+                    color: '#00D7DB'
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            legend: {
+                top: '10%',
+                data: ['CCGT09T304-AK', 'CCGT09T304-PCD', 'Φ6直钻', 'DCGT11T304R-A3'],
+                textStyle: {
+                    color: '#8ec4ed',
+                }
+            },
+            grid: {
+                top: '30%',
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['第一周', '第二周', '第三周', '第四周', '第五周', '第六周', '第七周'],
+                    axisLine: {
+                        lineStyle: {
+                            color: '#00D7DB' //控制颜色
+                        }
+                    },
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLine: {
+                        lineStyle: {
+                            color: '#ccc' //控制颜色
+                        }
+                    },
+                }
+            ],
+            series: [
+                {
+                    name: 'CCGT09T304-AK',
+                    type: 'bar',
+                    itemStyle : {
+                        normal : {
+                            color : colorL[0]
+                        },
+                    },
+                    data: [5, 4, 5, 5, 4, 3, 5]
+                },
+                {
+                    name: 'CCGT09T304-PCD',
+                    type: 'bar',
+                    itemStyle : {
+                        normal : {
+                            color : colorL[1]
+                        },
+                    },
+                    data: [2, 3, 2, 2, 3, 1, 2]
+                },
+                {
+                    name: 'Φ6直钻',
+                    type: 'bar',
+                    itemStyle : {
+                        normal : {
+                            color : colorL[2]
+                        },
+                    },
+                    data: [4, 3, 3, 3, 2, 2, 4]
+                },
+                {
+                    name: 'DCGT11T304R-A3',
+                    type: 'bar',
+                    itemStyle : {
+                        normal : {
+                            color : colorL[3]
+                        },
+                    },
+                    data: [2, 4, 4, 2, 2, 1, 3]
+                }
+            ]
+        };
+
+
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    </script>
+</body>
+</html>

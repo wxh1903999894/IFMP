@@ -1,0 +1,177 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../../Scripts/layui/css/layui.css" rel="stylesheet" />
+    <link href="../../Content/iconfont.css" rel="stylesheet" />
+    <link href="../../Content/main.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend>基础时段添加</legend>
+        </fieldset>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select id="classtype" name="classtype"></select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">表单类型</label>
+                <div class="layui-input-block">
+                    <select id="tabletype" lay-filter="tabletype"></select>
+                </div>
+            </div>
+        </form>
+
+
+        <form id="Form" class="layui-form" style="width:45%;float:left;margin-top:10px" action=""></form>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" onclick="AddBaseDate()">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="../../Scripts/jquery-3.3.1.js"></script>
+<script src="../../Scripts/layui/layui.js"></script>
+<script src="../../Scripts/Common.js"></script>
+<script>
+    var tabletype = 1;
+
+    $(document).ready(function () {
+        InitEnum("ClassType", false, $("#classtype"));
+        InitEnum("TableType", false, $("#tabletype"));
+        tabletype = $("#tabletype").val();
+        InitFlowTable()
+    });
+
+    function InitFlowTable() {
+        var FlowData = InitFlow(tabletype);
+        //console.log(FlowData);
+        var html = "<fieldset class=\"layui-elem-field layui-field-title\">";
+        html = html + "<legend>" + $("#tabletype").find("option:selected").text() + "</legend>";
+        html = html + "</fieldset>";
+
+        for (var i = 0; i < FlowData.length; i++) {
+            html = html + "<div class=\"layui-form-item layui-form-text\">";
+            html = html + "<label style=\"color:#ff0000;font-size:larger;\" class=\"layui-form-label\">流程" + parseInt(i + 1) + "</label>";
+            html = html + "<div class=\"layui-input-block\">";
+            html = html + "<span style=\"color:#ff0000;font-size:larger;\" class=\"layui-form-mid\">" + FlowData[i].Name + "</span>";
+            html = html + "</div></div>";
+
+            html = html + "<div><div class=\"layui-form-item layui-form-text\">";
+            html = html + "<label class=\"layui-form-label\">开始时间</label>";
+            html = html + "<div class=\"layui-input-block\">";
+            html = html + " <input type=\"text\" name=\"1-" + FlowData[i].ID + "\"  id=\"1-" + FlowData[i].ID + "\" autocomplete=\"off\" class=\"layui-input\">";
+            html = html + "</div></div>";
+
+            html = html + "<div class=\"layui-form-item layui-form-text\">";
+            html = html + "<label class=\"layui-form-label\">截至时间</label>";
+            html = html + "<div class=\"layui-input-block\">";
+            html = html + " <input type=\"text\" name=\"2-" + FlowData[i].ID + "\"  id=\"2-" + FlowData[i].ID + "\" autocomplete=\"off\" class=\"layui-input\">";
+            html = html + "</div></div>";
+
+            html = html + "<div class=\"layui-form-item layui-form-text\">";
+            html = html + "<label class=\"layui-form-label\">提示时间</label>";
+            html = html + "<div class=\"layui-input-block\">";
+            html = html + " <input type=\"text\" name=\"3-" + FlowData[i].ID + "\"  id=\"3-" + FlowData[i].ID + "\" autocomplete=\"off\" class=\"layui-input\">";
+            html = html + "</div></div></div>";
+        }
+
+        $("#Form").html(html);
+
+        layui.use(['form', 'layedit', 'laydate', 'element'], function () {
+            var form = layui.form
+            , layer = layui.layer
+            , layedit = layui.layedit
+            , laydate = layui.laydate;
+
+
+            form.on('select(tabletype)', function (data) {
+
+                console.log(data.value);
+                if (data.value != tabletype) {
+                    tabletype = data.value;
+                    InitFlow();
+                }
+
+            })
+
+
+            //监听指定开关
+            $("input[type='text']").each(function () {
+                var id = $(this).attr("id");
+                if (id != null && id.indexOf('-') > 0) {
+                    laydate.render({
+                        elem: this,
+                        type: 'time'
+                    });
+                }
+            })
+        });
+    }
+
+    function AddBaseDate() {
+        var BaseDatelist = [];
+        $("input[type='text']").each(function () {
+            var id = $(this).attr("id");
+            if ($(this).val() == null || $(this).val() == "") {
+                alert("请填写所有的基础时间");
+                return false;
+            }
+            if (id != null && id.indexOf('-') > 0) {
+                var flowid = id.split("-")[1];
+                var type = id.split("-")[0];
+                var BaseDate = BaseDatelist.filter(function (e) { return e.FlowID == flowid; });
+                if (BaseDate == null || BaseDate.length == 0) {
+                    BaseDate = {};
+                    BaseDate.FlowID = flowid;
+                    BaseDate.ClassType = $("#classtype").val();
+                    BaseDate.TableType = $("#tabletype").val();
+                    BaseDatelist.push(BaseDate);
+                }
+                if (type == 1) {
+                    BaseDate.BeginDate = $(this).val();
+                } else if (type == 2) {
+                    BaseDate[0].EndDate = $(this).val();
+                } else if (type == 3) {
+                    BaseDate[0].RemindDate = $(this).val();
+                }
+            }
+        })
+        console.log(BaseDatelist);
+
+        var path = "/baseDate/add";
+        var data = {
+            "BaseDateFlowList": BaseDatelist,
+        };
+
+
+        if (basepost(data, path)) {
+            //window.location.href = "ArticleList.html";
+            window.location.href = "BaseDateList.html";
+        }
+    }
+
+
+
+
+    function Back() {
+        window.location.href = "BaseDateList.html";
+        return false;
+    }
+</script>

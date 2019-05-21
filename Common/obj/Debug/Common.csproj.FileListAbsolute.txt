@@ -1,0 +1,15 @@
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\Common.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\Common.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\DAL.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\Entities.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\gk.rjb_Y.DataEntityProvider.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\NPOI.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\gk.rjb_Y.Libraries.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\gk.rjb_Y.DBAccessConvertorProvider.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\gk.rjb_Y.DatabaseProvider.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\MySql.Data.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\DAL.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Debug\Entities.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\obj\Debug\Common.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\obj\Debug\Common.pdb

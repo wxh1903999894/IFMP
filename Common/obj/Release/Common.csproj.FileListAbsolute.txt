@@ -1,0 +1,15 @@
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\Common.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\Common.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\DAL.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\Entities.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\gk.rjb_Y.DataEntityProvider.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\NPOI.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\gk.rjb_Y.Libraries.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\gk.rjb_Y.DBAccessConvertorProvider.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\gk.rjb_Y.DatabaseProvider.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\MySql.Data.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\DAL.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\bin\Release\Entities.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\obj\Release\Common.csprojResolveAssemblyReference.cache
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\obj\Release\Common.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Common\obj\Release\Common.pdb

@@ -1,0 +1,16 @@
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPTestProject.dll.config
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPTestProject.dll
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPTestProject.pdb
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\EntityFramework.dll
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPLibrary.dll
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPService.exe
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\Newtonsoft.Json.dll
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPLibrary.pdb
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\IFMPService.pdb
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\EntityFramework.xml
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\bin\Debug\Newtonsoft.Json.xml
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\obj\Debug\IFMPTestProject.csprojResolveAssemblyReference.cache
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\obj\Debug\IFMPTestProject.dll
+C:\Users\wws\source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPTestProject\obj\Debug\IFMPTestProject.pdb

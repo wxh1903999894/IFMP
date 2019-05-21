@@ -1,0 +1,576 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../css/formSelects-v4.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main bordermain">
+
+        <form class="layui-form" action="">
+
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>数据选择</legend>
+            </fieldset>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">表单类型</label>
+                <div class="layui-input-block">
+                    <select lay-filter="tabletype" id="tabletype"></select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">显示数据</label>
+                <div class="layui-input-block">
+                    <select lay-filter="tablecolumn" id="tablecolumn"></select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">统计对象</label>
+                <div class="layui-input-block">
+                    <select lay-filter="statitem" id="statitem"></select>
+                </div>
+            </div>
+
+
+            <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline" style="width: 300px;">
+                    <input type="text" name="begindate" id="begindate" lay-verify="begindate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline" style="width: 300px;">
+                    <input type="text" name="enddate" id="enddate" lay-verify="enddate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">图表类型</label>
+                <div class="layui-input-block">
+                    <select id="charttype" lay-filter="charttype">
+                        <option value="折线图">折线图</option>
+                        <option value="饼图">饼图</option>
+                        <option value="柱状图">柱状图</option>
+                        <!--<option value="4">柱状堆积图</option>-->
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">图表预览</label>
+                <div id="chartshow" style="height:300px" class="layui-input-block">
+
+                </div>
+            </div>
+
+        </form>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button style="background-color:blue" class="layui-btn layui-btn-primary submit" onclick="Confirm()">确定</button>
+                <button style="background-color:red" class="layui-btn layui-btn-primary submit" onclick="parent.layer.closeAll();">取消</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/Common.js"></script>
+<script src="../plugins/echarts.js"></script>
+<script src="../plugins/layui/layui.js"></script>
+<script>
+    $(document).ready(function () {
+        InitTableType();
+        InitTableColumn();
+        InitStatItem();
+        //InitTask($("#begindate").val(), $("#enddate").val());
+        BuildChart($("#charttype").val());
+        //可考虑提示位置
+        var type = unity.getURL("type");
+
+    })
+
+    layui.config({
+        base: '../plugins/layui/'
+    }).extend({
+        formSelects: 'formSelects-v4'
+    });
+
+    layui.use(['form', 'laydate', 'element', 'formSelects'], function () {
+
+        var form = layui.form
+        , layer = layui.layer
+        , laydate = layui.laydate;
+
+        var formExpertTypeSelects = layui.formSelects;
+
+        laydate.render({
+            elem: '#begindate'
+          , type: 'datetime'
+            , done: function (value, date, endDate) {
+                //InitTask(value, $("#enddate").val());
+            }
+        });
+
+        laydate.render({
+            elem: '#enddate'
+            , type: 'datetime'
+            , done: function (value, date, endDate) {
+                //InitTask($("#begindate").val(), value);
+            }
+        });
+
+
+        form.on('select(tabletype)', function (data) {
+            InitTableColumn();
+            InitStatItem();
+            //InitTask($("#begindate").val(), $("#enddate").val());
+            form.render('select');
+        });
+
+        form.on('checkbox', function (data) {
+            InitChart();
+        });
+
+        form.on('select(charttype)', function (data) {
+            //console.log(data.value);
+            BuildChart(data.value);
+
+        });
+    });
+
+    function InitTableType() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetStatisticsTableType",
+            success: function (data) {
+                if (data.result == "success") {
+                    var tabletypesel = document.getElementById("tabletype");
+                    tabletypesel.innerHTML = "";
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tabletypesel.appendChild(optionnode);
+                    }
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function InitTableColumn() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetStaticColumn&&tabletype=" + $("#tabletype").val(),
+            success: function (data) {
+                if (data.result == "success") {
+                    var tablecolumnsel = document.getElementById("tablecolumn");
+                    tablecolumnsel.innerHTML = "";
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tablecolumnsel.appendChild(optionnode);
+                    }
+                    //console.log(tablecolumnsel);
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function InitStatItem() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetNotStaticColumn&&tabletype=" + $("#tabletype").val(),
+            success: function (data) {
+                if (data.result == "success") {
+                    var tablecolumnsel = document.getElementById("statitem");
+                    tablecolumnsel.innerHTML = "";
+
+                    var optionnode = unity.InitNode("option", "");
+                    optionnode.value = 0;
+                    optionnode.innerText = "操作人";
+                    tablecolumnsel.appendChild(optionnode);
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tablecolumnsel.appendChild(optionnode);
+                    }
+                    //console.log(tablecolumnsel);
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+
+    var myChart = echarts.init(document.getElementById('chartshow'));
+
+    function BuildChart(type) {
+        if (myChart != null && myChart != "" && myChart != undefined) {
+            myChart.dispose();
+        }
+        myChart = echarts.init(document.getElementById('chartshow'));
+        switch (type) {
+            case "折线图":
+                BuildLine();
+                break;
+            case "饼图":
+                BuildPie();
+                break;
+            case "柱状图":
+                BuildBar();
+                break;
+            default:
+                //console.log("type=null");
+                break;
+        }
+    }
+
+    function Confirm() {
+        var type = unity.getURL("type");
+
+        //var tabletype = $("#tabletype").val();
+        var tablecolumn = $("#tablecolumn").val();
+        var begindate = $("#begindate").val();
+        var enddate = $("#enddate").val();
+        var charttype = $("#charttype").val();
+        var statitem = $("#statitem").val();
+        //parent.layer.msg(type, { shade: 0.3 })
+        //对应位置的修改
+        parent.BuildChart(type, begindate, enddate, tablecolumn,statitem, charttype);
+        parent.layer.closeAll();
+
+    }
+
+</script>
+
+<script type="text/javascript">
+    function BuildBar() {
+        //var myChart = echarts.init(document.getElementById('chartshow'));
+
+        var app = {};
+        option = null;
+        var dataAxis = ['', '', '', '', '', ''];
+        var data = [480, 485, 486, 482, 492, 487];
+        var yMax = 700;
+        var dataShadow = [];
+
+        for (var i = 0; i < data.length; i++) {
+            dataShadow.push(yMax);
+        }
+
+        option = {
+            title: {
+                text: '生产件数',
+                textStyle: {
+                    color: '#000'
+                }
+            },
+            xAxis: {
+                data: dataAxis,
+                axisLabel: {
+                    inside: true,
+                    textStyle: {
+                        color: '#000'
+                    }
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                z: 10
+            },
+            yAxis: {
+                axisLine: {
+                    show: false
+                },
+                axisTick: {
+                    show: false
+                },
+                axisLabel: {
+                    textStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            dataZoom: [
+                {
+                    type: 'inside'
+                }
+            ],
+            series: [
+                { // For shadow
+                    type: 'bar',
+                    itemStyle: {
+                        normal: { color: 'rgba(0,0,0,0.05)' }
+                    },
+                    barGap: '-100%',
+                    barCategoryGap: '40%',
+                    data: dataShadow,
+                    animation: false
+                },
+                {
+                    type: 'bar',
+                    label: {
+                        normal: {
+                            show: true,
+                            rotate: {
+                                min: -90,
+                                max: 90
+                            },
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    { offset: 0, color: '#83bff6' },
+                                    { offset: 0.5, color: '#188df0' },
+                                    { offset: 1, color: '#188df0' }
+                                ]
+                            )
+                        },
+                        emphasis: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1,
+                                [
+                                    { offset: 0, color: '#2378f7' },
+                                    { offset: 0.7, color: '#2378f7' },
+                                    { offset: 1, color: '#83bff6' }
+                                ]
+                            )
+                        }
+                    },
+                    data: data
+                }
+            ]
+        };
+
+        // Enable data zoom when user click bar.
+        var zoomSize = 6;
+        myChart.on('click', function (params) {
+            //console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+            myChart.dispatchAction({
+                type: 'dataZoom',
+                startValue: dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                endValue: dataAxis[Math.min(params.dataIndex + zoomSize / 2, data.length - 1)]
+            });
+        });;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    function BuildLine() {
+
+        var colorL = ['#01D8DB', '#FFBB44', '#3EA8FE', '#7BCE4C', 'rgb(0 ,0 ,255)', 'rgb(70 ,130 ,180)', 'rgb(0 ,139 ,139)', 'rgb(0, 255, 255)', 'rgb(78 ,238 ,148)', 'rgb(0,191 ,255)', 'rgb(46 ,139 ,87)'];
+        var app = {};
+        option = null;
+        option = {
+            title: {
+                text: 'XBAR平均值',
+
+                left: 'center',
+                textStyle: {
+                    color: '#00D7DB'
+                }
+            },
+            legend: {
+                top: '10%',
+                data: ['【一号线】李明', '刘枫'],
+                textStyle: {
+                    color: '#000'
+                }
+            },
+            grid: {
+                top: '25%',
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['9-20早班', '9-21早班', '9-21晚班', '9-22早班'],
+                boundaryGap: false,
+                axisLine: {
+                    lineStyle: {
+                        color: '#000' //控制颜色
+                    }
+                },
+            },
+            yAxis: {
+                type: 'value',
+                min: 29.92,
+                max: 29.96,
+                maxInterval: 0.005,
+                axisLine: {
+                    lineStyle: {
+                        color: '#000' //控制颜色
+                    }
+                },
+            },
+            series: [
+                {
+                    itemStyle: {
+                        normal: {
+                            color: colorL[0]
+                        },
+                    },
+                    data: [29.945, 29.947, 29.946, 29.948],
+                    smooth: true,
+                    name: "【一号线】李明",
+                    type: 'line'
+                },
+                {
+                    data: [29.944, 29.945, 29.945, 29.942],
+                    smooth: true,
+                    name: "刘枫",
+
+                    type: 'line',
+                    markLine: {
+                        data: [{
+                            name: "最大值",
+                            yAxis: 29.955,
+                            lineStyle: {
+                                color: "#f44444"
+                            }
+                        },
+                        {
+                            name: "最小值",
+                            yAxis: 29.935,
+                            lineStyle: {
+                                color: "#f44444"
+                            }
+                        }]
+                    }
+                }]
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+</script>
+<script type="text/javascript">
+    function BuildPie() {
+        var app = {};
+        option = null;
+        option = {
+            //backgroundColor: '#fff',
+
+            title: {
+                text: 'PH值',
+                left: 'center',
+                textStyle: {
+                    color: '#00D7DB',
+                }
+            },
+
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+
+            visualMap: {
+                show: false,
+                min: 80,
+                max: 600,
+                inRange: {
+                    colorLightness: [0, 1]
+                }
+            },
+
+            series: [
+                {
+                    name: 'ph值',
+                    type: 'pie',
+                    radius: '70%',
+                    center: ['50%', '50%'],
+                    data: [
+                        { value: 2, name: '低于5' },
+                        { value: 35, name: '5-6' },
+                        { value: 45, name: '6-7' },
+                        { value: 52, name: '7-8' },
+                        { value: 12, name: '8-9' },
+                        { value: 1, name: '高于9' }
+                    ].sort(function (a, b) { return a.value - b.value; }),
+                    roseType: 'radius',
+                    label: {
+                        normal: {
+                            textStyle: {
+                                color: '#00D7DB'
+                            }
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            lineStyle: {
+                                color: '#00D7DB'
+                            },
+                            smooth: 0.2,
+                            length: 10,
+                            length2: 20
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#3EA8FE',
+                            shadowBlur: 50,
+                            shadowColor: 'rgba(0, 0, 0, 0.7)'
+                        }
+                    },
+
+                    animationType: 'scale',
+                    animationEasing: 'elasticOut',
+                    animationDelay: function (idx) {
+                        return Math.random() * 200;
+                    }
+                }
+            ]
+        };;
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+    }
+</script>

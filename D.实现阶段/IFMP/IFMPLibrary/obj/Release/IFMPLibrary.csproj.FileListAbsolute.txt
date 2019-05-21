@@ -10,3 +10,15 @@ C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.csprojResolveAssemblyReference.cache
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.dll
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\IFMPLibrary.dll.config
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\IFMPLibrary.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\IFMPLibrary.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.SqlServer.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\Newtonsoft.Json.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.xml
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.SqlServer.xml
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\Newtonsoft.Json.xml
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.csprojResolveAssemblyReference.cache
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.pdb

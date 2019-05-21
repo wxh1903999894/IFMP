@@ -1,0 +1,591 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>智慧工厂管理平台</title>
+    <link href="../plugins/layui/css/layui.css" rel="stylesheet">
+    <link href="../css/iconfont.css" rel="stylesheet">
+    <link href="../css/main.css" rel="stylesheet">
+    <link href="../css/formSelects-v4.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="main">
+        <div class="page_nav"><span class="layui-breadcrumb"> <a href="/">首页</a> <a>数据统计</a> <a><cite>数据对比</cite></a> </span> </div>
+    </div>
+    <div class="main bordermain">
+
+        <form class="layui-form" action="">
+
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>数据选择</legend>
+            </fieldset>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">表单类型</label>
+                <div class="layui-input-block">
+                    <select lay-filter="tabletype" id="tabletype"></select>
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">对比数据</label>
+                <div class="layui-input-block">
+                    <select lay-filter="tablecolumn" id="tablecolumn"></select>
+                </div>
+            </div>
+
+            <!--<div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">对比类型</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" id="CompareType" checked name="open" lay-verify="required" lay-skin="switch" lay-filter="CompareType" lay-text="班次|人员">
+                </div>
+            </div>-->
+
+            <div id="ClassType" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次类型</label>
+                <div class="layui-input-block">
+                    <select id="classtype" lay-filter="classtype">
+                        <option value="0">全部</option>
+                        <option value="1">早班</option>
+                        <option value="2">夜班</option>
+                        <option value="3">早夜班</option>
+                        <option value="4">其他</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="begindate" id="begindate" lay-verify="begindate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline" style="width: 200px;">
+                    <input type="text" name="enddate" id="enddate" lay-verify="enddate" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">班次</label>
+                <div class="layui-input-block">
+                    <select id="Task" name="Task" xm-select="Task" xm-select-search-type="dl"></select>
+                </div>
+            </div>
+
+            <!--<div id="UserList" style="display:none" class="layui-form-item layui-form-text">
+                <label class="layui-form-label">人员</label>
+                <div class="layui-input-block">
+                    <select id="User" name="User" xm-select="User" xm-select-search-type="dl"></select>
+                </div>
+            </div>-->
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">图表类型</label>
+                <div class="layui-input-block">
+                    <input lay-filter="line" type="checkbox" checked title="折线图" />
+                    <input lay-filter="bar" type="checkbox" checked title="柱状图" />
+                    <input lay-filter="pie" type="checkbox" checked title="饼图" />
+                </div>
+            </div>
+
+        </form>
+
+        <div class="layui-form-item">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>图表对比</legend>
+            </fieldset>
+
+            <div id="Chart" style="height:500px" class="layui-input-block">
+            </div>
+
+            <div class="layui-input-block">
+                <button style="background-color:blue" class="layui-btn layui-btn-primary submit" onclick="InitChart()">生成</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/Common.js"></script>
+<script src="../plugins/echarts.js"></script>
+<script src="../plugins/layui/layui.js"></script>
+<script>
+
+    $(document).ready(function () {
+        InitTableType();
+        InitTableColumn();
+        InitTask($("#begindate").val(), $("#enddate").val());
+    })
+
+    layui.config({
+        base: '../plugins/layui/'
+    }).extend({
+        formSelects: 'formSelects-v4'
+    });
+
+    layui.use(['form', 'laydate', 'element', 'formSelects'], function () {
+
+        var form = layui.form
+        , layer = layui.layer
+        , laydate = layui.laydate;
+
+        var formExpertTypeSelects = layui.formSelects;
+
+        laydate.render({
+            elem: '#begindate'
+          , type: 'datetime'
+            , done: function (value, date, endDate) {
+                InitTask(value, $("#enddate").val());
+            }
+        });
+
+        laydate.render({
+            elem: '#enddate'
+            , type: 'datetime'
+            , done: function (value, date, endDate) {
+                InitTask($("#begindate").val(), value);
+            }
+        });
+
+
+        form.on('select(tabletype)', function (data) {
+            InitTableColumn();
+            InitTask($("#begindate").val(), $("#enddate").val());
+            form.render('select');
+        });
+
+        form.on('select(tablecolumn)', function (data) {
+            InitTask($("#begindate").val(), $("#enddate").val());
+            form.render('select');
+        });
+
+        form.on('select(classtype)', function (data) {
+            InitTask($("#begindate").val(), $("#enddate").val());
+            form.render('select');
+        });
+
+        form.on('checkbox', function (data) {
+            InitChart();
+        });
+
+
+
+        //监听指定开关
+        //form.on('switch(CompareType)', function (data) {
+        //    if (this.checked) {
+        //        document.getElementById("UserList").style.display = "none";
+        //    } else {
+        //        document.getElementById("UserList").style.display = "block";
+        //    }
+        //});
+    });
+
+    function InitTableType() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetStatisticsTableType",
+            success: function (data) {
+                if (data.result == "success") {
+                    var tabletypesel = document.getElementById("tabletype");
+                    tabletypesel.innerHTML = "";
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tabletypesel.appendChild(optionnode);
+                    }
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function InitTableColumn() {
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetStaticColumn&&tabletype=" + $("#tabletype").val(),
+            success: function (data) {
+                if (data.result == "success") {
+                    var tablecolumnsel = document.getElementById("tablecolumn");
+                    tablecolumnsel.innerHTML = "";
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tablecolumnsel.appendChild(optionnode);
+                    }
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+    function InitTask(begin, end) {
+        layui.use(['formSelects'], function () {
+            layui.formSelects.data('Task', 'server', {
+                url: '../ashx/Statistics.ashx?method=GetTask&tabletype=' + $("#tabletype").val() + "&begin=" + begin + "&end=" + end + "&classtype=" + $("#classtype").val(),
+                beforeSuccess: function (id, url, searchVal, result) {
+                    return result.List;
+                }
+            });
+        })
+    }
+
+    function InitChart() {
+        //根据所选内容绘制表单
+        var tabletype = $("#tabletype").val();
+        var tablecolumn = $("#tablecolumn").val();
+        var begindate = $("#begindate").val();
+        var enddate = $("#enddate").val();
+        var taskarray = layui.formSelects.value('Task', 'all');
+
+        TaskChartShow(taskarray, tablecolumn);
+
+
+        //if (document.getElementById("CompareType").checked == true) {
+        //    //班次
+
+
+        //} else {
+        //    //人员
+        //}
+    }
+
+    function TaskChartShow(taskarray, tablecolumn) {
+        if (taskarray.length == 0) {
+            alert("请至少选择一条数据");
+            return;
+        }
+
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetCompareDateByTask",
+                "column": tablecolumn,
+                "task": JSON.stringify(taskarray)
+            },
+            success: function (data) {
+                if (data.result == "success") {
+                    //先遍历获得人员
+                    //再遍历一次赋值
+                    var tablearray = [];
+                    var userarray = [];
+                    var dataarray = [];
+                    for (var i = 0; i < data.List.length; i++) {
+                        tablearray.push(data.List[i].Name);
+                        for (var j = 0; j < data.List[i].List.length; j++) {
+                            var count = unity.flitercount(function (e) { return e == data.List[i].List[j].UserName; }, userarray);
+                            if (count == -1)
+                                userarray.push(data.List[i].List[j].UserName);
+                            var dataobject = {};
+                            dataobject.Data = data.List[i].List[j].Data;
+                            dataobject.UserName = data.List[i].List[j].UserName;
+                            dataobject.IsAlert = data.List[i].List[j].IsAlert;
+                            dataobject.TableName = data.List[i].Name;
+                            dataarray.push(dataobject);
+                        }
+                    }
+
+
+                    var barseries = [];
+                    var lineseries = {};
+                    var pieseries = {};
+
+                    var series = [];
+                    if ($("input[lay-filter='bar']").get(0).checked) {
+                        //bar
+                        for (var i = 0; i < userarray.length; i++) {
+                            var bar = {};
+                            bar.name = userarray[i];
+                            bar.type = "bar";
+                            bar.barGap = 0;
+                            bar.label = "labelOption";
+                            var bardata = [];
+                            for (var j = 0; j < tablearray.length; j++) {
+                                var selsingledata = unity.fliterdata(function (e) { return e.UserName == userarray[i] && e.TableName == tablearray[j]; }, dataarray);
+                                var singledata = {};
+                                //singledata.name = tablearray[j];
+                                singledata.itemStyle = {};
+                                if (selsingledata == null) {
+                                    singledata.value = 0;
+                                    singledata.itemStyle.color = "#1869b3";
+                                } else {
+                                    singledata.value = selsingledata.Data;
+                                    if (selsingledata.IsAlert == "true") {
+                                        singledata.itemStyle.color = "#f44444";
+                                    } else {
+                                        //singledata.itemStyle.color = "#1869b3";
+                                    }
+                                }
+                                bardata.push(singledata);
+                            }
+                            bar.data = bardata;
+                            series.push(bar);
+                        }
+                        //series.push(barseries);
+                    }
+
+                    if ($("input[lay-filter='line']").get(0).checked) {
+                        //line
+                        lineseries.name = "折线图";
+                        lineseries.type = "line";
+                        lineseries.linestyle = {};
+                        lineseries.linestyle.width = 5;
+                        lineseries.linestyle.type = "solid";
+                        lineseries.label = {};
+                        lineseries.label.show = true;
+                        lineseries.data = [];
+                        for (var i = 0; i < tablearray.length; i++) {
+                            var seldataarray = unity.fliter(function (e) { return e.TableName == tablearray[i]; }, dataarray);
+                            if (seldataarray.length > 0) {
+                                var total = 0;
+                                for (var j = 0; j < seldataarray.length; j++) {
+                                    total = total + parseFloat(seldataarray[j].Data);
+                                }
+                                lineseries.data.push(parseFloat(total) / seldataarray.length);
+                            } else {
+                                lineseries.data.push(0);
+                            }
+                        }
+
+                        //console.log(data);
+                        if (data.MarkLine.Max != null && data.MarkLine.Max != "") {
+                            lineseries.markLine = {};
+                            lineseries.markLine.data = [];
+                            var maxmark = {};
+                            maxmark.name = "最大值";
+                            maxmark.yAxis = data.MarkLine.Max;
+
+                            var minmark = {};
+                            minmark.name = "最小值";
+                            minmark.yAxis = data.MarkLine.Min;
+
+                            lineseries.markLine.lineStyle = {};
+                            lineseries.markLine.lineStyle.color = "#f44444";
+
+                            lineseries.markLine.data.push(maxmark);
+                            lineseries.markLine.data.push(minmark);
+
+                        }
+
+                        series.push(lineseries);
+                        console.log(series);
+                    }
+
+                    if ($("input[lay-filter='pie']").get(0).checked) {
+                        //pie
+                        pieseries.name = "饼状图";
+                        pieseries.type = "pie";
+                        pieseries.pieseries = [];
+                        pieseries.pieseries.push("15%");
+                        pieseries.pieseries.push("35%");
+                        pieseries.radius = "28%";
+                        pieseries.center = [];
+                        pieseries.center.push("20%");
+                        pieseries.center.push("20%");
+
+                        pieseries.z = "100";
+                        pieseries.roseType = "radius";
+                        pieseries.animationType = "scale";
+                        pieseries.animationEasing = "elasticOut";
+                        pieseries.data = [];
+
+                        for (var i = 0; i < dataarray.length; i++) {
+                            var selpiedata = unity.fliterdata(function (e) { return e.name == dataarray[i].Data; }, pieseries.data);
+                            if (selpiedata == null) {
+                                var singlepiedata = {};
+                                singlepiedata.name = dataarray[i].Data;
+                                singlepiedata.value = 1;
+                                pieseries.data.push(singlepiedata);
+                            } else {
+                                selpiedata.value = selpiedata.value + 1;
+                            }
+                        }
+                        series.push(pieseries);
+                    }
+
+                    BuildEChart(series, userarray, tablearray);
+                } else {
+                    alert("获取数据失败，请联系系统管理员");
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+
+    var posList = [
+      'left', 'right', 'top', 'bottom',
+      'inside',
+      'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+      'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+    ];
+    var app = {};
+    app.configParameters = {
+        rotate: {
+            min: -90,
+            max: 90
+        },
+        align: {
+            options: {
+                left: 'left',
+                center: 'center',
+                right: 'right'
+            }
+        },
+        verticalAlign: {
+            options: {
+                top: 'top',
+                middle: 'middle',
+                bottom: 'bottom'
+            }
+        },
+        position: {
+            options: echarts.util.reduce(posList, function (map, pos) {
+                map[pos] = pos;
+                return map;
+            }, {})
+        },
+        distance: {
+            min: 0,
+            max: 100
+        }
+    };
+
+    app.config = {
+        rotate: 90,
+        align: 'left',
+        verticalAlign: 'middle',
+        position: 'insideBottom',
+        distance: 15,
+        onChange: function () {
+            var labelOption = {
+                normal: {
+                    rotate: app.config.rotate,
+                    align: app.config.align,
+                    verticalAlign: app.config.verticalAlign,
+                    position: app.config.position,
+                    distance: app.config.distance
+                }
+            };
+            myChart.setOption({
+                series: [{
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }, {
+                    label: labelOption
+                }]
+            });
+        }
+    };
+
+    var labelOption = {
+        normal: {
+            show: true,
+            position: app.config.position,
+            distance: app.config.distance,
+            align: app.config.align,
+            verticalAlign: app.config.verticalAlign,
+            rotate: app.config.rotate,
+            formatter: '{a}',
+            fontSize: 20,
+            rich: {
+                name: {
+                    textBorderColor: '#fff'
+                }
+            }
+        }
+    };
+
+    var myChart = echarts.init(document.getElementById('Chart'));
+    function BuildEChart(series, userarray, tablearray) {
+        //document.getElementById('Chart').innerHTML = "";
+        if (myChart != null && myChart != "" && myChart != undefined) {
+            myChart.dispose();
+        }
+        myChart = echarts.init(document.getElementById('Chart'));
+        //myChart.dispose();
+        var option = {
+            color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+            tooltip: {
+                trigger: 'item',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                data: userarray
+            },
+            toolbox: {
+                show: true,
+                orient: 'vertical',
+                left: 'right',
+                top: 'center',
+                feature: {
+                    mark: { show: true },
+                    dataView: { show: true, readOnly: false },
+                    magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                    restore: { show: true },
+                    saveAsImage: { show: true }
+                }
+            },
+            dataZoom: [
+                     {
+                         type: 'inside'
+                     }
+            ],
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    axisTick: { show: false },
+                    data: tablearray,
+
+                },
+            ],
+            yAxis: [
+                {
+                    type: 'value'
+                }
+            ],
+            visualMap: {
+                show: false,
+                min: 0,
+                max: 100,
+                z: 100,
+                inRange: {
+                    colorLightness: [0.4, 0.8]
+                }
+            },
+            series: series
+        };
+        myChart.setOption(option);
+    }
+</script>

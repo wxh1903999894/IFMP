@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>问题复查</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #pullrefresh .mui-table-view-cell {
+            margin-bottom: 0px;
+        }
+
+        .jftime {
+            text-align: center;
+        }
+
+        .jfp1 {
+            white-space: normal;
+            color: black;
+        }
+
+        .jfyoushang {
+            right: 25px;
+            top: 25px;
+            position: absolute;
+            text-align: center;
+        }
+
+            .jfyoushang p {
+                margin-top: 5px;
+            }
+
+            .jfyoushang span {
+                font-size: 18px;
+            }
+
+        #month {
+            padding: 15px;
+            display: block;
+            font-size: 18px;
+        }
+
+        .mycontent {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mySelector {
+        }
+
+        .content {
+            width: 100%;
+            flex: 1;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content mycontent">
+        <div class="mui-input-group mySelector">
+            <div class="mui-input-row">
+                <label>宿舍</label>
+                <select class="mui-btn mui-btn-block sel" id="DormitorySel"></select>
+            </div>
+        </div>
+        <div class="content">
+            <div id="eglist" class="mui-content  mui-scroll-wrapper mui-active" style="bottom:20px">
+
+                <div class="mui-scroll">
+                    <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="pullrefresh"></ul>
+                </div>
+            </div>
+        </div>
+        <!--<div id="item" class="mui-control-content  mui-active">
+            <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="pullrefresh"></ul>
+        </div>-->
+    </div>
+
+    <!--下导航-->
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <!--<a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>-->
+    </nav>
+
+</body>
+</html>
+<script>
+
+    var choose = -2;
+
+    $(function () {
+        //绑定宿舍
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetDormitory",
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true") {
+                    var item1 = "<option value=\"-2\">请选择</option>";
+                    for (var i = 0; i < d.data.length; i++) {
+                        item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                    }
+                    $("#DormitorySel").html(item1);
+                }
+            },
+            error: function () { alert("宿舍查询出错，请稍候再试"); }
+        });
+    });
+
+    var isend = false;
+    var nowpage = 1;
+
+    var count = 0;
+
+    var changeLoad = function ($) {
+
+        $('body').on('tap', 'a', function () { document.location.href = this.href; });
+        $('body').on('tap', 'div', function () {
+            if ($(this)[0].className == "mui-media-body") {
+                window.location.href = "ReviewDetail.html?SpId=" + $(this)[0].id;
+            }
+        });
+
+        var deceleration = $.os.ios ? 0.003 : 0.0009;
+        $('.mui-scroll-wrapper').scroll({
+            bounce: false,
+            indicators: true, //是否显示滚动条
+            deceleration: deceleration
+        });
+
+        mui.init({
+            pullRefresh: {
+                container: "#eglist",//待刷新区域标识，querySelector能定位的css选择器均可，比如：id、.class等
+                up: {
+                    auto: true,// 可选,默认false.自动上拉加载一次
+                    contentrefresh: "正在加载...",// 可选，正在加载状态时，上拉加载控件上显示的标题内容
+                    contentnomore: '没有更多数据了',// 可选，请求完毕若没有更多数据时显示的提醒内容；
+                    callback: function () {
+                        var self = this;
+                        // 加载更多的内容
+                        //loadMore(this);
+                        var ul = self.element.querySelector('.mui-table-view');
+                        //alert(GetEG(nowpage, 10));
+                        //ul.append(GetEG(nowpage, 10));
+                        console.log('nowpage:' + nowpage);
+                        ul.appendChild(DateBind(nowpage, 10, choose));
+                        //GetEG(nowpage, 10);
+                        nowpage = nowpage + 1;
+                        if (isend) {
+                            self.endPullupToRefresh(true);
+                        } else {
+
+                            self.endPullupToRefresh(false);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    var selectChange = function () {
+        var ul = $("#pullrefresh");
+        ul.html(DateBind(nowpage, 10, choose));
+        changeLoad(mui);
+        nowpage++;
+    }
+
+    //changeLoad(-2);
+    changeLoad(mui);
+
+    $("#DormitorySel").change(function (e) {
+        nowpage = 1;
+        $("#pullrefresh").innerHTML = "";
+        choose = $("#DormitorySel option:selected").val();
+        selectChange();
+        mui('#eglist').pullRefresh().refresh(true);
+    })
+
+    function DateBind(pageindex, pagesize, dormitoryid) {
+        var fragment = document.createDocumentFragment();
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            type: "GET",
+            data: "method=GetProblemDetailPageListByDromitoryId&flag=" + 2 + "&pageindex=" + pageindex + "&pagesize=" + pagesize + "&dormitoryid=" + dormitoryid,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.result == 'true') {
+                    //console.log(data.data.length);
+                    if (data.data.length > 0) {
+                        for (var j in data.data) {
+                            var li = document.createElement('li');
+                            li.className = 'mui-table-view-cell  mui-media';
+                            var intem = "";
+                            //intem += "<li class='mui-table-view-cell mui-media'>";
+                            //intem += "<a href='ImageDetail.html?SpotId=" + data.data[j].SpotId + "'> ";
+                            intem += "<div id=\"" + data.data[j].SpId + "\"  class='mui-media-body'>";
+                            intem += "<h4 style='white-space: normal;width: 70%;'><span class='mui-icon mui-icon-compose' ></span>";
+                            intem += "<span style='color:#2abbb4'>" + data.data[j].DormiName + "</span>";
+                            intem += "</h4>";
+                            intem += "<p  style='margin: 10px 0;white-space: normal;width: 70%;' class='jfp1'>";
+                            intem += "<span>" + data.data[j].ProDesc + "</span>";
+                            intem += "</p>";
+                            intem += "<h5 style='margin-left:0px;margin-top:15px;'>";
+                            intem += "<span style='margin-left:0px;'>" + "问题责任人：" + data.data[j].DutyUser + "&nbsp;&nbsp;点检人：" + data.data[j].CreateUser + "</span><div class='jfyoushang'><br/><a href='javascript:void(0)'  class='reviewItem' id='" + data.data[j].SpId + "'>点击复查<br/><br/></a><p class='jftime'>" + data.data[j].CreateDate + "</p></div>";
+                            intem += "</h5>";
+                            intem += "</div>";
+
+                            li.innerHTML = intem;
+                            fragment.appendChild(li);
+                        }
+                    } else {
+                        isend = true;
+                        //var li = document.createElement('li');
+                        //li.className = 'mui-table-view-cell';
+                        //li.setAttribute("style", "margin-top:80px;text-align:center");
+                        //var html = "";
+                        //li.innerHTML = html;
+                        //fragment.appendChild(li);
+                    }
+
+                    //intem += "</li>";
+                    //$("#pullrefresh").append(intem);
+
+
+                    //var reviewItem = $(".reviewItem");
+                    //reviewItem.on("tap", function () {
+                    //    console.log($(this)[0].id);
+                    //    document.location.href = 'ReviewDetail.html?SpId=' + $(this)[0].id;
+                    //})
+                }
+                //else {
+                //    $("#pullrefresh").append("<div style='position: relative;padding: 8px 12px;text-align: center;'>暂无需要复查的问题</div>");
+                //}
+                jsondata = data.data;
+            }
+        });
+        return fragment;
+    }
+
+    //window.location.href = "ReviewDetail.html?SpId=" + ID;
+
+</script>

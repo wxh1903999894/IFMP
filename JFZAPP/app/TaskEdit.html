@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>任务发布</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function () {
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET",
+                data: "method=GetAuditUser",
+                dataType: "json",
+                success: function (d) {
+                    if (d.result == "true") {
+                        var item = "";
+                        var item1 = "<option value=\"-2\">请选择</option>";
+                        for (var i = 0; i < d.data.length; i++) {
+                            if (d.data[i].IsTrue == 1) {
+                                item += "  <option selected=\"selected\"  value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                            }
+                            else {
+                                item += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                            }
+                            item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                        }
+                        $("#LastAduitUser").html(item1);
+                        $("#FirstAduitUser").html(item);
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试"); }
+            });
+        })
+        mui.init();
+    </script>
+    <style>
+        .mui-bar-tab {
+            position: absolute;
+            margin-bottom: 0px;
+            z-index: -1;
+        }
+
+        .righttext {
+            font-size: 15px;
+        }
+
+        .mui-input-row .mui-btn {
+            padding: 0px;
+        }
+
+        .mui-input-row select {
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <div style="padding: 10px 10px;">
+            <div id="segmentedControl" class="mui-segmented-control">
+                <a class="mui-control-item mui-active" href="TaskEdit.html">任务添加</a>
+                <a class="mui-control-item  " href="TaskSHZList.html">审核中</a>
+                <a class="mui-control-item " href="TaskYWCList.html">已完成</a>
+            </div>
+        </div>
+        <div id="item1" class="mui-control-content  mui-active">
+            <form class="mui-input-group">
+                <div class="mui-input-row">
+                    <label>任务名称</label>
+                    <input id="TaskName" type="text" placeholder="请输入任务名称(必填)">
+                </div>
+                <div class="mui-input-group linght40">
+                    <div class="mui-input-row">
+                        <label>汇报截止日期</label>
+                        <div id='demo7' data-options='{"type":"date"}' class="righttext btn1" placeholder="选择日期 ...(必选)"></div>
+                    </div>
+                </div>
+                <input type="hidden" id="hf_EndDate" />
+                <div class="mui-input-row">
+                    <label>悬赏分数</label>
+                    <input id="TScore" type="text" onkeyup="this.value = /^[1-9]\d*$/g.test(this.value)?this.value:''" placeholder="请输入悬赏分数(必填)">
+                </div>
+                <div class="mui-input-row">
+                    <label>报名分数</label>
+                    <input id="SignScore" type="text" onkeyup="this.value = /^[1-9]\d*$/g.test(this.value)?this.value:''" placeholder="请输入报名分数(必填)">
+                </div>
+                <div class="mui-input-row">
+                    <label>初审人</label>
+                    <select class="mui-btn mui-btn-block sel" id="FirstAduitUser"></select>
+                </div>
+                <div class="mui-input-row">
+                    <label>终审人</label>
+                    <select class="mui-btn mui-btn-block sel" id="LastAduitUser"></select>
+                </div>
+                <div contenteditable="true" id="TaskContent" class="multipletext mui-input-row" placeholder="请在此填写任务内容(必填)"></div>
+                <div class="btn_Sumbit-a">
+                    <input type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" onclick='tj()' value="提交">
+                </div>
+            </form>
+        </div>
+    </div>
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+    <script>
+        mui('#segmentedControl').on('tap', 'a', function () {
+            document.location.href = this.href;
+        });
+        (function ($) {
+            $.init();
+            var result = $('#demo7')[0];
+            var btns = $('.btn1');
+            var curr_time = new Date();
+            result.innerText = myformatter(curr_time);
+            document.getElementById("hf_EndDate").value = myformatter(curr_time);
+            btns.each(function (i, btn) {
+                btn.addEventListener('tap', function () {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    /*
+                     * 首次显示时实例化组件
+                     * 示例为了简洁，将 options 放在了按钮的 dom 上
+                     * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+                     */
+                    var picker = new $.DtPicker(options);
+                    picker.show(function (rs) {
+                        /*
+                         * rs.value 拼合后的 value
+                         * rs.text 拼合后的 text
+                         * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+                         * rs.m 月，用法同年
+                         * rs.d 日，用法同年
+                         * rs.h 时，用法同年
+                         * rs.i 分（minutes 的第二个字母），用法同年
+                         */
+                        result.innerText = rs.text;
+                        document.getElementById("hf_EndDate").value = rs.value;
+                        /*
+                         * 返回 false 可以阻止选择框的关闭
+                         * return false;
+                         */
+                        /*
+                         * 释放组件资源，释放后将将不能再操作组件
+                         * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+                         * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+                         * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+                         */
+                        picker.dispose();
+                    });
+                }, false);
+            });
+        })(mui, document);
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+    </script>
+</body>
+</html>
+<script>
+    function tj() {
+        if ($("#TaskName").val() == null || $("#TaskName").val() == "") {
+            alert("请填写任务名称");
+            return;
+        }
+        if ($("#hf_EndDate").val() == null || $("#hf_EndDate").val() == "") {
+            alert("请选择汇报截止日期");
+            return;
+        }
+        if ($("#TScore").val() == null || $("#TScore").val() == "") {
+            alert("请填写悬赏分数");
+            return;
+        }
+        if ($("#SignScore").val() == null || $("#SignScore").val() == "") {
+            alert("请填写报名分数");
+            return;
+        }
+        if ($("#FirstAduitUser").find("option:selected").val() == null || $("#FirstAduitUser").find("option:selected").val() == "") {
+            alert("请选择初审人");
+            return;
+        }
+        if ($("#LastAduitUser").find("option:selected").val() == null || $("#LastAduitUser").find("option:selected").val() == "") {
+            alert("请选择终审人");
+            return;
+        }
+        if ($("#TaskContent").text() == null || $("#TaskContent").text() == "") {
+            alert("请填写任务内容");
+            return;
+        }
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            dataType: "json",
+            type: "get",
+            data: "method=TaskAdd&TaskName=" + $("#TaskName").val() + "&EndDate=" + $("#hf_EndDate").val() + "&TScore=" + $("#TScore").val() + "&SignScore=" + $("#SignScore").val() + "&FirstAduitUser=" + $("#FirstAduitUser").find("option:selected").val() + "&LastAduitUser=" + $("#LastAduitUser").find("option:selected").val() + "&TaskContent=" + $("#TaskContent").text(),
+            success: function (data) {
+                if (data.result == "true") {
+                    alert("任务发布成功");
+                }
+                else {
+                    alert("任务发布失败");
+                }
+                window.location.href = "../app/TaskSHZList.html";
+            }
+        })
+    }
+</script>

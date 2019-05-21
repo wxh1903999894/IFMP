@@ -68,7 +68,7 @@ namespace DormitoryAPP.ashx
         {
             using (IFMPDBContext db = new IFMPDBContext())
             {
-                List<Dormitory> DormitoryList = db.Dormitory.ToList();
+                List<Dormitory> DormitoryList = db.Dormitory.Where(x => x.IsCheck == true).ToList();
                 var name = "";
                 foreach (Dormitory dormitory in DormitoryList)
                 {

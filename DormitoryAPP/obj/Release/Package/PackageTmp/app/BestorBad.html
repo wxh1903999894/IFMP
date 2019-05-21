@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>最优最差宿舍</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+        @media screen and (max-width: 319px) {
+            html {
+                font-size: 85.33333px;
+            }
+        }
+
+        @media screen and (min-width: 320px) and (max-width: 359px) {
+            html {
+                font-size: 96px;
+            }
+        }
+
+        @media screen and (min-width: 360px) and (max-width: 374px) {
+            html {
+                font-size: 100px;
+            }
+        }
+
+        @media screen and (min-width: 375px) and (max-width: 383px) {
+            html {
+                font-size: 102.4px;
+            }
+        }
+
+        @media screen and (min-width: 384px) and (max-width: 399px) {
+            html {
+                font-size: 106.66667px;
+            }
+        }
+
+        @media screen and (min-width: 400px) and (max-width: 413px) {
+            html {
+                font-size: 110.4px;
+            }
+        }
+
+        @media screen and (min-width: 414px) {
+            html {
+                font-size: 115px;
+            }
+        }
+
+        .rank-submain {
+            width: 99%;
+            text-align: center;
+        }
+
+            .rank-submain .rank-p-l {
+                margin-left: 8%;
+            }
+
+        .sel1 {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <div style="padding: 10px 10px;">
+        </div>
+        <div class="rank-submain" style="padding-bottom:0.6rem;">
+            <!--选择搜索-->
+            <select class="sel1" id="begin"></select>至
+            <select class="sel1" id="end"></select>年
+
+            <table class="rank-sub-table" id="step1"></table>
+            <div class="clear">
+                <table class="no-rank-sub-table none" id="noRank" style="line-height: 0.38rem; font-size: 0.14rem; color: #838f9f; width: 100%"></table>
+            </div>
+        </div>
+
+    </div>
+    <!--下导航-->
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+
+    </nav>
+
+</body>
+</html>
+<script>
+    var begin = "", end = "";
+    $(function () {
+        document.body.addEventListener('touchstart', function () {
+        });
+    })
+    mui('body').on('tap', 'a', function () {
+        document.location.href = this.href;
+    });
+    mui("body").on("tap", ".list-btn span", function () {
+        show(this);
+    });
+
+    $(function () {
+        GetYear();
+        begin = $("#begin").val();
+        end = $("#end").val();
+        if (parseInt(begin) > parseInt(end)) {
+            alert("请检查年份选择是否正确");
+            $("#step1").empty();
+            $("#pm").hide();
+            $("#zwpm").show();
+            $("#spoints").empty();
+        }
+        else {
+            DateBind(begin, end);
+        }
+    })
+
+    function DateBind(begin, end) {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            type: "GET",
+            data: "method=GetBestorBad&begin=" + begin + "&end=" + end,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.result == 'true') {
+                    $("#step1").empty();
+                    $("#srank").html(0);
+                    var item = "<tbody>";
+                    var syjxh = 0;
+                    var syjfs = 0;
+                    item += "<tr id='one' class=\"tr\" style=\"font-size:15px;\"><td class=\"sort\" style=\"color:#66b9b4;width:15%;text-align:center;\">日期</td><td  class=\"name\" style=\"color:#66b9b4;width:15%;text-align:center;\">最优宿舍(得分)</td><td style=\"color:#66b9b4;width:15%;text-align:center;\" class=\"sort\">最差宿舍(得分)</td></tr>";
+                    for (var i in data.data) {
+                        item += "<tr class=\"tr\" style=\"font-size:15px;\"><td class=\"date\">" + data.data[i].date + "</td><td class=\"max\" id=\"row\">" + data.data[i].dr_first + "(" + data.data[i].max + ")" + "</td><td class=\"min\">" + data.data[i].dr_last + "(" + data.data[i].min + ")" + "</td></tr>";
+                    }
+                    item += "</tbody>";
+                    $("#step1").append(item);
+
+                }
+                else {
+                    //$("#pullrefresh").addClass("zwsj").append("<img src=\"../images/zwsj.png\">");
+                }
+                jsondata = data.data;
+            }
+        });
+    }
+
+    function GetYear() {
+        var dqyear = new Date().getFullYear();
+        var item = "";
+        for (var i = dqyear; i >= 1; i--) {
+            if (i >= 2015) {
+                item += "  <option value=\"" + i + "\">" + i + "</option>";
+            }
+        }
+        $("#begin").html(item);
+        $("#end").html(item);
+    }
+    $("#begin").change(function () {
+        begin = $("#begin").val();
+        end = $("#end").val();
+        if (parseInt(begin) > parseInt(end)) {
+            alert("请检查年份选择是否正确");
+            $("#step1").empty();
+            $("#pm").hide();
+            $("#zwpm").show();
+            $("#spoints").empty();
+        }
+        else {
+            DateBind(begin, end);
+        }
+    })
+    $("#end").change(function () {
+        begin = $("#begin").val();
+        end = $("#end").val();
+        if (parseInt(begin) > parseInt(end)) {
+            alert("请检查年份选择是否正确");
+            $("#step1").empty();
+            $("#pm").hide();
+            $("#zwpm").show();
+            $("#spoints").empty();
+        }
+        else {
+            DateBind(begin, end);
+        }
+    })
+</script>

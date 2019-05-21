@@ -1,0 +1,63 @@
+.pading5{padding: 5px;}
+.padbot{padding-bottom: 52px;}
+.centmenu li{float: left;width: 50%;}
+.centmenu li a{color: #fff;display: block;height: 50px;line-height: 50px;padding-left: 20px;font-size: 18px;font-weight: bold;}
+.centmenu li span{float: right;margin-right: 20px;font-size: 30px;font-weight:lighter ;}
+.bgc1{background: #fcdc53 !important;}
+.bgc2{background: #91e0fe !important;}
+.mgr5{margin-right: 2px !important;}
+.mgl5{margin-left: 2px !important;}
+li,ul{list-style: none;padding: 0px;margin: 0px;}
+input[type=file]{line-height: 21px;width: 100%;height: 40px;margin-bottom: 15px;padding: 10px 15px;-webkit-user-select: text;border: 1px solid rgba(0,0,0,.2);border-radius: 3px;outline: 0;background-color: #fff;-webkit-appearance: none;}
+.mui-content{padding-bottom: 65px;}
+.mui-table-view-cell:after{  }
+.mui-content h4{line-height: 1.3;}
+.mui-bar-nav~.mui-content{padding-top: 44px;}
+.mui-input-group .mui-input-row{height: auto;min-height: 40px;}
+.righttext{min-height: 30px;margin-left: 120px;}
+.righttext:empty:before{content: attr(placeholder);color:#7f7e7e;}
+.righttext:focus:before{content:none;}
+.mui-input-group .mui-input-row:after{left: 0px; bottom:0px}
+.mui-input-row label{width: 112px;padding: 11px 15px;padding-right: 0px;}
+body{font-size: 16px;}
+.righttext input{font-size: 16px;padding: 0px;height: auto;}
+.mui-input-row .mui-btn{width: 100%;}
+.multipletext{min-height: 60px;padding:10px 5px;padding-left: 15px;-webkit-user-select:text}
+.multipletext:empty:before{content: attr(placeholder);color:#7f7e7e;}
+.multipletext:focus:before{content:none;}
+.righttext span{float: right;margin-right: 10px;width: 100%;}
+.righttext  input[type="radio"]{ position:relative !important; right: 0px; top:0px}
+/*.righttext span input[type="file"]{display: none;}*/.file{text-align: right;position: relative;display: inline-block;border-radius: 4px;padding: 4px 12px;/*overflow: hidden;*/text-decoration: none;text-indent: 0;line-height: 20px;}
+.file input{position: absolute;font-size: 100px;right: 0;top: 0;opacity: 0;}
+.file:hover{color: #004974;text-decoration: none;}
+.mui-table-view-cell:after{left: 0px;}
+.zw-content{padding: 10px 10px;}
+.mui-btn-warning,.mui-btn-yellow{color: #fff;border: 1px solid #f0ad4e !important;background-color: #f0ad4e !important;border-radius:3px !important;top:0px !important}
+.mui-btn-primary{border: 1px solid #2abbb4 !important;background-color: #2abbb4 !important;border-radius:3px !important;top:0px !important}
+.mui-search{ margin:0px 5px;margin-top: 15px;}
+input[type=search]{ background: #fff;}
+.goback{color:#007aff}
+.search{margin: 10px 0px; border-bottom: 1px solid #4ae89f;border-top: 1px solid #dbdadd; background:#fff;}
+.search input{ width: 80%; border: none; margin: 3px 0px;}
+.searchinput{ border: none; margin-top: 8px; font-size: 28px; width: 15%; color:#808080}
+.soft-ellipsis{ overflow:auto;white-space:inherit;text-overflow:inherit;color:#333}
+
+.mui-table-view .mui-media-object{ width: 100px; max-width: 100px; height: 100px; max-height:100px;}
+.list-btn{margin-top: 10px; text-align: right; border-top:1px dashed #eee; padding-top: 10PX;}
+.list-btn a:link{ margin-right: 10px;padding: 5px 10px; border-radius: 15px;  display:inline-block}
+.mui-table-view-cell>a:not(.mui-btn){white-space:inherit}
+.clzt-btn{padding: 2px 4px; color: #FF0000;border: 1px solid #ff9898; margin-left: 5px;  }
+.btn-sh:link{ border: 1px solid #4FA868;color: #222222;font-size:12px; cursor:pointer}
+    a.btn-sh:active { background:#4FA868 !important;
+    }
+.btn-pz{ border: 1px solid #29a5e8;color: #222222;font-size:12px}
+    .btn-pz:active {
+     background:#29a5e8}
+.btn-th{ border: 1px solid #f0ad4e;color: #222222;font-size:12px}
+.lyfont:before{ font-size: 36px;}
+.lyfont{ margin-top: 40px; float: left; width: 100%;}
+.tcdiv{width:120px; background:rgba(0,0,0,0.4); height: 120px; border-radius: 3px; color: #fff; font-size: 14px; text-align: center;position:absolute ; left: 50%; top: 50%; margin-left: -60px; margin-top: -350px;}
+.tcmain{width:100%; height:100%; position:absolute; z-index:999; display:none}
+.mui-input-row label ~ input, .mui-input-row label ~ select, .mui-input-row label ~ textarea{ width:68%}
+#pullrefresh .mui-table-view-cell { border-bottom:10px solid #efeff4;
+margin-bottom:10px}

@@ -82,7 +82,7 @@
                         <th width="130px"><strong>宿舍名称</strong></th>
                         <th width="130px"><strong>宿舍编号</strong></th>
                         <th width="130px"><strong>宿舍人员</strong></th>
-                        
+                        <%--<th width="130px"><strong>是否点检</strong></th>--%>
                         <th width="130px"><strong>操作日期</strong></th>
                         <th width="180px" width="130px"><strong>备注</strong></th>
                         <th width="130px"><strong>操作</strong></th>
@@ -97,7 +97,7 @@
                                 <td><%#Eval("DormiName")%></td>
                                 <td><%#Eval("DormiCode")%></td>
                                 <td><%#GetUserName(Eval("DormiUser"))%></td>
-                                
+                                <%--<td><%#GetIsCheck(Eval("IsCheck"))%></td>--%>
                                 <td><%#Eval("CreateDate","{0:yyyy-MM-dd HH:mm:ss}")%></td>
                                 <td><%#Eval("DormiDesc")%></td>
                                 <td>

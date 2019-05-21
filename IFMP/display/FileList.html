@@ -1,0 +1,371 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>飞龙大屏3-文件列表</title>
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/fl-daping.css">
+    <style type="text/css">
+        .mui-preview-image.mui-fullscreen {
+            position: fixed;
+            z-index: 20;
+            background-color: #000;
+        }
+
+        .mui-preview-header,
+        .mui-preview-footer {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            z-index: 10;
+        }
+
+        .mui-preview-header {
+            height: 44px;
+            top: 0;
+        }
+
+        .mui-preview-footer {
+            height: 50px;
+            bottom: 0px;
+        }
+
+        .mui-preview-header .mui-preview-indicator {
+            display: block;
+            line-height: 25px;
+            color: #fff;
+            text-align: center;
+            margin: 15px auto 4;
+            width: 70px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            font-size: 16px;
+        }
+
+        .mui-preview-image {
+            display: none;
+            -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+            .mui-preview-image.mui-preview-in {
+                -webkit-animation-name: fadeIn;
+                animation-name: fadeIn;
+            }
+
+            .mui-preview-image.mui-preview-out {
+                background: none;
+                -webkit-animation-name: fadeOut;
+                animation-name: fadeOut;
+            }
+
+                .mui-preview-image.mui-preview-out .mui-preview-header,
+                .mui-preview-image.mui-preview-out .mui-preview-footer {
+                    display: none;
+                }
+
+        .mui-zoom-scroller {
+            position: absolute;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .mui-zoom {
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+
+        .mui-slider .mui-slider-group .mui-slider-item img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+            width: 100%;
+        }
+
+        .mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+            display: inline-table;
+        }
+
+        .mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .mui-preview-loading {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: none;
+        }
+
+            .mui-preview-loading.mui-active {
+                display: block;
+            }
+
+            .mui-preview-loading .mui-spinner-white {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin-left: -25px;
+                margin-top: -25px;
+                height: 50px;
+                width: 50px;
+            }
+
+        .mui-preview-image img.mui-transitioning {
+            -webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        @-webkit-keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        p img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+
+</head>
+
+<body id="daping4">
+    <div class="dpfile-tit">文件列表</div>
+    <div class="header">
+        <div onclick="ChartShow()" class="logo ib"><img src="images/fl_03_3.png" /> </div>
+
+    </div>
+    <div class="mui-content">
+        <div id="Gallery" class="mui-slider">
+            <div class="mui-slider-group">
+
+            </div>
+            <div class="mui-slider-indicator">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/mui.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/mui.zoom.js"></script>
+<script src="js/mui.previewimage.js"></script>
+<script src="js/flexible.js"></script>
+<script src="../plugins/Common.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+    $(document).ready(function () {
+        //console.log(123);
+        //InitFileList();
+
+
+
+        mui.init();
+        mui.ready(function () {
+            InitData();
+
+            var slider = document.getElementById('Gallery');
+            var group = slider.querySelector('.mui-slider-group');
+            var items = mui('.mui-slider-item', group);
+            //克隆第一个节点
+            var first = items[0].cloneNode(true);
+            first.classList.add('mui-slider-item-duplicate');
+            //克隆最后一个节点
+            var last = items[items.length - 1].cloneNode(true);
+            last.classList.add('mui-slider-item-duplicate');
+            //处理是否循环逻辑，若支持循环，需支持两点：
+            //1、在.mui-slider-group节点上增加.mui-slider-loop类
+            //2、重复增加2个循环节点，图片顺序变为：N、1、2...N、1
+            var sliderApi = mui(slider).slider();
+
+            function toggleLoop(loop) {
+                if (loop) {
+                    group.classList.add('mui-slider-loop');
+                    group.insertBefore(last, group.firstChild);
+                    group.appendChild(first);
+                    sliderApi.refresh();
+                    sliderApi.gotoItem(0);
+                } else {
+                    group.classList.remove('mui-slider-loop');
+                    group.removeChild(first);
+                    group.removeChild(last);
+                    sliderApi.refresh();
+                    sliderApi.gotoItem(0);
+                }
+            }
+
+        });
+
+        mui.previewImage();
+    })
+
+    var ID = 0;
+
+
+    function ChartShow() {
+        window.location.href = "display.html";
+    }
+
+    function Back() {
+        //获取上级的ID
+        mui.ajax('../ashx/Resource.ashx?method=GetParentResourcePath&id=' + ID, {
+
+            async: false,
+            dataType: 'json',//服务器返回json格式数据
+            type: 'get',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            headers: { 'Content-Type': 'application/json' },
+            success: function (data) {
+                //服务器返回响应，根据响应结果，分析是否登录成功；
+                console.log(data.ParentID);
+                ID = data.ParentID;
+                InitData();
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+    }
+
+    function ChangePath(id) {
+        ID = id;
+        InitData();
+    }
+
+
+
+    function InitData() {
+        mui.ajax('../ashx/Resource.ashx?method=GetResourcePath&pathid=' + ID, {
+
+            async: false,
+            dataType: 'json',//服务器返回json格式数据
+            type: 'get',//HTTP请求类型
+            timeout: 10000,//超时时间设置为10秒；
+            headers: { 'Content-Type': 'application/json' },
+            success: function (data) {
+                //服务器返回响应，根据响应结果，分析是否登录成功；
+                console.log(data);
+                var count = 1;
+                var html = "<div class=\"mui-slider-item\"><ul class=\"mui-table-view mui-grid-view mui-grid-9\">";
+                var pointhtml = " <div class=\"mui-indicator mui-active\"></div>";
+                //加一个返回
+                if (ID != 0) {
+                    html = html + "<li class=\"mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-2\">";
+                    html = html + "<a onclick=\"Back(" + ID + ")\" >";
+                    html = html + " <span class=\"mui-icon\"><i></i><div class=\"dpfile-box\"></div></span>";
+                    html = html + "<div class=\"mui-media-body\">返回</div>";
+                    html = html + "</a></li>";
+                    count = count + 1;
+
+                }
+                //文件夹
+                for (var i = 0; i < data.ResourcePath.length; i++) {
+                    if (count > 12) {
+                        html = html + "</ul></div><div class=\"mui-slider-item\"><ul class=\"mui-table-view mui-grid-view mui-grid-9\">";
+                        count = 1;
+                        pointhtml = pointhtml + "<div class=\"mui-indicator\"></div>";
+                    }
+                    html = html + "<li class=\"mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-2\">";
+                    html = html + "<a onclick=\"ChangePath(" + data.ResourcePath[i].ID + ")\" >";
+                    html = html + " <span class=\"mui-icon\"><i></i><div class=\"dpfile-box\"></div></span>";
+                    html = html + "<div class=\"mui-media-body\">" + data.ResourcePath[i].Name + "</div>";
+                    html = html + "</a></li>";
+
+
+                    count = count + 1;
+                }
+                //文件
+                for (var i = 0; i < data.ResourceData.length; i++) {
+                    if (count > 12) {
+                        html = html + "</ul></div><div class=\"mui-slider-item\"><ul class=\"mui-table-view mui-grid-view mui-grid-9\">";
+                        count = 1;
+                        pointhtml = pointhtml + "<div class=\"mui-indicator\"></div>";
+                    }
+                    html = html + "<li class=\"mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-2\">";
+                    html = html + "<a onclick=\"ChangePahth(" + data.ResourceData[i].ID + ")\" >";
+                    html = html + " <span class=\"mui-icon\"><i></i><img src=\"" + data.ResourceData[i].Path + "\" data-preview-src=\"\" data-preview-group=\"1\"></span>";
+                    html = html + "<div class=\"mui-media-body\">" + data.ResourceData[i].Name + "</div>";
+                    html = html + "</a></li>";
+
+
+                    count = count + 1;
+                }
+
+                html = html + "</ul></div>";
+
+                $(".mui-slider-group").html(html);
+                $(".mui-slider-indicator").html(pointhtml);
+
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+    }
+
+
+</script>

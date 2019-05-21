@@ -1,0 +1,891 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>宿舍点检</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mui-content {
+            width: 100%;
+            flex: 1;
+            margin-bottom: 30px;
+            overflow: auto;
+        }
+
+        .halfbut {
+            width: 49.5%;
+            box-sizing: border-box;
+            float: left;
+        }
+
+            .halfbut + .halfbut {
+                margin-left: 1%;
+            }
+
+        .qk {
+            background-color: #ff5a92;
+        }
+
+            .qk input {
+                border: 1px solid #ff5a92 !important;
+                background-color: #ff5a92 !important;
+            }
+
+        .mui-table-view-cell:last-child:after {
+            height: 1px;
+        }
+
+        .mui-table-view:after {
+            height: 0px;
+        }
+
+        #demo2 {
+            width: 68%;
+            display: inline-block;
+            border: 0;
+            margin: 0;
+            margin-top: -25px;
+            font-size: 16px;
+            text-align: left;
+            height: 50px;
+            margin-bottom: -20px;
+        }
+
+        .ui-alert {
+            display: inline-block;
+            width: 70%;
+            background: #1296db;
+        }
+
+        .mui-content-padded {
+            margin-left: 3px;
+            margin-top: 20px !important;
+        }
+
+            .mui-content-padded:first-child {
+                margin-top: 12px !important;
+            }
+
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .sel {
+            width: 68% !important;
+        }
+
+        .mui-input-row .mui-btn {
+            padding: 0px;
+        }
+
+        .mui-input-row select {
+            font-size: 15px;
+        }
+
+        .xsuser {
+            display: block;
+        }
+
+
+        .selectdiv, .selectdivEventName {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #fff;
+            color: #494949;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .floatBottom {
+            background-color: #fff;
+            width: 100%;
+            position: fixed;
+            bottom: 50px;
+            z-index: 999;
+        }
+        .mui-input-group {
+            background-color: #eff0f2;
+        }
+
+            .mui-input-group:before .mui-input-group:after {
+                display: none;
+            }
+
+        .mui-input-row {
+            background-color: #fff;
+        }
+
+        .mui-content-padded {
+            margin-top: 0px;
+        }
+
+        #addList {
+            background: #eff0f2;
+        }
+
+        #newAdd {
+            overflow: hidden;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .newTitle {
+            text-align: right;
+            width: 100%;
+            height: 40px;
+        }
+
+            .newTitle .deleteItem {
+                width: 50px;
+                height: 40px;
+                line-height: 40px;
+                display: block;
+                float: right;
+                margin-right: 10px;
+                font-size: 16px;
+                color: #268dff;
+            }
+
+        #sLabel {
+            display: block;
+            width: 100%;
+        }
+
+        #ProDesc {
+            width: 100%;
+            text-indent: 2rem;
+            min-height: 120px;
+        }
+
+        .addButton {
+            background-color: #eff0f2;
+            color: #268dff;
+            text-align: center;
+            padding: 5px 0;
+        }
+
+            .addButton p {
+                text-align: left;
+                text-indent: 1rem;
+            }
+
+        .addBtn {
+            display: block;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+
+            .addBtn i {
+                font-size: 20px;
+                font-style: normal;
+            }
+
+        /*--------------选人修改样式-------------------*/
+        #sfxs {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            overflow-y: scroll;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 0px;
+        }
+
+        #close {
+            float: right;
+            display: block;
+            border: 1px solid #989898;
+            border-radius: 2px;
+            padding: 3px 10px;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .dangerTip {
+            width: calc(100% - .4rem);
+            height: auto;
+            /*border: 1px solid #ccc;*/
+            margin: .2rem;
+            box-sizing: border-box;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+
+        .dangerTip_title {
+            width: 100%;
+            text-align: left;
+            text-indent: 12px;
+            padding: 2px 0;
+        }
+
+        .dangerTip_list {
+            width: 100%;
+        }
+
+            .dangerTip_list li {
+                text-align: left;
+                text-indent: 12px;
+                padding: 5px 0;
+                box-sizing: border-box;
+                display: flex;
+            }
+
+            .dangerTip_list .dangerTip_content {
+                flex: 1;
+                word-wrap: break-word;
+                word-break: break-all;
+                overflow: hidden;
+                color: #212121;
+                font-size: 13px;
+            }
+        .selectBtn {
+            text-indent: 0rem;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            position: relative;
+            margin-right: 4px;
+        }
+
+            .selectBtn .mui-icon {
+                position: absolute;
+                top: 0;
+                left: 0;
+                color: #2BA245;
+            }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <ul class="mui-table-view" id="sfxs"></ul>
+        <!--切换按钮-->
+        <!--<div style="padding: 10px 10px;">
+            <div id="segmentedControl" class="mui-segmented-control">
+                <a class="mui-control-item  mui-active" href="RegistrationEdit.html">奖扣添加</a>
+                <a class="mui-control-item" href="RegistrationSHZList.html">审核中</a>
+                <a class="mui-control-item " href="RegistrationYWCList.html">已完成</a>
+            </div>
+        </div>-->
+        <div style="padding: 10px 10px;">
+        </div>
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>宿舍</label>
+                <select class="mui-btn mui-btn-block sel" id="DormitorySel"></select>
+            </div>
+
+            <div class="mui-input-row">
+                <label>
+                    宿舍评分
+                <!--</label><input type="text" id="SpotScore" placeholder="请在此填写分数(必填)" readonly="true" />-->
+                </label><input type="text" id="SpotScore" readonly="true" />
+            </div>
+            <div class="mui-input-row" style="
+    background-color: #eff0f2">
+                <label style="height: 25px;font-size: 11px;color: #666;">录入问题</label>
+            </div>
+            <ul id="addList"></ul>
+            <div class="addButton">
+                <p>如需要添加多个问题，请点击"添加更多"</p>
+                <a href="javascript:void(0)" class="addBtn addProblem">
+                    <i>+</i>
+                    <span>添加更多</span>
+                </a>
+            </div>
+            <div class="fn-clear floatBottom">
+                <div class="btn_Sumbit-a">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" style="color:#fff !important;z-index:999 !important; " onclick='tj()' value="提交">
+                </div>
+                <!--<div class="btn_Sumbit-a  halfbut qk">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block" style="color:#fff !important;" onclick='qk()' value="清空">
+                </div>-->
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+    </nav>
+</body>
+
+</html>
+<script type="text/javascript">
+    var item = "";
+    
+    var problemIDList = [];
+    
+    $(function () {
+        //绑定宿舍
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetDormitoryMarks",
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true" && d.data.length > 0) {
+                    var item1 = "<option value=\"-2\">请选择</option>";
+                    for (var i = 0; i < d.data.length; i++) {
+                        item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                    }
+                    $("#DormitorySel").html(item1);
+                }
+                else {
+                    alert("请在“宿舍批量点检”中先行评分");
+                    window.location.href = "../index.html";
+                }
+            },
+            error: function () { alert("宿舍查询出错，请稍候再试"); }
+        });
+    });
+    //var imageFile = document.getElementById("ImgUrl").files[0];
+
+    //var target = $('#newAdd');
+    var target = '<div class="mui-input-row"><label>问题责任人</label><select class="mui-btn mui-btn-block sel UserSel" id="UserSel"></select></div><div class="mui-input-row"><label>上传图片</label><div class="righttext"><span class="mui-icon mui-icon-paperclip file"><input id="ImgUrl" class="ImgUrl" type="file" onchange="fj(this)" accept="image/*" /></span></div><div id="textName" style="width: 100%; padding: 0px 15px; clear: both; line-height: 20px;"></div></div> <div class="mui-input-row">$</div><div class="mui-input-row"><label id=" slabel">宿舍问题描述</label><textarea id="ProDesc" class="ProDesc" placeholder="请在此填写宿舍问题描述"></textarea></div>';
+    var list = $('#addList');
+    var dormitoryid = -2;
+    var image = "", optionList = [], result = "", count = 0;
+
+    $(function () {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetSelectProblem",
+            dataType: "json",
+            success: function (data) {
+                if (data.result == 'true') {
+                    result = data.data;
+                }
+            },
+            error: function () { alert("查询出错，请稍候再试"); }
+        })
+    });
+
+    $(".addProblem").on("tap", function () {
+        if (dormitoryid < 0) {
+            alert("请先选择宿舍");
+        } else {
+            count++;
+
+            var problemID = [];
+            var newArr = target.split("$");
+
+            var str = "";
+            var newTarget = "";
+
+            str += '<div class="dangerTip">';
+            str += '<div class="dangerTip_title">常见问题</div>';
+            str += '<ul class="dangerTip_list">';
+            if (result.length == 0) {
+                str += '<div class="dangerTip_content">' + "暂无常见问题" + '</div>';
+            } else {
+                for (var i in result) {
+                    str += '<li class="dangerTip_li" id=' + result[i].value + ' onclick="toSwitch(this,' + i + ',' + count + ')">';
+                    str += '<div class="dangerTip_content">' + result[i].text + '</div>';
+                    str += '<div class="selectBtn"><i style="display:none" class="mui-icon mui-icon-checkmarkempty"></i></div></li>';
+                    problemID.push({ id: result[i].value, text: result[i].text, isConfirm: false });
+                };
+            }
+            
+            problemIDList.push(problemID);
+            str += '</ul></div>';
+            newTarget = newArr[0] + str + newArr[1];
+
+            var newDiv = document.createElement('li');
+            newDiv.id = "newAdd";
+            newDiv.innerHTML = '<div class="newTitle"><a href="javascript:void(0)" class="deleteItem">删除</a></div>';
+
+            newDiv.innerHTML += newTarget;
+
+            list.append(newDiv);
+
+            var item1 = "<option value=\"-2\">请选择</option>";
+            for (var i = 0; i < optionList.length; i++) {
+                item1 += "  <option value=\"" + optionList[i].value + "\">" + optionList[i].text + "</option>";
+            }
+
+            var l = $(".UserSel");
+            $(".UserSel")[l.length - 1].innerHTML = item1;
+
+            var deleteBtn = $(".deleteItem");
+            deleteBtn = deleteBtn.eq(deleteBtn.length - 1);
+            deleteBtn.on("tap", function () {
+                $(this).parent().parent().remove();
+            })
+
+        }
+    });
+
+    function toSwitch(that, index, count) {
+        problemIDList[count - 1][index].isConfirm = !problemIDList[count - 1][index].isConfirm;
+
+        var i = $(that).find('i')[0];
+        if (problemIDList[count-1][index].isConfirm) {
+            i.style.display = "block";
+        } else {
+            i.style.display = "none";
+        }
+
+        console.log(problemIDList);
+    }
+
+    mui('#segmentedControl').on('tap', 'a', function () {
+        document.location.href = this.href;
+    });
+    var isks = true;
+    var id = getUrlParam("id");
+    var score = "";
+    var spotid = "";
+    $("#DormitorySel").change(function () {
+        dormitoryid = $("#DormitorySel").find("option:selected").val();
+        //DateBind(dormitoryid);
+        $("#addList").html("");
+        DateBind(dormitoryid);
+        ScoreBind(dormitoryid);
+        console.log(score);
+        console.log(spotid);
+        document.getElementById("SpotScore").value = score;
+    })
+
+    //绑定宿舍分数
+    function ScoreBind(dormitoryid) {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetScoreByDor&dormitoryid=" + dormitoryid,
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true") {
+                    score = d.data[0].score;
+                    spotid = d.data[0].spotid;
+                }
+            },
+            error: function () {; alert("宿舍分数查询出错，请稍候再试"); }
+        });
+    }
+
+    //绑定宿舍人员
+    function DateBind(dormitoryid) {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetDorUser&dormitoryid=" + dormitoryid,
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true") {
+                    optionList = d.data;
+                    //var item1 = "<option value=\"-2\">请选择</option>";
+                    //for (var i = 0; i < d.data.length; i++) {
+                    //    item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                    //}
+                    //$("#UserSel").html(item1);
+
+                }
+            },
+            error: function () {; alert("宿舍人员查询出错，请稍候再试"); }
+        });
+    }
+    
+    mui(".mui-collapse-content").on('tap', '.choose', function (event) {
+        this.click();
+    });
+
+    function tj() {
+        var desc = [], dutyuser = [];
+        var image = $("#ImgUrl").val();
+        var descList = $(".ProDesc");
+        var dutyUserList = $(".UserSel");
+        var imagelist = $(".ImgUrl");
+        var problem = [];
+        for (var i = 0; i < problemIDList.length; i++) {
+            var templet = [];
+            for (var j = 0; j < problemIDList[i].length; j++) {
+                if (problemIDList[i][j].isConfirm) {
+                    templet.push(problemIDList[i][j].id);
+                }
+            }
+            problem.push(templet)
+            
+        }
+        console.log(problem);
+
+        if (descList.length > 0) {
+            for (var i = 0; i < descList.length; i++) {
+                desc.push(descList[i].value);
+            }
+        }
+
+        if (dutyUserList.length > 0) {
+            for (var i = 0; i < dutyUserList.length; i++) {
+                dutyuser.push(dutyUserList[i].value);
+            }
+        }
+
+        isks = false;
+        if ($("#DormitorySel").find("option:selected").val() == "-2") {
+            alert("请选择宿舍");
+            bl = false;
+            return;
+        }
+        //if ($("#UserSel").find("option:selected").val() == "-2") {
+        //    alert("请选择责任人");
+        //    bl = false;
+        //    return;
+        //}
+        //if ($("#SpotScore").val() == null || $("#SpotScore").val() == "") {
+        //    alert("请填写分数");
+        //    bl = false;
+        //    return;
+        //}
+        if (descList.length == 0) {
+            alert("请录入问题");
+            bl = false;
+            return;
+        }
+        if (document.getElementById("UserSel")) {
+            for (var i = 0; i < dutyUserList.length; i++) {
+                if (dutyuser[i] == -2) {
+                    alert("请选择责任人");
+                    bl = false;
+                    return;
+                }
+            }
+            for (var j = 0; j < descList.length; j++) {
+                if (desc[j] == "") {
+                    if (problem[j] == "") {
+                        if (imagelist[j].files[0] == null) {
+                            alert("请填写完整的信息");
+                            bl = false;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        //if ($("#UserSel").find("option:selected").val() != "-2") {
+        //    if ($("#ProDesc").val() == null || $("#ProDesc").val() == "") {
+        //        alert("请填写宿舍问题描述");
+        //        bl = false;
+        //        return;
+        //    }
+        //}
+        $("#xs input").each(function () {
+            if ($(this).attr("id") != "txt-0") {
+                if ($("#" + $(this).attr("id")).val() == "0") {
+                    bl = false;
+                    return bl;
+                }
+            }
+        });
+
+        $("#bt").attr("disabled", "disabled");
+        $("#bt").val("正在上传...");
+
+        var flag = false;
+        var isallfinish = true;
+        if (imagelist.length > 0) {
+            //这个判断是否全部完成
+            var IsFinish = [];
+            for (var i = 0; i < imagelist.length; i++) {
+                IsFinish.push(false);
+            }
+            for (var i = 0; i < imagelist.length; i++) {
+                var imageFile = imagelist[i].files[0];
+                if (imageFile != null) {
+                    if (imageFile.size > 1000000) {
+                        unity.photoCompressFinish(imageFile, { quality: 0.15 }, function (base64Codes, number) {
+                            var formFile = new FormData();
+                            formFile.append("method", "SpotProblemAdd");
+                            formFile.append("SpotScore", $("#SpotScore").val());
+                            formFile.append("DormitorySel", $("#DormitorySel").find("option:selected").val());
+                            formFile.append("ImgUrl", base64Codes);
+                            formFile.append("spotid", spotid);
+                            formFile.append("ProDesc", desc[number]);
+                            formFile.append("DutyUser", dutyuser[number]);
+                            formFile.append("problemIDList", problem[number]);
+                            formFile.append("index", number);
+                            $.ajax({
+                                url: "../ashx/GetMainData.ashx",
+                                type: "post",
+                                cache: false,
+                                async: false,
+                                processData: false,
+                                contentType: false,
+                                data: formFile,
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.result == 'true') {
+                                        flag = true;
+                                    }
+                                    else {
+                                        if (isallfinish) {
+                                            isallfinish = false;
+                                            alert("保存失败，您没有今天的点检权限");
+                                            window.location.href = "../app/DormitoryScore.html";
+                                        }
+                                    }
+                                    $("#bt").attr("style", "display:block");
+                                },
+                                error: function () {
+                                    if (isallfinish) {
+                                        isallfinish = false;
+                                        alert("保存失败，您没有今天的点检权限");
+                                        window.location.href = "../app/DormitoryScore.html";
+                                    }
+                                    $("#bt").attr("disabled", "");
+                                    $("#bt").val("提交");
+                                }
+                            })
+                            IsFinish[number] = true;
+
+                            if (unity.fliterdata(function (e) { return e == false }, IsFinish) == null && flag && isallfinish) {
+                                isallfinish = false;
+                                alert("保存成功");
+                                window.location.href = "../app/DormitoryScore.html";
+                            }
+
+                        }, i)
+                    }
+                    else {
+                        unity.photoCompressFinish(imageFile, { quality: 0.7 }, function (base64Codes, number) {
+                            var formFile = new FormData();
+                            formFile.append("method", "SpotProblemAdd");
+                            formFile.append("SpotScore", $("#SpotScore").val());
+                            formFile.append("DormitorySel", $("#DormitorySel").find("option:selected").val());
+                            formFile.append("ImgUrl", base64Codes);
+                            formFile.append("spotid", spotid);
+                            formFile.append("ProDesc", desc[number]);
+                            formFile.append("DutyUser", dutyuser[number]);
+                            formFile.append("problemIDList", problem[number]);
+                            formFile.append("index", number);
+                            $.ajax({
+                                url: "../ashx/GetMainData.ashx",
+                                type: "post",
+                                cache: false,
+                                async: false,
+                                processData: false,
+                                contentType: false,
+                                data: formFile,
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data.result == 'true') {
+                                        flag = true;
+                                    }
+                                    else {
+                                        if (isallfinish) {
+                                            isallfinish = false;
+                                            alert("保存失败，您没有今天的点检权限");
+                                            window.location.href = "../app/DormitoryScore.html";
+                                        }
+                                    }
+                                    $("#bt").attr("style", "display:block");
+                                },
+                                error: function () {
+                                    if (isallfinish) {
+                                        isallfinish = false;
+                                        alert("保存失败，您没有今天的点检权限");
+                                        window.location.href = "../app/DormitoryScore.html";
+                                    }
+                                    $("#bt").attr("disabled", "");
+                                    $("#bt").val("提交");
+                                }
+                            })
+
+                            IsFinish[number] = true;
+                            if (unity.fliterdata(function (e) { return e == false }, IsFinish) == null && flag && isallfinish) {
+                                isallfinish = false;
+                                alert("保存成功");
+                                window.location.href = "../app/DormitoryScore.html";
+                            }
+                        }, i)
+                    }
+                }
+                else {
+                    var formFile = new FormData();
+                    formFile.append("method", "SpotProblemAdd");
+                    formFile.append("SpotScore", $("#SpotScore").val());
+                    formFile.append("spotid", spotid);
+                    formFile.append("DormitorySel", $("#DormitorySel").find("option:selected").val());
+                    formFile.append("ProDesc", desc[i]);
+                    formFile.append("DutyUser", dutyuser[i]);
+                    formFile.append("problemIDList", problem[i]);
+                    formFile.append("index", i);
+                    formFile.append("ImgUrl", "");
+                    $.ajax({
+                        url: "../ashx/GetMainData.ashx",
+                        type: "post",
+                        cache: false,
+                        async: false,
+                        processData: false,
+                        contentType: false,
+                        data: formFile,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.result == 'true') {
+                                flag = true;
+                            }
+                            else {
+                                if (isallfinish) {
+                                    isallfinish = false;
+                                    alert("保存失败，您没有今天的点检权限");
+                                    window.location.href = "../app/DormitoryScore.html";
+                                }
+                            }
+                            $("#bt").attr("style", "display:block");
+                        },
+                        error: function () {
+                            if (isallfinish) {
+                                isallfinish = false;
+                                alert("保存失败，您没有今天的点检权限");
+                                window.location.href = "../app/DormitoryScore.html";
+                            }
+                            $("#bt").attr("disabled", "");
+                            $("#bt").val("提交");
+                        }
+                    })
+
+                    IsFinish[i] = true;
+                    if (unity.fliterdata(function (e) { return e == false }, IsFinish) == null && flag && isallfinish) {
+                        isallfinish = false;
+                        alert("保存成功");
+                        window.location.href = "../app/DormitoryScore.html";
+                    }
+                }
+            }
+        }
+        //else {
+        //    var formFile = new FormData();
+        //    formFile.append("method", "SpotProblemAdd");
+        //    formFile.append("SpotScore", $("#SpotScore").val());
+        //    formFile.append("spotid", spotid);
+        //    formFile.append("DormitorySel", $("#DormitorySel").find("option:selected").val());
+        //    formFile.append("ProDesc", "");
+        //    formFile.append("DutyUser", -2);
+        //    formFile.append("index", 0);
+        //    formFile.append("ImgUrl", "");
+        //    $.ajax({
+        //        url: "../ashx/GetMainData.ashx",
+        //        type: "post",
+        //        cache: false,
+        //        async: false,
+        //        processData: false,
+        //        contentType: false,
+        //        data: formFile,
+        //        dataType: "json",
+        //        success: function (data) {
+        //            if (data.result == 'true') {
+        //                alert("保存成功");
+        //                window.location.href = "../app/DormitoryScore.html";
+        //            }
+        //            else {
+        //                if (isallfinish) {
+        //                    isallfinish = false;
+        //                    alert("保存失败，您没有今天的点检权限");
+        //                    window.location.href = "../app/DormitoryScore.html";
+        //                }
+        //            }
+        //            $("#bt").attr("style", "display:block");
+        //        },
+        //        error: function () {
+        //            if (isallfinish) {
+        //                isallfinish = false;
+        //                alert("保存失败，您没有今天的点检权限");
+        //                window.location.href = "../app/DormitoryScore.html";
+        //            }
+        //            $("#bt").attr("disabled", "");
+        //            $("#bt").val("提交");
+        //        }
+        //    })
+
+        //}
+
+        //$("#bt").attr("disabled", "");
+        //$("#bt").val("提交");
+    }
+
+    function fj(obj) {
+        var arr = $(obj).val().split('\\');
+        console.log(arr);
+        $(obj).parent().parent().next().html(arr[arr.length - 1]);
+    }
+    function kjsz() {
+        $("#xs input").each(function () {
+            $(this).val($("#txt-0").val());
+        });
+    }
+    function jiaorjian(obj) {
+        if ($(obj).attr("src") == "../images/allpic.png") {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allinpic.png");
+                }
+            });
+        }
+        else {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allpic.png");
+                }
+            });
+        }
+    }
+    var time = setInterval(function () {
+        if (isks) {
+            localStorage.setItem("VDate", $("#hf_begin").val());
+        }
+    }, 1000);
+    function qk() {
+        var target = $('#newAdd');
+        var list = $('#addList');
+        var newDiv = document.createElement('li');
+        newDiv.id = "newAdd";
+        newDiv.innerHTML = target.html();
+        list.html(newDiv);
+    }
+</script>

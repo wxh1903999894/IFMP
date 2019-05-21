@@ -1,0 +1,151 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>问题详情</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+</head>
+<body>
+    <div class="mui-content">
+        <div style="padding: 10px 10px;">
+        </div>
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>
+                    时间
+                </label>
+                <input type="text" id="VDate" />
+            </div>
+            <div class="mui-input-row">
+                <label>问题描述</label>
+                <textarea type="text" id="ProDesc" readonly="true" style='overflow-y: hidden;'></textarea>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    常见问题
+                </label><textarea type="text" id="Problem" readonly="true" style='overflow-y: hidden;'></textarea>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    图片
+                </label>
+                <img id="SImage" class="pimg" width="100px" height="100px" />
+            </div>
+            <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+                <div id="innerdiv" style="position:absolute;">
+                    <img id="bigimg" style="border:5px solid #fff;" src="" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <!--<a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>-->
+    </nav>
+</body>
+</html>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+   
+    $(function () {
+        var SpId = getUrlParam("SpId");
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET",
+            async: false,
+            data: "method=ImageDetail&SpId=" + SpId,
+            dataType: "json",
+            success: function (data) {
+                if (data.result == "true") {
+                    $("#VDate").val(data.data[0].CreateDate).attr("readonly", "readonly");
+                    $("#ProDesc").val(data.data[0].ProDesc).attr("readonly", "readonly");
+                    var problemstr = "";
+                    var proarray = data.data[0].Problem.split('&');
+                    if (proarray[0] != "") {
+                        for (var i = 1; i <= proarray.length; i++) {
+                            problemstr += i + ". " + proarray[i - 1] + "\n"
+                        }
+                    }
+                    $("#Problem").val(problemstr).attr("readonly", "readonly");
+                    var ProDesc = document.getElementById('ProDesc');
+                    ProDesc.style.height = ProDesc.scrollHeight + 'px';
+                    var Problem = document.getElementById('Problem');
+                    Problem.style.height = Problem.scrollHeight + 'px';
+                    if (data.data[0].SImage == "") {
+                        $("#SImage").attr("style", "display:none");
+                    }
+                    else {
+                        $("#SImage").attr("src", data.data[0].SImage);
+                    }
+                }
+            },
+            error: function () { alert("查询出错，请稍候再试"); }
+        });
+    });
+
+    $(function () {
+
+        $(".pimg").click(function () {
+            var _this = $(this);//将当前的pimg元素作为_this传入函数
+            imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+        });
+    });
+
+    function imgShow(outerdiv, innerdiv, bigimg, _this) {
+        var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+        $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).load(function () {
+            var windowW = $(window).width();//获取当前窗口宽度
+            var windowH = $(window).height();//获取当前窗口高度
+            var realWidth = this.width;//获取图片真实宽度
+            var realHeight = this.height;//获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) {//判断图片高度
+                imgHeight = windowH * scale;//如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth;//等比例缩放宽度
+                if (imgWidth > windowW * scale) {//如宽度扔大于窗口宽度
+                    imgWidth = windowW * scale;//再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) {//如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale;//如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight;//等比例缩放高度
+            } else {//如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigimg).css("width", imgWidth);//以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2;//计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2;//计算图片与窗口上边距
+            $(innerdiv).css({ "top": h, "left": w });//设置#innerdiv的top和left属性
+            $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+        });
+
+        $(outerdiv).click(function () {//再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+</script>

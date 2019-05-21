@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>积分奖扣</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+</head>
+<body>
+    <div class="mui-content">
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>
+                    时间
+                </label>
+                <input type="text" id="VDate" />
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    主题
+                </label>
+                <input type="text" id="STitle" />
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    事件
+                </label>
+                <input type="text" id="EventName" />
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    描述
+                </label>
+                <textarea id="EventMark"></textarea>
+            </div>
+
+            <div id="div"></div>
+            <div class="mui-input-row">
+                <label>
+                    记录人
+                </label>
+                <input type="text" id="VUserName" />
+            </div>
+            <div id="cs" style="display:none;">
+                <div class="mui-input-row">
+                    <label>初审人</label>
+                    <input type="text" id="FirstAduitUserName" />
+                </div>
+                <div class="mui-input-row">
+                    <label>初审日期</label>
+                    <input type="text" id="FirstAduitDate" />
+                </div>
+            </div>
+            <div id="zs" style="display:none;">
+                <div class="mui-input-row">
+                    <label>说明</label>
+                    <input type="text" id="FirstAduitMark" />
+                </div>
+                <div class="mui-input-row">
+                    <label>终审人</label>
+                    <input type="text" id="LastAduitUserName" />
+                </div>
+                <div class="mui-input-row">
+                    <label>终审日期</label>
+                    <input type="text" id="LastAduitDate" />
+                </div>
+                <div class="mui-input-row">
+                    <label>说明</label>
+                    <input type="text" id="LastAduitMark" />
+                </div>
+                <div class="mui-input-row">
+                    <label>状态</label>
+                    <input type="text" id="AduitStateName" />
+                </div>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    图片
+                </label>
+                <img id="SImage" class="pimg" width="100px" height="100px" />
+            </div>
+            <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none;">
+                <div id="innerdiv" style="position:absolute;">
+                    <img id="bigimg" style="border:5px solid #fff;" src="" />
+                </div>
+            </div>
+            <div id="divsh">
+                <div class="mui-input-row" style="color: #2abbb4;">
+                    <label>审核状态</label>
+                    <select style="font-size: 16px; color: #2abbb4; width: 68% !important; padding-left: 0px" class="mui-btn mui-btn-block sel" id="AduitState"></select>
+                </div>
+                <div contenteditable="true" id="div_AduitMark" class="multipletext mui-input-row" placeholder="请在此填写审核意见"></div>
+                <div class="btn_Sumbit-a">
+                    <input type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" onclick='tj()' value="提交" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+</body>
+</html>
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8">
+    $(function () {
+        var sid = getUrlParam("id");
+        var flag = getUrlParam("flag");
+        if (flag == 1) {    //审核
+            $("#divsh").attr("style", "display:block");
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET",
+                data: "method=GetAuditState",
+                dataType: "json",
+                success: function (d) {
+                    if (d.result == "true") {
+                        var item = "<option value=\"-2\" >请选择</option>";
+                        for (var i = 2; i < d.data.length - 1; i++) {
+                            item += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                        }
+                        $("#AduitState").html(item);
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试"); }
+            });
+        }
+        else {
+            $("#divsh").attr("style", "display:none");
+        }
+        $.ajax({
+            url: "../ashx/Integral.ashx",
+            cache: false, type: "GET",
+            async: false,
+            data: "method=IntegralDetai&id=" + sid,
+            dataType: "json",
+            success: function (data) {
+                if (data.result == "true") {
+                    for (var i = 0; i < data.data.length; i++) {
+                        $("#VDate").val(data.data[i].VDate).attr("readonly", "readonly");
+                        $("#STitle").val(data.data[i].STitle).attr("readonly", "readonly");
+                        $("#EventName").val(data.data[i].EventNames).attr("readonly", "readonly");
+                        $("#EventMark").val(data.data[i].EventMark).attr("readonly", "readonly");
+                        $("#VUserName").val(data.data[i].VUserName).attr("readonly", "readonly");
+                        if (flag == 1) {
+                            if (data.data[i].AduitState == "1") {
+                                $("#cs").attr("style", "display:none");
+                                $("#zs").attr("style", "display:none");
+                            }
+                            if (data.data[i].AduitState == "2") {
+                                $("#cs").attr("style", "display:block");
+                                $("#zs").attr("style", "display:none");
+                                $("#FirstAduitUserName").val(data.data[i].FirstAduitUserName).attr("readonly", "readonly");
+                                $("#FirstAduitDate").val(data.data[i].FirstAduitDate).attr("readonly", "readonly");
+                            }
+                        }
+                        else {
+                            $("#cs").attr("style", "display:block");
+                            $("#zs").attr("style", "display:block");
+                            $("#FirstAduitUserName").val(data.data[i].FirstAduitUserName).attr("readonly", "readonly");
+                            $("#LastAduitUserName").val(data.data[i].LastAduitUserName).attr("readonly", "readonly");
+                            $("#FirstAduitDate").val(data.data[i].FirstAduitDate).attr("readonly", "readonly");
+                            $("#LastAduitDate").val(data.data[i].LastAduitDate).attr("readonly", "readonly");
+                            $("#FirstAduitMark").val(data.data[i].FirstAduitMark).attr("readonly", "readonly");
+                            $("#LastAduitMark").val(data.data[i].LastAduitMark).attr("readonly", "readonly");
+                            $("#AduitStateName").val(data.data[i].AduitStateName).attr("readonly", "readonly");
+                        }
+                        if (data.data[i].SImage == "") {
+                            $("#SImage").attr("style", "display:none");
+                        }
+                        else {
+                            $("#SImage").attr("src", data.data[i].SImage);
+                        }
+                    }
+                    $.ajax({
+                        url: "../ashx/Integral.ashx",
+                        cache: false, type: "GET",
+                        data: "method=GetUser&sid=" + sid,
+                        dataType: "json",
+                        success: function (data1) {
+                            if (data1.result == "true") {
+                                var item = "";
+                                for (var j = 0; j < data1.data.length; j++) {
+                                    //if (flag == 1) {
+                                    item += " <div class=\"mui-input-row\" style=\"color: #2ABBB4;\">";
+                                    //}
+                                    //else {
+                                    //    item += " <div class=\"mui-input-row\">";
+                                    //}
+                                    item += " <label>" + data1.data[j].RewardUserName + "</label>";
+                                    item += " <label>" + data1.data[j].BScore + "分</label>";
+                                    item += "</div>";
+                                }
+                                $("#div").html(item);
+                            }
+                        }
+                    })
+                }
+            },
+            error: function () { alert("查询出错，请稍候再试"); }
+        });
+    })
+    function tj() {
+        var sid = getUrlParam("id");
+        if ($("#AduitState").find("option:selected").val() == -2) {
+            alert("请选择审核状态");
+        }
+        else {
+            if ($("#AduitState").find("option:selected").val() == 4 && $("#div_AduitMark").text() == "") {
+                alert("驳回请输入审核意见");
+            }
+            else {
+                $.ajax({
+                    url: "../ashx/GetMainData.ashx",
+                    cache: false, type: "GET",
+                    data: "method=GetBuckleRegistrationAudit&SID=" + sid + "&AduitState=" + $("#AduitState").find("option:selected").val() + "&AduitMark=" + $("#div_AduitMark").text(),
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.result == "true") {
+                            alert("审核成功");
+                            window.location.href = "IntergralAudit.html";
+                        }
+                        else {
+                            alert("审核失败");
+                        }
+                    },
+                    error: function () { alert("查询出错，请稍候再试"); }
+                });
+            }
+        }
+    }
+    $(function () {
+
+        $(".pimg").click(function () {
+            var _this = $(this);//将当前的pimg元素作为_this传入函数
+            imgShow("#outerdiv", "#innerdiv", "#bigimg", _this);
+        });
+    });
+
+    function imgShow(outerdiv, innerdiv, bigimg, _this) {
+        var src = _this.attr("src");//获取当前点击的pimg元素中的src属性
+        $(bigimg).attr("src", src);//设置#bigimg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).load(function () {
+            var windowW = $(window).width();//获取当前窗口宽度
+            var windowH = $(window).height();//获取当前窗口高度
+            var realWidth = this.width;//获取图片真实宽度
+            var realHeight = this.height;//获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.8;//缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) {//判断图片高度
+                imgHeight = windowH * scale;//如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth;//等比例缩放宽度
+                if (imgWidth > windowW * scale) {//如宽度扔大于窗口宽度
+                    imgWidth = windowW * scale;//再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) {//如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale;//如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight;//等比例缩放高度
+            } else {//如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigimg).css("width", imgWidth);//以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2;//计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2;//计算图片与窗口上边距
+            $(innerdiv).css({ "top": h, "left": w });//设置#innerdiv的top和left属性
+            $(outerdiv).fadeIn("fast");//淡入显示#outerdiv及.pimg
+        });
+
+        $(outerdiv).click(function () {//再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+</script>

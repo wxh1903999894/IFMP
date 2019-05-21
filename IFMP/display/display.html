@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="description" content="不超过150个字符" />
+    <meta name="keywords" content="" />
+    <meta content="caibaojian" name="author" />
+    <title>飞龙大屏</title>
+    <link rel="stylesheet" href="css/layui.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css"><!--时钟-->
+    <link rel="stylesheet" href="css/fl-daping.css">
+    <!--自适应插件-->
+    <script src="js/flexible.js"></script>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin fl-daping2">
+        <!--第一行-->
+        <div class="dpbox dpbox1 selectable">
+            <div id="containerleftup" style="width: 90%;height: 90%;margin: 5% auto 0"></div>
+        </div>
+        <div class="dpbox dpbox2 selectable">
+            <div id="containerleftdown" style="width: 90%;height: 90%;margin: 5% auto 0"></div>
+        </div>
+        <div class="dpbox dpbox3">
+            <div class="header2-1">
+                <div onclick="PicShow()" class="logo ib"><img src="images/fl_03_2.png" /> </div>
+                <span class="data ib"></span>
+                <div class="flclock ib">
+                    <main class="ib">
+                        <!-- 星期几 -->
+                        <div class="days">
+                            <div class="day">
+                                <p class="sunday">周日</p>
+                            </div>
+                            <div class="day">
+                                <p class="monday">周一</p>
+                            </div>
+                            <div class="day">
+                                <p class="tuesday">周二</p>
+                            </div>
+                            <div class="day">
+                                <p class="wednesday">周三</p>
+                            </div>
+                            <div class="day">
+                                <p class="thursday">周四</p>
+                            </div>
+                            <div class="day">
+                                <p class="friday">周五</p>
+                            </div>
+                            <div class="day">
+                                <p class="saturday">周六</p>
+                            </div>
+                        </div>
+                        <!-- CLOCK -->
+                        <div class="clock">
+                            <!-- 小时 -->
+                            <div class="numbers">
+                                <p class="hours"></p>
+                                <p class="placeholder">88</p>
+                            </div>
+                            <div class="colon">
+                                <p>:</p>
+                            </div>
+                            <!-- 分 -->
+                            <div class="numbers">
+                                <p class="minutes"></p>
+                                <p class="placeholder">88</p>
+                            </div>
+
+                            <div class="colon">
+                                <p>:</p>
+                            </div>
+                            <!-- 秒 -->
+                            <div class="numbers">
+                                <p class="seconds"></p>
+                                <p class="placeholder">88</p>
+                            </div>
+                            <!-- 上午 / 下午 -->
+                            <div class="am-pm">
+                                <!-- AM -->
+                                <div>
+                                    <p class="am">am</p>
+                                </div>
+                                <!-- PM -->
+                                <div>
+                                    <p class="pm">pm</p>
+                                </div>
+                            </div>
+                        </div><!-- END CLOCK -->
+                    </main>
+                </div>
+                <div class="ib" style="width: 1px;height: 100%"></div>
+            </div>
+            <div class="header2-2">
+                <marquee behavior="scroll" direction="left" class="ib frt">
+                    <p id="time"></p>
+                </marquee>
+            </div>
+            <div class="lb2-main selectable">
+                <div id="containercenter" style="width: 100%;height: 100%"></div>
+            </div>
+        </div>
+        <div class="dpbox dpbox4 selectable">
+            <div id="containerrightup" style="width: 90%;height: 90%;margin: 5% auto 0"></div>
+        </div>
+        <div class="dpbox dpbox5 selectable">
+            <div id="containerrightdown" style="width: 90%;height: 90%;margin: 6% auto 0"></div>
+        </div>
+
+    </div>
+</body>
+</html>
+
+<script>
+    var chartarray = ["折线图", "饼图", "柱状图"];
+    var containerarray = ["containercenter", "containerleftup", "containerleftdown", "containerrightup", "containerrightdown"];
+    var containerchangearray = ["true", "true", "true", "true", "true"];
+    var selcolumn = "";
+    var isrefresh = true;
+    var time = 20000;
+</script>
+
+<script src="js/layui.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/echarts.common.min.js"></script>
+<script src="js/fl-daping.js"></script>
+<script src="../plugins/Common.js"></script>
+<script src="../plugins/BuildChart.js"></script>
+<script>
+    layui.use('element', function () {
+        var element = layui.element;
+        DoRefresh();
+    });
+
+    //表单启用
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+    })
+
+    //年份选择器启用
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        //年份选择器常规用法
+        laydate.render({
+            elem: '#test1',
+        });
+    });
+    var tt = $("marquee").height();
+    $("#time").css("line-height", tt + "px");
+
+    //设立5个定时器，分别给每个位置的表单添加刷新计数
+    //长连接，超时自动替换，非超时修改将重置超时时间到较长的情况
+    //可实时更新当前的画面
+
+
+    $(".selectable").click(function () {
+        //layer.closeAll();
+        //var selecttype = $(this).children(0)[0].id;
+        //if (selecttype != null || selecttype != "") {
+        //    layer.open({
+        //        type: 2,
+        //        title: '选择表单',
+        //        //shadeClose: true,
+        //        shade: true,
+        //        maxmin: true, //开启最大化最小化按钮
+        //        area: ['80%', '80%'],
+        //        content: 'select.html?type=' + selecttype
+        //    });
+        //}
+
+    })
+
+
+    function BuildChart(container, begin, end, tablecolumn, statitem, charttype) {
+        var flag = unity.getURL("flag");
+        $.ajax({
+            url: "../ashx/Statistics.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetStatisticsByDate",
+                "column": tablecolumn,
+                "statitem": statitem,
+                "begin": begin,
+                "end": end,
+                "selcolumn": selcolumn,
+                "flag": flag
+            },
+            success: function (data) {
+                if (data.result == "success") {
+
+                    if (charttype == null) {
+                        if (data.ColumnStatType == null) {
+                            charttype = chartarray[Math.floor(Math.random() * chartarray.length)];
+                        }
+                        else {
+                            charttype = data.ColumnStatType;
+                        }
+                    }
+                    selcolumn = selcolumn + data.ColumnID + ",";
+                    //console.log(charttype + "---" + data.StatColumn);
+                    //charttype = chartarray[0];
+                    //console.log(charttype + "---" + container);
+                    Chart(data, charttype, data.StatColumn, container);
+                }
+            }
+        })
+    }
+
+    function DoRefresh() {
+        if (isrefresh) {
+            selcolumn = "";
+            for (var i = 0; i < containerchangearray.length; i++) {
+                if (containerchangearray[i] == "true") {
+                    GetRefresh(containerarray[i]);
+                } else {
+                    containerchangearray[i] = "true";
+                }
+            }
+        }
+        setTimeout(DoRefresh, time);
+    }
+
+    function GetRefresh(container) {
+        BuildChart(container, null, null, null, 0, null);
+    }
+
+    function PicShow() {
+        window.location.href = "ScrollPic.html";
+    }
+
+</script>

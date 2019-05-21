@@ -1,0 +1,466 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>修改点检人</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mui-content {
+            width: 100%;
+            flex: 1;
+            margin-bottom: 30px;
+            overflow: auto;
+        }
+
+        .halfbut {
+            width: 49.5%;
+            box-sizing: border-box;
+            float: left;
+        }
+
+            .halfbut + .halfbut {
+                margin-left: 1%;
+            }
+
+        .qk {
+            background-color: #ff5a92;
+        }
+
+            .qk input {
+                border: 1px solid #ff5a92 !important;
+                background-color: #ff5a92 !important;
+            }
+
+        .mui-table-view-cell:last-child:after {
+            height: 1px;
+        }
+
+        .mui-table-view:after {
+            height: 0px;
+        }
+
+        #demo2 {
+            width: 68%;
+            display: inline-block;
+            border: 0;
+            margin: 0;
+            margin-top: -25px;
+            font-size: 16px;
+            text-align: left;
+            height: 50px;
+            margin-bottom: -20px;
+        }
+
+        .ui-alert {
+            display: inline-block;
+            width: 70%;
+            background: #1296db;
+        }
+
+        .mui-content-padded {
+            margin-left: 3px;
+            margin-top: 20px !important;
+        }
+
+            .mui-content-padded:first-child {
+                margin-top: 12px !important;
+            }
+
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .sel {
+            width: 68% !important;
+        }
+
+        .mui-input-row .mui-btn {
+            padding: 0px;
+        }
+
+        .mui-input-row select {
+            font-size: 15px;
+        }
+
+        .xsuser {
+            display: block;
+        }
+
+
+        .selectdiv, .selectdivEventName {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #fff;
+            color: #494949;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .floatBottom {
+            background-color: #fff;
+            width: 100%;
+            position: fixed;
+            bottom: 50px;
+        }
+        /*.allselect {
+            float: left;
+            margin: 5px;
+            margin-left: 10px;
+        }
+
+            .allselect span {
+                float: left;
+                display: inline-block;
+                border: 1px solid #989898;
+                width: 16px;
+                height: 16px;
+                margin-right: 5px;
+            }
+
+                .allselect span.selected {
+                    background: url(../images/selectinfo.png) center center no-repeat #f5faff;
+                }
+
+        .selectclose {
+            float: right;
+            display: block;
+            border: 1px solid #989898;
+            border-radius: 2px;
+            padding: 3px 10px;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .selectdiv ul, .selectdiv li {
+            margin: 0px;
+            list-style: none;
+            padding: 0px;
+        }
+
+        .selectdiv .parentli {
+            border-bottom: 1px solid #DDDDDD;
+            padding: 10px 10px;
+        }
+
+            .selectdiv .parentli li {
+                margin-left: 5px;
+            }
+
+            .selectdiv .parentli.selected ul {
+                display: block;
+            }
+
+            .selectdiv .parentli span.selected {
+                background: url(../images/selectinfo.png) center center no-repeat #f5faff;
+            }
+
+            .selectdiv .parentli ul {
+                display: none;
+            }
+
+        .parentli span {
+            display: inline-block;
+            border: 1px solid #989898;
+            width: 16px;
+            height: 16px;
+            float: left;
+            margin-right: 5px;
+        }
+
+        .selectdiv .parentli img {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .selectdiv .parentli li {
+            width: 70px;
+            display: inline-block;
+            border: 1px solid #dedede;
+            margin-top: 10px;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+            .selectdiv .parentli li.select {
+                background: url(../images/selectinfo.png) 50px center no-repeat #f5faff;
+                border-color: #1296db;
+                color: #1296db;
+            }*/
+        .mui-input-group {
+            background-color: #eff0f2;
+        }
+
+            .mui-input-group:before .mui-input-group:after {
+                display: none;
+            }
+
+        .mui-input-row {
+            background-color: #fff;
+        }
+
+        .mui-content-padded {
+            margin-top: 0px;
+        }
+
+        #addList {
+            background: #eff0f2;
+        }
+
+        #newAdd {
+            overflow: hidden;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .newTitle {
+            text-align: right;
+            width: 100%;
+            height: 40px;
+        }
+
+            .newTitle .deleteItem {
+                width: 50px;
+                height: 40px;
+                line-height: 40px;
+                display: block;
+                float: right;
+                margin-right: 10px;
+                font-size: 16px;
+                color: #268dff;
+            }
+
+        #sLabel {
+            display: block;
+            width: 100%;
+        }
+
+        #ProDesc {
+            width: 100%;
+            text-indent: 2rem;
+            min-height: 120px;
+        }
+
+        .addButton {
+            background-color: #eff0f2;
+            color: #268dff;
+            text-align: center;
+            padding: 5px 0;
+        }
+
+            .addButton p {
+                text-align: left;
+                text-indent: 1rem;
+            }
+
+        .addBtn {
+            display: block;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 16px;
+        }
+
+            .addBtn i {
+                font-size: 20px;
+                font-style: normal;
+            }
+        /*--------------选人修改样式-------------------*/
+        #sfxs {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            overflow-y: scroll;
+        }
+
+        .mui-content > .mui-table-view:first-child {
+            margin-top: 0px;
+        }
+
+        #close {
+            float: right;
+            display: block;
+            border: 1px solid #989898;
+            border-radius: 2px;
+            padding: 3px 10px;
+            margin: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <ul class="mui-table-view" id="sfxs"></ul>
+        <div style="padding: 10px 10px;">
+        </div>
+        <form class="mui-input-group">
+            <div class="mui-input-row">
+                <label>
+                    日期
+                </label>
+                <select class="mui-btn mui-btn-block sel" id="DataSel"></select>
+            </div>
+
+            <div class="mui-input-row">
+                <label>
+                    选择点检人
+                </label>
+                <select class="mui-btn mui-btn-block sel" id="UserSel"></select>
+            </div>
+
+
+            <div class="fn-clear floatBottom">
+                <div class="btn_Sumbit-a">
+                    <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" style="color:#fff !important;" onclick='tj()' value="提交">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+    </nav>
+
+</body>
+
+</html>
+<script type="text/javascript">
+
+    $(function () {
+        //绑定日期
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetWeek",
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true") {
+                    var item1 = "<option value=\"-2\">请选择</option>";
+                    for (var i = 0; i < d.data.length; i++) {
+                        item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                    }
+                    $("#DataSel").html(item1);
+                }
+            },
+            error: function () { alert("点检日期查询出错，请稍候再试"); }
+        });
+    });
+
+    $("#UserSel").click(function () {
+        if ($("#UserSel").html() == "")
+        {
+            alert("请先选择点检日期");
+        }
+        
+    })
+
+    $("#DataSel").change(function () {
+        var datavalue = $("#DataSel").find("option:selected").val();
+        DateBind(datavalue);
+
+    })
+
+    //绑定点检人员
+    function DateBind(datavalue) {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET", async: false,
+            data: "method=GetWeekUser&datavalue=" + datavalue,
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true") {
+                    var item1 = "<option value=\"-2\">请选择</option>";
+                    for (var i = 0; i < d.data.length; i++) {
+                        item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                    }
+                    $("#UserSel").html(item1);
+                }
+            },
+            error: function () { alert("点检人员查询出错，请稍候再试"); }
+        });
+    }
+
+    function tj() {
+        isks = false;
+        if ($("#DataSel").find("option:selected").val() == "-2") {
+            alert("请选择日期");
+            bl = false;
+            return;
+        }
+        if ($("#UserSel").find("option:selected").val() == "-2") {
+            alert("请选择点检人");
+            bl = false;
+            return;
+        }
+
+        $("#xs input").each(function () {
+            if ($(this).attr("id") != "txt-0") {
+                if ($("#" + $(this).attr("id")).val() == "0") {
+                    bl = false;
+                    return bl;
+                }
+            }
+        });
+
+        $("#bt").attr("style", "display:none");
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            dataType: "json",
+            type: "get",
+            data: "method=ModifyCheck&UserSel=" + $("#UserSel").find("option:selected").val() + "&DataSel=" + $("#DataSel").find("option:selected").val(),
+            success: function (data) {
+                if (data.result == 'true') {
+                    alert("保存成功");
+                    window.location.href = "../index.html";
+                }
+                else {
+                    alert("保存失败,您没有修改的权限或点检人员重复添加");
+                }
+                $("#bt").attr("style", "display:block");
+            },
+            error: function () { alert("您没有修改的权限或点检人员重复添加"); }
+        })
+    }
+</script>
+

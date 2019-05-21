@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>飞龙大屏</title>
+</head>
+<link href="../plugins/layui/css/modules/layer/default/layer.css" rel="stylesheet" />
+<body>
+    <div onclick="Change()"><img src="images/fl_03_1.png" /> </div>
+    <div id="PicShow">
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/layui/lay/modules/layer.js"></script>
+<script>
+    $(document).ready(function () {
+        InitPic();
+    })
+
+    function InitPic() {
+        $.ajax({
+            url: "../ashx/BaseData.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetPic",
+            },
+            success: function (data) {
+                if (data.result == "success") {
+                    console.log(data.PicList);
+                    var html = "";
+                    for (var i = 0; i < data.PicList.length; i++) {
+                        html = html + "<img onclick=\"Show(this)\" width=\"25%\" height=\"25%\" src=\"/resource/" + data.PicList[i].Name + "\"  alt=\"" + data.PicList[i].Name + "\" />";
+                    }
+                    $("#PicShow").html(html);
+                }
+            }
+        })
+
+
+    }
+
+    function Show() {
+        layer.photos({
+            photos: '#PicShow'
+              , anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机
+        });
+    }
+
+    function Change() {
+        window.location.href = "display.html";
+    }
+
+</script>

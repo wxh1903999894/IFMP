@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>我的奖票</title>
+
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+</head>
+<body>
+    <div class="mui-content">
+        <!--切换按钮-->
+        <div style="padding: 10px 10px;">
+            <div id="segmentedControl" class="mui-segmented-control jpqh">
+                <a class="mui-control-item mui-active jpqh1"><div>全部</div></a>
+                <a class="mui-control-item jpqh2">已打印</a>
+                <a class="mui-control-item jpqh3">未打印</a>
+            </div>
+        </div>
+        <!--切换内容-->
+
+
+        <div id="item" class="mui-scroll-wrapper" style="margin-top:100px">
+            <div class="mui-scroll">
+                <ul class="mui-table-view" id="pullrefresh"></ul>
+            </div>
+        </div>
+
+        <!--<div id="item" class="mui-control-content  mui-active">
+            <ul class="mui-table-view mui-table-view-striped mui-table-view-condensed" id="pullrefresh"></ul>
+        </div>-->
+
+    </div>
+
+    <!--下端导航栏-->
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+
+
+    </nav>
+</body>
+
+</html>
+
+<script>
+    var pageindex = 1;
+
+    mui.init();
+    $(function () {
+        pullupRefresh();
+        //DateBind();
+    })
+
+    mui.init({
+        pullRefresh: {
+            container: '#item',
+            up: {
+                contentrefresh: '正在加载...',
+                callback: pullupRefresh
+            }
+        }
+    });
+
+    ///**
+    // * 下拉刷新具体业务实现
+    // */
+    function pulldownRefresh() {
+        setTimeout(function () {
+            window.location.reload();
+        }, 1500);
+    };
+    /**
+
+     * 上拉加载具体业务实现
+     */
+    function pullupRefresh() {
+        setTimeout(function () {
+            var jsondata = "";
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false,
+                type: "GET",
+                data: "method=GetTicket&pagesize=10&pageindex=" + pageindex,
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    if (data.result == 'true') {
+                    
+                        var html = " <ul class=\"stamp_list\">";
+                        for (var i = 0; i < data.data.length; i++) {
+                            html = html + "<li class=\"stamp " + (data.data[i].PrintState == 1 ? "printed" : "noprint") + "\">";
+                            html = html + "<div class=\"stamp_inner stamp_left\">";
+                            html = html + "<h6 class=\"st-h6\"><i><img src=\"../images/quanzi.png\" width=\"18\" height=\"20\"  /></i>" + data.data[i].EventName + "</h6>";
+                            html = html + "<p class=\"st-p1\"><b>记录人 : </b><i>" + data.data[i].VUserName + "</i></p>";
+                            html = html + "<p class=\"st-p2\"><b>奖 &nbsp;&nbsp; 分 : </b><i>B " + data.data[i].BSCore + "</i></p>";
+                            html = html + "<p class=\"st-p3\"><b>初审人 : </b><i>" + data.data[i].FirstAduitUserName + "</i></p>";
+                            html = html + " <p class=\"st-p4\"><b>终审人 : </b><i>" + data.data[i].LastAduitUserName + "</i></p>";
+                            html = html + "</div> <div class=\"stamp_inner stamp_right\">";
+                            html = html + "<div>" + (data.data[i].PrintState == 1 ? "已打印" : "未打印") + "</div>";
+                            html = html + "<p>" + data.data[i].VDate + "</p>";
+                            html = html + "<ul class=\"circle_list circle_list1\">";
+                            for (var j = 0; j < 11; j++) {
+                                html = html + "<li></li>";
+                            }
+                            html = html + "</ul>";
+                            html = html + "<ul class=\"circle_list circle_list2\">";
+                            for (var j = 0; j < 11; j++) {
+                                html = html + "<li></li>";
+                            }
+                            html = html + "</ul></div></li>";
+                        }
+                        html = html + "</ul>";
+                        $("#pullrefresh").append(html);
+                        InitPrint();
+                    }
+                    else {
+                        mui('#item').pullRefresh().endPullupToRefresh(true);
+                     }
+                    pageindex = pageindex + 1;
+                    jsondata = data.data;
+                }
+            });
+            console.log(jsondata);
+            if (jsondata == null || jsondata.length == 0) {
+                var li = document.createElement('li');
+                li.className = 'mui-table-view-cell';
+                li.setAttribute("style", "margin-top:80px;text-align:center");
+
+                fragment.appendChild(li);
+
+                mui('#item').pullRefresh().endPullupToRefresh(true);
+            }
+            else {
+                mui('#item').pullRefresh().endPullupToRefresh(false);
+            }
+        
+        }, 1500);
+    }
+
+
+
+</script>

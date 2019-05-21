@@ -1,0 +1,103 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFMP", "IFMP\IFMP.csproj", "{94048383-7CB4-4440-A1A2-1EA158395B76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{4817619A-ED45-4841-A931-1DF0110AA779}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{B4FEF1A7-B7DA-4550-8F1D-E3DD27F35562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{CD2A8DEC-2084-4827-BB3D-43382A877D83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JFZAPP", "JFZAPP\JFZAPP.csproj", "{000AB45C-F84F-4B46-A647-D1519048E2EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFMPLibrary", "IFMPLibrary\IFMPLibrary.csproj", "{D7C7E9E4-996C-4DF3-94AA-A39E16D4F6FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFMPService", "IFMPService\IFMPService.csproj", "{F7314323-C19F-4242-8B40-A32650FAD567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFMPTestProject", "IFMPTestProject\IFMPTestProject.csproj", "{9B4ADBF4-5B03-4F5D-8997-B9855E044D59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DormitoryAPP", "DormitoryAPP\DormitoryAPP.csproj", "{F2C8B373-986A-4BE7-A6AB-C52BAE9BF1B2}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 10
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://192.168.10.20:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Common\\Common.csproj
+		SccProjectName1 = Common
+		SccLocalPath1 = Common
+		SccProjectUniqueName2 = IFMP\\IFMP.csproj
+		SccProjectName2 = IFMP
+		SccLocalPath2 = IFMP
+		SccProjectUniqueName3 = DAL\\DAL.csproj
+		SccProjectName3 = DAL
+		SccLocalPath3 = DAL
+		SccProjectUniqueName4 = Entities\\Entities.csproj
+		SccProjectName4 = Entities
+		SccLocalPath4 = Entities
+		SccProjectUniqueName5 = JFZAPP\\JFZAPP.csproj
+		SccProjectName5 = JFZAPP
+		SccLocalPath5 = JFZAPP
+		SccProjectUniqueName6 = IFMPLibrary\\IFMPLibrary.csproj
+		SccProjectName6 = IFMPLibrary
+		SccLocalPath6 = IFMPLibrary
+		SccProjectUniqueName7 = IFMPService\\IFMPService.csproj
+		SccProjectName7 = IFMPService
+		SccLocalPath7 = IFMPService
+		SccProjectUniqueName8 = IFMPTestProject\\IFMPTestProject.csproj
+		SccProjectName8 = IFMPTestProject
+		SccLocalPath8 = IFMPTestProject
+		SccProjectUniqueName9 = DormitoryAPP\\DormitoryAPP.csproj
+		SccProjectName9 = DormitoryAPP
+		SccLocalPath9 = DormitoryAPP
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94048383-7CB4-4440-A1A2-1EA158395B76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94048383-7CB4-4440-A1A2-1EA158395B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94048383-7CB4-4440-A1A2-1EA158395B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94048383-7CB4-4440-A1A2-1EA158395B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4817619A-ED45-4841-A931-1DF0110AA779}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4817619A-ED45-4841-A931-1DF0110AA779}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4817619A-ED45-4841-A931-1DF0110AA779}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4817619A-ED45-4841-A931-1DF0110AA779}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4FEF1A7-B7DA-4550-8F1D-E3DD27F35562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4FEF1A7-B7DA-4550-8F1D-E3DD27F35562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4FEF1A7-B7DA-4550-8F1D-E3DD27F35562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4FEF1A7-B7DA-4550-8F1D-E3DD27F35562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD2A8DEC-2084-4827-BB3D-43382A877D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD2A8DEC-2084-4827-BB3D-43382A877D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD2A8DEC-2084-4827-BB3D-43382A877D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD2A8DEC-2084-4827-BB3D-43382A877D83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{000AB45C-F84F-4B46-A647-D1519048E2EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{000AB45C-F84F-4B46-A647-D1519048E2EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{000AB45C-F84F-4B46-A647-D1519048E2EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{000AB45C-F84F-4B46-A647-D1519048E2EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7C7E9E4-996C-4DF3-94AA-A39E16D4F6FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7C7E9E4-996C-4DF3-94AA-A39E16D4F6FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7C7E9E4-996C-4DF3-94AA-A39E16D4F6FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7C7E9E4-996C-4DF3-94AA-A39E16D4F6FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7314323-C19F-4242-8B40-A32650FAD567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7314323-C19F-4242-8B40-A32650FAD567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7314323-C19F-4242-8B40-A32650FAD567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7314323-C19F-4242-8B40-A32650FAD567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B4ADBF4-5B03-4F5D-8997-B9855E044D59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B4ADBF4-5B03-4F5D-8997-B9855E044D59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B4ADBF4-5B03-4F5D-8997-B9855E044D59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B4ADBF4-5B03-4F5D-8997-B9855E044D59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2C8B373-986A-4BE7-A6AB-C52BAE9BF1B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2C8B373-986A-4BE7-A6AB-C52BAE9BF1B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2C8B373-986A-4BE7-A6AB-C52BAE9BF1B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2C8B373-986A-4BE7-A6AB-C52BAE9BF1B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

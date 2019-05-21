@@ -38,9 +38,8 @@ namespace IFMP.dormitory
         private void DataListBind()
         {
             string name = this.txt_Name.Text;
-            List<Dormitory> doormitorypage = db.Dormitory.ToList();
-            List<Dormitory> DormitoryList = db.Dormitory.Where(t => t.DormiName.Contains(name)).OrderByDescending(t => t.CreateDate).Skip((Pager.CurrentPageIndex - 1) * Pager.PageSize).Take(Pager.PageSize).ToList();
-            
+            List<Dormitory> DormitoryList = db.Dormitory.Where(t => t.DormiName.Contains(name)).ToList();
+
             if (DormitoryList.Count > 0)
             {
                 this.tr_null.Visible = false;
@@ -49,8 +48,8 @@ namespace IFMP.dormitory
             {
                 this.tr_null.Visible = true;
             }
-            this.rp_List.DataSource = DormitoryList;
-            Pager.RecordCount = doormitorypage.Count;
+            this.rp_List.DataSource = DormitoryList.OrderByDescending(t => t.CreateDate).Skip((Pager.CurrentPageIndex - 1) * Pager.PageSize).Take(Pager.PageSize).ToList();
+            Pager.RecordCount = DormitoryList.Count;
             this.rp_List.DataBind();
             this.hf_CheckIDS.Value = "";
         }
@@ -128,5 +127,18 @@ namespace IFMP.dormitory
             }
         }
         #endregion
+
+        public string GetIsCheck(object sender)
+        {
+            try
+            {
+                sender = false ? "否" : "是";
+                return sender.ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
     }
 }

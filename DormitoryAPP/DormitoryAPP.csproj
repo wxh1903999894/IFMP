@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F2C8B373-986A-4BE7-A6AB-C52BAE9BF1B2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DormitoryAPP</RootNamespace>
+    <AssemblyName>DormitoryAPP</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>E:\工作\XXZGISMP\D.实现阶段\LocationPlatform\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>E:\工作\XXZGISMP\D.实现阶段\XXPipes\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="app\BestorBad.html" />
+    <Content Include="app\BestorBadMore.html" />
+    <Content Include="app\DormitoryGrade.html" />
+    <Content Include="app\DormitoryMarks.html" />
+    <Content Include="app\DormitoryScore.html" />
+    <Content Include="app\ImageDetail.html" />
+    <Content Include="app\ModifyCheck.html" />
+    <Content Include="app\MonthRanking.html" />
+    <Content Include="app\ProblemDetail.html" />
+    <Content Include="app\ProblemReview.html" />
+    <Content Include="app\ProblemReviewByDromitoryId.html" />
+    <Content Include="app\ReviewDetail.html" />
+    <Content Include="app\YearRanking.html" />
+    <Content Include="DDLogin.aspx" />
+    <Content Include="fonts\iconfont.eot" />
+    <Content Include="fonts\iconfont.ttf" />
+    <Content Include="fonts\iconfont.woff" />
+    <Content Include="fonts\mui.ttf" />
+    <Content Include="ashx\GetMainData.ashx" />
+    <Content Include="Identity.aspx" />
+    <Content Include="packages.config" />
+    <Content Include="ashx\Integral.ashx" />
+    <Content Include="ashx\Identity.ashx" />
+    <Content Include="ashx\GetUser.ashx" />
+    <None Include="Properties\PublishProfiles\DormitoryAPP.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\animate.css" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\demo.css" />
+    <Content Include="css\easyui.css" />
+    <Content Include="css\iconfont.css" />
+    <Content Include="css\jifenzhi.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\mobile.css" />
+    <Content Include="css\mui.css" />
+    <Content Include="css\mui.min.css" />
+    <Content Include="css\mui.picker.css" />
+    <Content Include="css\mui.picker.min.css" />
+    <Content Include="css\mui.poppicker.css" />
+    <Content Include="css\new_file.css" />
+    <Content Include="css\style.css" />
+    <Content Include="fonts\iconfont.js" />
+    <Content Include="fonts\iconfont.svg" />
+    <Content Include="images\1.jpg" />
+    <Content Include="images\10.png" />
+    <Content Include="images\11.png" />
+    <Content Include="images\12.png" />
+    <Content Include="images\2.jpg" />
+    <Content Include="images\3.jpg" />
+    <Content Include="images\4.jpg" />
+    <Content Include="images\5399e361b8251f.jpg" />
+    <Content Include="images\5399e361b8251f.png" />
+    <Content Include="images\9.png" />
+    <Content Include="images\adduser.png" />
+    <Content Include="images\allinpic.png" />
+    <Content Include="images\allpic.png" />
+    <Content Include="images\bg.png" />
+    <Content Include="images\bg01.gif" />
+    <Content Include="images\cdb.jpg" />
+    <Content Include="images\del.png" />
+    <Content Include="images\menu_bg %281%29.gif" />
+    <Content Include="images\menu_bg.gif" />
+    <Content Include="images\muwu.jpg" />
+    <Content Include="images\nopic.png" />
+    <Content Include="images\pm.png" />
+    <Content Include="images\QQ图片20180808160624.png" />
+    <Content Include="images\quanzi.png" />
+    <Content Include="images\selectinfo.png" />
+    <Content Include="images\shuijiao.jpg" />
+    <Content Include="images\sytj.png" />
+    <Content Include="images\yuantiao.jpg" />
+    <Content Include="images\zwsj.png" />
+    <Content Include="index.html" />
+    <Content Include="js\Common.js" />
+    <Content Include="js\echarts-all.js" />
+    <Content Include="js\images\01.gif" />
+    <Content Include="js\images\01b.gif" />
+    <Content Include="js\images\03.gif" />
+    <Content Include="js\images\accept.png" />
+    <Content Include="js\images\accordion_arrows.png" />
+    <Content Include="js\images\addfile.gif" />
+    <Content Include="js\images\addq.png" />
+    <Content Include="js\images\adminbg.png" />
+    <Content Include="js\images\adminlogo.png" />
+    <Content Include="js\images\adzy.png" />
+    <Content Include="js\images\arrow.png" />
+    <Content Include="js\images\AsyncBoximages\accept.png" />
+    <Content Include="js\images\AsyncBoximages\asyncbox_bg.png" />
+    <Content Include="js\images\AsyncBoximages\asyncbox_tipsbar_bg.gif" />
+    <Content Include="js\images\AsyncBoximages\asyncbox_tipsbar_icon.gif" />
+    <Content Include="js\images\AsyncBoximages\asyncbox_title_bottom.gif" />
+    <Content Include="js\images\AsyncBoximages\asyncbox_title_bottom.png" />
+    <Content Include="js\images\AsyncBoximages\asynctips_bg %281%29.gif" />
+    <Content Include="js\images\AsyncBoximages\asynctips_bg.gif" />
+    <Content Include="js\images\AsyncBoximages\blue_icon.png" />
+    <Content Include="js\images\AsyncBoximages\formtitlebg.gif" />
+    <Content Include="js\images\AsyncBoximages\green_icon.png" />
+    <Content Include="js\images\AsyncBoximages\icon.gif" />
+    <Content Include="js\images\AsyncBoximages\icon.png" />
+    <Content Include="js\images\AsyncBoximages\wait.gif" />
+    <Content Include="js\images\AsyncBoximages\white_icon.png" />
+    <Content Include="js\images\avatar.png" />
+    <Content Include="js\images\bg-featurebox.jpg" />
+    <Content Include="js\images\bj_01_01_01.png" />
+    <Content Include="js\images\blank.gif" />
+    <Content Include="js\images\bmp_icon.png" />
+    <Content Include="js\images\bot.png" />
+    <Content Include="js\images\but_b.gif" />
+    <Content Include="js\images\calendar_arrows.png" />
+    <Content Include="js\images\combo_arrow.png" />
+    <Content Include="js\images\d13.png" />
+    <Content Include="js\images\dash.gif" />
+    <Content Include="js\images\dashminus.gif" />
+    <Content Include="js\images\dashplus.gif" />
+    <Content Include="js\images\datagrid_icons.png" />
+    <Content Include="js\images\datebox_arrow.png" />
+    <Content Include="js\images\db.png" />
+    <Content Include="js\images\del.png" />
+    <Content Include="js\images\delq.png" />
+    <Content Include="js\images\dengli_02.png" />
+    <Content Include="js\images\denglu.png" />
+    <Content Include="js\images\denglu1.png" />
+    <Content Include="js\images\denglu2_03.png" />
+    <Content Include="js\images\denglu2_03_03.png" />
+    <Content Include="js\images\dengluye_06_06.png" />
+    <Content Include="js\images\denglu_03.png" />
+    <Content Include="js\images\denglu_031.png" />
+    <Content Include="js\images\denglu_10.png" />
+    <Content Include="js\images\deng_03.png" />
+    <Content Include="js\images\deng_06.png" />
+    <Content Include="js\images\deng_09.png" />
+    <Content Include="js\images\deng_091.png" />
+    <Content Include="js\images\denli_01.png" />
+    <Content Include="js\images\denli_06.png" />
+    <Content Include="js\images\diannaotu_05.png" />
+    <Content Include="js\images\dl-sc.png" />
+    <Content Include="js\images\docx_icon.png" />
+    <Content Include="js\images\duotive-modal-bottom-left.png" />
+    <Content Include="js\images\duotive-modal-bottom-middle.png" />
+    <Content Include="js\images\duotive-modal-bottom-right.png" />
+    <Content Include="js\images\duotive-modal-close.png" />
+    <Content Include="js\images\duotive-modal-contract.png" />
+    <Content Include="js\images\duotive-modal-control-bottom-left.png" />
+    <Content Include="js\images\duotive-modal-control-bottom-right.png" />
+    <Content Include="js\images\duotive-modal-control-left.png" />
+    <Content Include="js\images\duotive-modal-control-right.png" />
+    <Content Include="js\images\duotive-modal-expand.png" />
+    <Content Include="js\images\duotive-modal-left.png" />
+    <Content Include="js\images\duotive-modal-right.png" />
+    <Content Include="js\images\duotive-modal-top-left.png" />
+    <Content Include="js\images\duotive-modal-top-middle.png" />
+    <Content Include="js\images\duotive-modal-top-right.png" />
+    <Content Include="js\images\duotive-modal-video.png" />
+    <Content Include="js\images\duotive-slideshow-preloader2.gif" />
+    <Content Include="js\images\execl_icon.png" />
+    <Content Include="js\images\feature_left.gif" />
+    <Content Include="js\images\feature_right.gif" />
+    <Content Include="js\images\fh.png" />
+    <Content Include="js\images\fhc_23.png" />
+    <Content Include="js\images\fhc_26.png" />
+    <Content Include="js\images\fhc_29.png" />
+    <Content Include="js\images\fhc_31.png" />
+    <Content Include="js\images\fhc_34.png" />
+    <Content Include="js\images\fhc_51.png" />
+    <Content Include="js\images\fhc_61.png" />
+    <Content Include="js\images\fhc_69.png" />
+    <Content Include="js\images\fhc_72.png" />
+    <Content Include="js\images\fhc_75.png" />
+    <Content Include="js\images\FHC_web_03.png" />
+    <Content Include="js\images\flash_icon.png" />
+    <Content Include="js\images\gallery-slider-content-bg.png" />
+    <Content Include="js\images\gallery-slider-control-left.png" />
+    <Content Include="js\images\gallery-slider-control-right.png" />
+    <Content Include="js\images\gallery-slider-icon-article.png" />
+    <Content Include="js\images\gallery-slider-icon-image.png" />
+    <Content Include="js\images\gallery-slider-icon-video.png" />
+    <Content Include="js\images\gallery-slider-scroll-handle.png" />
+    <Content Include="js\images\gif_icon.png" />
+    <Content Include="js\images\graduate_female.png" />
+    <Content Include="js\images\graduate_male.png" />
+    <Content Include="js\images\green_1b.png" />
+    <Content Include="js\images\green_abg.png" />
+    <Content Include="js\images\green_add.png" />
+    <Content Include="js\images\green_check.png" />
+    <Content Include="js\images\green_db.png" />
+    <Content Include="js\images\green_jt_03.png" />
+    <Content Include="js\images\green_logo.png" />
+    <Content Include="js\images\green_point_28.png" />
+    <Content Include="js\images\green_radio.png" />
+    <Content Include="js\images\green_radion.png" />
+    <Content Include="js\images\green_savebg.png" />
+    <Content Include="js\images\green_sb_07.png" />
+    <Content Include="js\images\green_sb_09.png" />
+    <Content Include="js\images\green_sb_11.png" />
+    <Content Include="js\images\green_sb_12.png" />
+    <Content Include="js\images\green_tree_05.png" />
+    <Content Include="js\images\green_tree_13.png" />
+    <Content Include="js\images\green_xxsm.png" />
+    <Content Include="js\images\green_yjqh_19.png" />
+    <Content Include="js\images\green_yjqh_27.png" />
+    <Content Include="js\images\green_yjqh_31.png" />
+    <Content Include="js\images\green_yjq_09.png" />
+    <Content Include="js\images\green_yjq_10.png" />
+    <Content Include="js\images\gr_02.png" />
+    <Content Include="js\images\gr_05.png" />
+    <Content Include="js\images\hdztbg.png" />
+    <Content Include="js\images\i.gif" />
+    <Content Include="js\images\info_09.png" />
+    <Content Include="js\images\info_091.png" />
+    <Content Include="js\images\jt_03.png" />
+    <Content Include="js\images\jw_logo.png" />
+    <Content Include="js\images\kfbg.png" />
+    <Content Include="js\images\kj_01.png" />
+    <Content Include="js\images\kj_02.png" />
+    <Content Include="js\images\l.gif" />
+    <Content Include="js\images\layout_arrows.png" />
+    <Content Include="js\images\line.png" />
+    <Content Include="js\images\linkbutton_bg.png" />
+    <Content Include="js\images\lminus.gif" />
+    <Content Include="js\images\loading.gif" />
+    <Content Include="js\images\loginbtn.png" />
+    <Content Include="js\images\lplus.gif" />
+    <Content Include="js\images\main_12.png" />
+    <Content Include="js\images\main_15.png" />
+    <Content Include="js\images\main_24.png" />
+    <Content Include="js\images\menu_arrows.png" />
+    <Content Include="js\images\messager_icons.png" />
+    <Content Include="js\images\mianicon.png" />
+    <Content Include="js\images\minus.gif" />
+    <Content Include="js\images\mp3_icon.png" />
+    <Content Include="js\images\mpeg_icon.png" />
+    <Content Include="js\images\music_icon.png" />
+    <Content Include="js\images\noexpand.gif" />
+    <Content Include="js\images\noface.png" />
+    <Content Include="js\images\oabiaoti.png" />
+    <Content Include="js\images\oagreen_logo.png" />
+    <Content Include="js\images\outicon.png" />
+    <Content Include="js\images\pagination_icons.png" />
+    <Content Include="js\images\panel_tools.png" />
+    <Content Include="js\images\passwordbox_close.png" />
+    <Content Include="js\images\passwordbox_open.png" />
+    <Content Include="js\images\pdf_icon.png" />
+    <Content Include="js\images\plus.gif" />
+    <Content Include="js\images\point_28.png" />
+    <Content Include="js\images\pptx_icon.png" />
+    <Content Include="js\images\ppt_icon.png" />
+    <Content Include="js\images\r.gif" />
+    <Content Include="js\images\radio.png" />
+    <Content Include="js\images\radion.png" />
+    <Content Include="js\images\rar_icon.png" />
+    <Content Include="js\images\rl.png" />
+    <Content Include="js\images\rminus.gif" />
+    <Content Include="js\images\rplus.gif" />
+    <Content Include="js\images\rs.png" />
+    <Content Include="js\images\searchbox_button.png" />
+    <Content Include="js\images\SEARCH_06.png" />
+    <Content Include="js\images\selectbtn.png" />
+    <Content Include="js\images\sl.png" />
+    <Content Include="js\images\slider_handle.png" />
+    <Content Include="js\images\spinner_arrows.png" />
+    <Content Include="js\images\sq.png" />
+    <Content Include="js\images\stugreen_logo.png" />
+    <Content Include="js\images\stuicon.png" />
+    <Content Include="js\images\t.gif" />
+    <Content Include="js\images\tabs_icons.png" />
+    <Content Include="js\images\tagbox_icons.png" />
+    <Content Include="js\images\teaicon.png" />
+    <Content Include="js\images\text_icon.png" />
+    <Content Include="js\images\timg.png" />
+    <Content Include="js\images\timg1.png" />
+    <Content Include="js\images\tminus.gif" />
+    <Content Include="js\images\top.png" />
+    <Content Include="js\images\tplus.gif" />
+    <Content Include="js\images\tree_icons.png" />
+    <Content Include="js\images\t_female.png" />
+    <Content Include="js\images\t_male.png" />
+    <Content Include="js\images\unknow_icon.png" />
+    <Content Include="js\images\upload.png" />
+    <Content Include="js\images\validatebox_warning.png" />
+    <Content Include="js\images\vevio_icon.png" />
+    <Content Include="js\images\video.png" />
+    <Content Include="js\images\vodeolist.png" />
+    <Content Include="js\images\weblogo.png" />
+    <Content Include="js\images\website_green_logo.png" />
+    <Content Include="js\images\wmv_file_icon.png" />
+    <Content Include="js\images\word_icon.png" />
+    <Content Include="js\images\xlsx_icon.png" />
+    <Content Include="js\images\xy1.png" />
+    <Content Include="js\images\xy2.png" />
+    <Content Include="js\images\yjqh_05.png" />
+    <Content Include="js\images\yjqh_09.png" />
+    <Content Include="js\images\yjqh_11.png" />
+    <Content Include="js\images\yxj_cpzx.jpg" />
+    <Content Include="js\images\zhutu_02.png" />
+    <Content Include="js\images\zhutu_021.png" />
+    <Content Include="js\images\zhutu_03_03_03.png" />
+    <Content Include="js\images\zip_icon.png" />
+    <Content Include="js\images\zy.png" />
+    <Content Include="js\images\zy_1.png" />
+    <Content Include="js\images\zy_10.png" />
+    <Content Include="js\images\zy_11.png" />
+    <Content Include="js\images\zy_12.png" />
+    <Content Include="js\images\zy_13.png" />
+    <Content Include="js\images\zy_19.png" />
+    <Content Include="js\images\zy_2.png" />
+    <Content Include="js\images\zy_3.png" />
+    <Content Include="js\images\zy_7.png" />
+    <Content Include="js\images\zy_8.png" />
+    <Content Include="js\images\zy_9.png" />
+    <Content Include="js\jifenzhi.js" />
+    <Content Include="js\jquery-1.11.0.min.js" />
+    <Content Include="js\jquery-3.3.1.min.js" />
+    <Content Include="js\jquery.cookie.js" />
+    <Content Include="js\mui.js" />
+    <Content Include="js\mui.min.js" />
+    <Content Include="js\mui.picker.js" />
+    <Content Include="js\mui.picker.min.js" />
+    <Content Include="js\mui.poppicker.js" />
+    <Content Include="js\mui.pullToRefresh.js" />
+    <Content Include="js\mui.pullToRefresh.material.js" />
+    <Content Include="Setting.xml" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ashx\GetMainData.ashx.cs">
+      <DependentUpon>GetMainData.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\GetUser.ashx.cs">
+      <DependentUpon>GetUser.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Identity.ashx.cs">
+      <DependentUpon>Identity.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ashx\Integral.ashx.cs">
+      <DependentUpon>Integral.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="DDLogin.aspx.cs">
+      <DependentUpon>DDLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DDLogin.aspx.designer.cs">
+      <DependentUpon>DDLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Identity.aspx.cs">
+      <DependentUpon>Identity.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Identity.aspx.designer.cs">
+      <DependentUpon>Identity.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{4817619a-ed45-4841-a931-1df0110aa779}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IFMPLibrary\IFMPLibrary.csproj">
+      <Project>{d7c7e9e4-996c-4df3-94aa-a39e16d4f6fe}</Project>
+      <Name>IFMPLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>9733</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:9733/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

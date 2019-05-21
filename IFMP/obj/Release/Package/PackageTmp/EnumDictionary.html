@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="plugins/layui/css/layui.css" rel="stylesheet" />
+    <link href="css/iconfont.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="main">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+            <legend style="color:#086fcb">系统内置字典</legend>
+        </fieldset>
+    </div>
+    <div class="main bordermain">
+        <form class="layui-form" action="">
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">字典类型</label>
+                <div class="layui-input-block">
+                    <select id="tabletype">
+                        <option value="ClassTypeEnums">班次类型</option>
+                        <option value="ApplyTypeEnums">提交状态</option>
+                        <option value="RegexType">表单验证</option>
+                        <option value="UserType">员工分类</option>
+                        <option value="UserLeaveType">岗位类型</option>
+                        <option value="LeaveType">请假类型</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <div id="Data">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button style="background-color:red" type="reset" class="layui-btn layui-btn-primary" onclick="Back()">返回</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="plugins/jquery-3.3.1.js"></script>
+<script src="plugins/layui/layui.js"></script>
+<script src="plugins/layui/lay/modules/layer.js"></script>
+<script src="plugins/Common.js"></script>
+<!--<script>
+    ///这个还应包括xml内的数据修改
+    $(document).ready(function () {
+        InitData();
+    })
+
+    $("#tabletype").change(function () {
+        InitData();
+    })
+
+    function InitData() {
+        $.ajax({
+            url: "/ashx/BaseData.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: "method=GetTableType",
+            success: function (data) {
+                if (data.result == "success") {
+
+
+                } else {
+                    layer.ready(function () {
+                        title: false
+                        layer.alert(data.Data, {
+                            title: false
+                        });
+                    });
+                }
+            },
+            error: function () {
+                layer.ready(function () {
+                    title: false
+                    layer.alert("当前网络可能有错误", {
+                        title: false
+                    });
+                });
+            }
+        });
+    }
+
+    function Back() {
+        window.history.back(-1);
+    }
+</script>-->

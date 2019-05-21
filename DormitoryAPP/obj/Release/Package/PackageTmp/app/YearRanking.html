@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>宿舍排名</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+        @media screen and (max-width: 319px) {
+            html {
+                font-size: 85.33333px;
+            }
+        }
+
+        @media screen and (min-width: 320px) and (max-width: 359px) {
+            html {
+                font-size: 96px;
+            }
+        }
+
+        @media screen and (min-width: 360px) and (max-width: 374px) {
+            html {
+                font-size: 100px;
+            }
+        }
+
+        @media screen and (min-width: 375px) and (max-width: 383px) {
+            html {
+                font-size: 102.4px;
+            }
+        }
+
+        @media screen and (min-width: 384px) and (max-width: 399px) {
+            html {
+                font-size: 106.66667px;
+            }
+        }
+
+        @media screen and (min-width: 400px) and (max-width: 413px) {
+            html {
+                font-size: 110.4px;
+            }
+        }
+
+        @media screen and (min-width: 414px) {
+            html {
+                font-size: 115px;
+            }
+        }
+
+        .rank-submain {
+            width: 90%;
+            text-align: center;
+        }
+
+            .rank-submain .rank-p-l {
+                margin-left: 8%;
+            }
+
+        .sel1 {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <!--切换按钮-->
+        <div style="padding: 10px 10px;">
+            <div id="segmentedControl" class="mui-segmented-control">
+                <a class="mui-control-item  mui-active" href="YearRanking.html?flag=1">年度</a>
+                <a class="mui-control-item" href="MonthRanking.html?flag=2">月度</a>
+            </div>
+        </div>
+        <div class="rank-submain" style="padding-bottom:0.6rem;">
+            <!--选择搜索-->
+            <!--<select class="sel1" id="group"></select>-->
+            <!--<select class="sel1" id="begin"></select>至
+            <select class="sel1" id="end"></select>年-->
+            <!--<div class="rank-p white f14">
+                <div class="show_rank">
+                    <div id="pm" class="flt rank-p-l">我的排名&nbsp;&nbsp;第<span class="f22" id="srank"> 0</span>名</div>
+                    <div id="zwpm" class="flt rank-p-l">暂无排名</div>
+                    <div class="frl rank-p-r f22" id="spoints"></div>
+                </div>
+                <div class="clear"></div>
+            </div>-->
+
+            <table class="rank-sub-table" id="step1"></table>
+            <div class="clear">
+                <table class="no-rank-sub-table none" id="noRank" style="line-height: 0.38rem; font-size: 0.14rem; color: #838f9f; width: 100%"></table>
+            </div>
+        </div>
+
+    </div>
+    <!--下导航-->
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <!--<a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>-->
+    </nav>
+
+</body>
+</html>
+<script>
+    var flag = "", begin = "", end = "";
+    $(function () {
+        document.body.addEventListener('touchstart', function () {
+        });
+    })
+
+
+    mui('body').on('tap', 'a', function () {
+        document.location.href = this.href;
+    });
+    mui("body").on("tap", ".list-btn span", function () {
+        show(this);
+    });
+
+    $(function () {
+        flag = getUrlParam("flag");
+        DateBind(flag);
+    })
+
+    function DateBind(flag) {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            type: "GET",
+            data: "method=GetPM&flag=" + flag,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.result == 'true') {
+                    $("#step1").empty();
+                    //$("#srank").html(0);
+                    var syjxh = 0;
+                    var syjfs = 0;
+                    var item = "<tbody id=\"list\">";
+                    item += "<tr id='one' class=\"tr\" style=\"font-size:15px;\"><td class=\"sort\" style=\"color:#66b9b4;width:15%;text-align:center;\">排名</td><td  class=\"name\" style=\"color:#66b9b4;width:15%;text-align:center;\">宿舍名称</td><td style=\"color:#66b9b4;width:15%;text-align:center;\" class=\"sort\">宿舍分数</td></tr>";
+                    for (var i in data.data) {
+                        if (parseInt(data.data[i].score) != syjfs) {
+                            syjfs = data.data[i].score;
+                            syjxh += 1;
+                        }
+                        if (syjxh <= 3) {
+                            item += "<tr class=\"tr\" style=\"font-size:15px;\"><td class=\"sort rank-red\">" + syjxh + "</td><td class=\"name\" id=\"row\" style=\"color:#333\">" + data.data[i].name + "</td><td class=\"score\">" + data.data[i].score + "</td></tr>";
+                        }
+                        else {
+                            item += "<tr class=\"tr\" style=\"font-size:15px;\"><td class=\"sort\">" + syjxh + "</td><td class=\"name\" id=\"row\" style=\"color:#333\">" + data.data[i].name + "</td><td class=\"score\">" + data.data[i].score + "</td></tr>";;
+                        }
+
+
+                    }
+                    item += "</tbody>";
+                    $("#step1").append(item);
+                }
+                else {
+                    //$("#pullrefresh").addClass("zwsj").append("<img src=\"../images/zwsj.png\">");
+                }
+                jsondata = data.data;
+            }
+        });
+    }
+
+
+    function sort(intType) {
+        var table = document.getElementById("list");
+        var trArr = table.children;
+        var temp;
+        for (var i = 0; i < trArr.length - 1; i++) {
+            for (j = 0; j < trArr.length - i - 1; j++) {
+                if ((trArr[j].children[intType].innerHTML - 0) < (trArr[j + 1].children[intType].innerHTML - 0)) {
+                    temp = trArr[j].innerHTML;
+                    trArr[j].innerHTML = trArr[j + 1].innerHTML;
+                    trArr[j + 1].innerHTML = temp;
+                }
+            }
+        }
+    }   
+</script>

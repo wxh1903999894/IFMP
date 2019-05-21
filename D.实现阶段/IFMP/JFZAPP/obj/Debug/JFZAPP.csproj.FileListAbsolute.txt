@@ -12,3 +12,17 @@ C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\JFZAPP\bin\Newtonsoft.Js
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\JFZAPP\obj\Debug\JFZAPP.csprojResolveAssemblyReference.cache
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\JFZAPP\obj\Debug\JFZAPP.dll
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\JFZAPP\obj\Debug\JFZAPP.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\JFZAPP.dll.config
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\JFZAPP.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\JFZAPP.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\EntityFramework.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\EntityFramework.SqlServer.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\IFMPLibrary.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\Newtonsoft.Json.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\IFMPLibrary.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\EntityFramework.xml
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\EntityFramework.SqlServer.xml
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\bin\Newtonsoft.Json.xml
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\obj\Debug\JFZAPP.csprojResolveAssemblyReference.cache
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\obj\Debug\JFZAPP.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\JFZAPP\obj\Debug\JFZAPP.pdb

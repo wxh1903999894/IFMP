@@ -53,6 +53,17 @@
                     </td>
                 </tr>
                 <tr>
+                    <td align="right">是否点检：
+                    </td>
+                    <td>
+                        <asp:RadioButtonList ID="rbl_IsCheck" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="edilab">
+                        </asp:RadioButtonList>
+                        <%--<asp:CheckBox ID="rbl_Check" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow"/>--%>
+
+                        <span style="color: Red">*</span>
+                    </td>
+                </tr>
+                <tr>
                     <td align="right" width="100px">宿舍人员：
                     </td>
                     <td>

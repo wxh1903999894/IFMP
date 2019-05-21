@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>智慧工厂管理平台</title>
+    <link href="../css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="mtop">
+        <div class="ld1200">
+            <img src="../images/fl_03_1.png" />
+        </div>
+        <div class="ldiv">
+            <div class="ld1200">
+                <div class="bgdiv">
+                    <img src="../images/fl_07.png" />
+                </div>
+                <div class="logindiv">
+                    <div class="flname">智慧工厂管理平台</div>
+                    <div>
+                        <select id="classname" style="font-size: 22px"></select>
+                    </div>
+                    <div>
+                        <input type="button" value="登录" onclick="Login()" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lgdes">
+            版权所有权：芜湖市高科电子有限公司 皖ICP备0123231号<br>
+            All Rights Reserved
+        </div>
+        <div class="by"></div>
+    </div>
+</body>
+</html>
+<script src="../plugins/jquery-3.3.1.js"></script>
+<script src="../plugins/Common.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        InitClass();
+    })
+
+    function InitClass() {
+        $.ajax({
+            url: "../ashx/BaseData.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetBaseClass",
+            },
+            success: function (data) {
+                if (data.result == "success") {
+                    console.log(data);
+                    var tabletypesel = document.getElementById("classname");
+                    for (var i = 0; i < data.List.length; i++) {
+                        var optionnode = unity.InitNode("option", "");
+                        optionnode.value = data.List[i].ID;
+                        optionnode.innerText = data.List[i].Name;
+                        tabletypesel.appendChild(optionnode);
+                    }
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function () {
+                alert("当前网络可能有错误");
+            }
+        });
+    }
+
+
+    function Login() {
+        var classid = $("#classname").val();
+
+        $.getJSON("../ashx/Login.ashx", { method: "ClassLoginIn", classid: classid }, function (data) {
+            if (data.result == "success") {
+                //alert("登录成功");
+                window.location.href = "TaskList.aspx";
+            }
+            else {
+                alert(data.result);
+            }
+        })
+    }
+</script>

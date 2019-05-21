@@ -1,0 +1,111 @@
+﻿/* CSS Document */
+body{background-color: #F2F2F2;font-size: 20px;padding-bottom: 100px;position: relative}
+a{font-family:"微软雅黑"}
+input[type="text"],textarea,select{border: 1px solid #c2c2c2;margin-top: -9px;}
+input[type="text"]{width: 120px}
+.layui-select-title input[type="text"],.layui-select-title textarea,.layui-select-title select,.layui-input-inline input[type="text"],.layui-input-inline textarea,.layui-input-inline select,.xm-select-title input[type="text"]{margin-top: 0;width: 100%}
+.xm-select--suffix{width: 100%}
+.xm-select-parent .xm-input{border-color: #ccc!important}
+.layui-btn + .layui-btn{margin-left: 0}
+.leftbg .iconfont{margin-right: 5px}
+.topmenu .iconfont:before{ display: block; font-size: 30px;  text-align: center;}
+.topmenu .layui-nav-item a{padding:5px; color: #fff;}
+.topmenu .layui-nav-item{ line-height: 1.5; width: 100px; text-align: center; height: 85px}
+.topmenu .layui-nav-item:hover{ background: #bdbdbd}
+.topmenu .layui-nav-item:hover a{ color: #aa1616}
+body.topbg{ background:#086fcb; font-family:"微软雅黑"}/*background: url(../images/topbg.png)*/
+.topmenu{ background: none; padding:0px 5px}
+.layui-layout-admin .layui-logo{ line-height:85px; font-size: 30px; margin-left: 10px; width: auto; color: #086fcb}
+.leftbg{ background: #2a2a2b}
+.leftbg .layui-nav-tree{width:100%; margin-top: 5px}
+.leftbg .layui-nav-tree .layui-nav-item{background: #3e3c3c; line-height: 50px;}
+
+.leftbg .layui-nav-tree .layui-nav-item a{line-height: 50px; height: 50px;}
+.leftbg .layui-nav-tree .layui-nav-item .layui-nav-child{background:rgba(42,42,43,1) !important}
+
+.leftbg .layui-nav-tree .layui-nav-item .layui-nav-child a{line-height: 42px; height: 42px;}
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {background-color: #44c3f0;color: #fff;}
+.main{ margin: 10px}
+.page_nav{border-bottom: 2px solid #086fcb; padding-bottom: 5px; padding-left: 5px}
+table.cum-table table{border-spacing: 1px;border-collapse:separate}
+.cum-table td td{padding:5px; line-height: 1.5}
+.cum-table th{padding:6px 5px; line-height: 2; background:#086fcb; color: #fff}
+.layui-nav-tree .layui-nav-bar {background-color: #1869b3;}
+.bordermain{ border:1px solid #086fcb; border-radius: 3px; padding-top: 10px}
+.cum-btn{ background: #086fcb}
+.add-btn{ background: #17b485}
+.export-btn{ background: #2fa3ef}
+.import-btn{ background: #3acce9}
+.resetpwd-btn{ background: #6a6c7c}
+.delete-btn {background:#f15858;}
+
+.layui-form-checked, .layui-form-checked:hover {border-color: #1869b3;}
+.layui-form-checked span, .layui-form-checked:hover span {background-color:  #1869b3;}
+.layui-form-checked i, .layui-form-checked:hover i {color:  #1869b3;}
+
+.layui-card-header{font-size: 40px;font-weight: 600;color: #526e7d;height:auto;line-height: normal;border-bottom: 2px solid #f6f6f6;padding: 15px 15px}
+.layui-form-label,.blue1{font-weight: 600;color: #01AAED}
+.blue1{text-align: center}
+.edilab input{ width: 22px;height: 22px!important ;margin-right: 10px;vertical-align: top}
+select{padding: 7px 10px}
+textarea{width: 100%;padding: 10px}
+.layui-input-block{margin-left: 0px!important;width: 80%}
+.layui-form-text .layui-input-block{float: left}
+input[type=radio]+label{margin-right: 20px}
+html{padding-bottom: 30px}
+.head-child{font-size: 25px;font-weight: normal}
+
+/*卡片列表*/
+.card-list .layui-input-block{float: right}
+.card-list .layui-col-sm6:nth-child(odd){clear: left}
+/*新增*/
+.layui-form-label{font-weight: normal;width: 20%;box-sizing: border-box}
+.card-child input[type="text"]{padding: 6px 10px}
+
+/*页头新增*/
+.layui-header{box-shadow: 0 1px 2px 0 rgba(0,0,0,.07);box-sizing: border-box;background-color: #fff;position: fixed;top: 0;left: 0;width: 100%;text-align: center}
+.layui-header select{margin-top: 10px}
+
+
+/*代班*/
+.daiban {background: #fff;}
+.daiban h1{font-size: 26px;font-weight: 700;background: #252630;color: #fff;padding: 15px;margin-bottom: 20px}
+#allchange{margin: 0 20px 20px 0}
+#allchange lable{margin-bottom: 5px;display: block}
+.daiban .layui-btn{}
+.daiban .layui-elem-field{margin:30px 0 5px}
+.daiban .layui-elem-field legend{color: #252630}
+#flowchange lable{margin: 5px 0 5px 0;display: block;color: #666}
+
+/*流程图*/
+.head1{font-size: 26px;font-weight: 700;background: #252630;color: #fff;padding: 15px;margin-bottom: 20px}
+.liucheng{padding: 5px 0px 0;margin: 15px}
+.liucheng .layui-card-body{text-align: center}
+.jiantou{text-align: center;padding-top: 0px;padding-bottom: 0px}.jiantou img{height: 40px;margin: -15px 0}
+.jiantou1 img{transform:rotate(45deg);-webkit-transform:rotate(45deg);}
+.jiantou2 img{transform:rotate(-45deg);-webkit-transform:rotate(-45deg);}
+
+/*页脚*/
+footer{height:80px;background: #f7f7f7;box-shadow:0px -2px 6px rgba(0,0,0,0.2);position: fixed;bottom: 0;width: 100%;padding: 10px .5% 0}
+.layui-form-mid span{line-height: 26px}
+
+/*横向pad*/
+.hpad .layui-form-label{width: 25%}
+.hpad .layui-input-block{width: 75%}
+.hpad .layui-form-item{float: left;width: 50%;clear: none}
+.hpad .layui-card-body:after,.hpad .layui-form:after {  content:"\200B"; display:block; height:0; clear:both; } 
+.hpad .layui-card-body,.hpad .layui-form {*zoom:1;box-sizing: border-box}
+.hpad .tubiao{width: 100%}
+.hpad .tubiao .layui-form-label{width: 12.5%}
+
+
+/*页面区别*/
+	/*左侧宽度大的样式*/
+.big .layui-form-label{width: 40%}/*左侧宽度大*/
+.big .layui-input-block{width: 60%}
+
+	/*2个按钮*/
+.layui-btn{float: left; margin: 0 .5%;font-size: 25px!important;line-height: 65px!important;height: 65px!important;padding: 0!important;width: 48.5%}
+
+	/*1个按钮*/
+.one-btn{float: left; margin: 0 .5%;font-size: 25px!important;line-height: 65px!important;height: 65px!important;padding: 0!important;width: 98%}

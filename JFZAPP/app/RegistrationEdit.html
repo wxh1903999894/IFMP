@@ -1,0 +1,881 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>奖扣登记</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <link href="../css/new_file.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/mui.picker.min.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function () {
+            var depid = "-1", uid = "", item = "", html = "", scid = "-1", sdid = "-1";
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET", async: false,
+                data: "method=GetUser",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == 'true') {
+                        for (var i in data.data) {
+                            if (depid != data.data[i].DepID) {
+                                if (i != 0 || i == data.data.length - 1) {
+                                    item += "</ul>";
+                                    item += "</li>";
+                                }
+                                item += "<li class=\"" + (i == 0 ? "parentli selected" : "parentli") + "\">";
+                                item += "<img src=\"" + (i == 0 ? "../images/allinpic.png" : "../images/allpic.png") + "\"/><span></span>" + data.data[i].DepName + "";
+                                item += "<ul>";
+                                item += "<li id=\"" + data.data[i].SysID + "\" title=" + data.data[i].Realname + ">" + data.data[i].Realname + "</li>";
+                            }
+                            else {
+                                item += "<li id=\"" + data.data[i].SysID + "\" title=" + data.data[i].Realname + ">" + data.data[i].Realname + "</li>";
+                                if (i == data.data.length - 1) {
+                                    item += "</ul>";
+                                    item += "</li>";
+                                }
+                            }
+                            depid = data.data[i].DepID;
+                        }
+                    }
+                    $("#dep").html(item);
+                },
+                error: function () { alert("查询出错，请稍候再试3"); }
+            })
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET", async: false,
+                data: "method=GetEventName",
+                dataType: "json",
+                success: function (data) {
+                    if (data.result == "true") {
+                        item = "";
+                        for (var i in data.data) {
+                            if (scid != data.data[i].SCID) {
+                                if ((i != 0 || i == data.data.length - 1)) {
+                                    item += "</ul>";
+                                    item += "</ul>";
+                                    item += "</div>";
+                                    item += "</li>";
+                                }
+                                item += "<li class=\"mui-table-view-cell mui-collapse\">";
+                                item += "<a class=\"mui-navigate-right\">" + data.data[i].SCIDName + "</a>";
+                                item += "<div class=\"mui-collapse-content\">";
+                                item += "<ul class=\"qiantao2\">";
+                                if (sdid != data.data[i].SDID) {
+                                    item += "<li class=\"mui-table-view-cell qiantao \">" + data.data[i].SDIDName + "</li>";
+                                    item += "<ul class=\"qiantao3\">";
+                                    item += "<li id=\"" + data.data[i].SEID + "\" class=\"\">" + data.data[i].EventNames + "</li>";
+                                }
+                                else {
+                                    item += "<li id=\"" + data.data[i].SEID + "\" class=\"\">" + data.data[i].EventNames + "</li>";
+                                }
+                                if (i == data.data.length - 1) {
+                                    item += "</ul>";
+                                    item += "</ul>";
+                                }
+                            }
+                            else {
+                                if (sdid != data.data[i].SDID) {
+                                    if (i != 0 || i == data.data.length - 1) {
+                                        item += "</ul>";
+                                        item += "</ul>";
+                                    }
+                                    item += "<ul class=\"qiantao2\">";
+                                    item += "<li class=\"mui-table-view-cell qiantao \">" + data.data[i].SDIDName + "</li>";
+                                    item += "<ul class=\"qiantao3\">";
+                                    item += "<li id=\"" + data.data[i].SEID + "\" class=\"\">" + data.data[i].EventNames + "</li>";
+                                }
+                                else {
+                                    item += "<li id=\"" + data.data[i].SEID + "\" class=\"\">" + data.data[i].EventNames + "</li>";
+                                }
+                                if (i == data.data.length - 1) {
+                                    item += "</ul>";
+                                    item += "</ul>";
+                                    item += "</div>";
+                                    item += "</li>";
+                                }
+                            }
+                            scid = data.data[i].SCID;
+                            sdid = data.data[i].SDID;
+                        }
+                        //item += "<li class=\"mui-table-view-cell mui-collapse dj\"><a id=\"10000\">其他类事件</a></li>";
+                    }
+                    $("#EventName").html(item);
+                },
+                error: function () { alert("查询出错，请稍候再试4"); }
+            })
+            //绑定初审人
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET", async: false,
+                data: "method=GetAuditUser",
+                dataType: "json",
+                success: function (d) {
+                    if (d.result == "true") {
+                        var item = "";
+                        //var item1 = "<option value=\"-2\">请选择</option>";
+                        for (var i = 0; i < d.data.length; i++) {
+                            if (d.data[i].IsTrue == 1) {
+                                item += "  <option selected=\"selected\"  value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                            }
+                            else {
+                                item += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                            }
+                            // item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                        }
+                        //$("#LastAduitUser").html(item1);
+                        $("#FirstAduitUser").html(item);
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试1"); }
+            });
+            //绑定终审人
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET", async: false,
+                data: "method=GetLastUser",
+                dataType: "json",
+                success: function (d) {
+                    if (d.result == "true") {
+                        //var item = "";
+                        var item1 = "<option value=\"-2\">请选择</option>";
+                        for (var i = 0; i < d.data.length; i++) {
+                            //if (d.data[i].IsTrue == 1) {
+                            //    item += "  <option selected=\"selected\"  value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                            //}
+                            //else {
+                            //    item += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                            //}
+                            item1 += "  <option value=\"" + d.data[i].value + "\">" + d.data[i].text + "</option>";
+                        }
+                        $("#LastAduitUser").html(item1);
+                        //$("#FirstAduitUser").html(item);
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试2"); }
+            });
+            //事件
+            $("#dxsecletEventName").click(function () {
+                $("#dxcEventName").css("display", "block");
+            })
+            mui(".qiantao2").on('tap', '.qiantao', function (event) {
+                this.click();
+
+            });
+            $('.qiantao').click(function () {
+                if ($(this).next(".qiantao3").is(":visible")) {
+                    $(this).next(".qiantao3").hide();
+                } else {
+                    $(this).next(".qiantao3").show();
+                }
+            })
+
+            mui(".qiantao3").on('tap', 'li', function (event) {
+                this.click();
+
+            });
+            $('.qiantao3 li').click(function () {
+                if ($(this).attr("class") == 'qiantao-on') {
+                    $(this).removeClass("qiantao-on");
+                }
+                else {
+                    if ($(this).parent().parent().parent().parent().parent().find("li").hasClass("qiantao-on")) {
+                        $(this).parent().parent().parent().parent().parent().find("li").removeClass("qiantao-on");
+                    }
+                    $(this).addClass("qiantao-on");
+                }
+                $("#dxcEventName").css("display", "none");
+                if ($(this).attr("class") == "qiantao-on") {
+                    $("#hf_EventNameID").val($(this).attr("id"));
+                    $("#dxsecletEventName").val($(this).html());
+                    if ($("#hf_EventNameID").val() != "") {
+                        getAuditUser();
+                    }
+                }
+            })
+            mui('.dj').on('tap', 'a', function () {
+                if ($(this).parent().parent().find("li").hasClass("qiantao-on")) {
+                    $(this).parent().parent().find("li").removeClass("qiantao-on");
+                }
+                $("#dxcEventName").css("display", "none");
+                $("#hf_EventNameID").val($(this).attr("id"));
+                $("#dxsecletEventName").val($(this).html());
+                if ($("#hf_EventNameID").val() != "") {
+                    getAuditUser();
+                }
+            });
+
+            //人员
+            $("#dxc .parentli li").each(function () {
+                if ($(this).hasClass("select"))
+                { }
+                else { $(this).addClass("noselect") }
+            });
+            $("#dxseclet").click(function () {
+                //$("#STitle").after("<input type=\"text\" id=\"STitle1\" unselectable=\"on\" onfocus=\"this.blur()\" placeholder=\"请在此填写主题(必填)\" value='" + $("#STitle").val() + "' />");
+                //$("#STitle").remove();
+                //alert($("#STitle").val());
+                //alert($("#STitle1").val());
+                //// <input type="text" id="STitle" placeholder="请在此填写主题(必填)" />
+                $("#dxc").css("display", "block");
+            })
+
+            $("#selectclose").click(function () {
+                $("#dxc").css("display", "none");
+                xsuser($("#hf_UID").val(), $("#hf_AllUsersText").val());
+            })
+
+            $("#dxc .parentli img").click(function () {
+                if ($(this).parent("li").hasClass("selected")) {
+                    $(this).parent("li").removeClass("selected");
+                    $(this).attr("src", "../images/allpic.png");
+                } else {
+                    $(this).parent("li").addClass("selected");
+                    $(this).attr("src", "../images/allinpic.png");
+                }
+            })
+            $("#allselect span").click(function () {
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected");
+                    $(".parentli span").removeClass("selected");
+                    $(".parentli li").removeClass("select");
+                    $(".parentli li").addClass("noselect");
+                } else {
+                    $(this).addClass("selected");
+                    $(".parentli span").addClass("selected");
+                    $(".parentli li").addClass("select");
+                    $(".parentli li").removeClass("noselect");
+                }
+                selectoption();
+            })
+
+            $("#dxc .parentli li").click(function () {
+                if ($(this).hasClass("select")) {
+                    $(this).addClass("noselect");
+                    $(this).removeClass("select");
+                } else {
+                    $(this).removeClass("noselect");
+                    $(this).addClass("select");
+                }
+
+                if ($(this).parent().find("li").hasClass("noselect")) {
+                    $(this).parent().siblings("span").removeClass("selected");
+                } else {
+                    $(this).parent().siblings("span").addClass("selected");
+                }
+                selectoption();
+            })
+
+            $("#dxc .parentli span").click(function () {
+                if ($(this).hasClass("selected")) {
+                    $(this).removeClass("selected");
+                    $(this).parent().find("li").addClass("noselect");
+                    $(this).parent().find("li").removeClass("select");
+                } else {
+                    $(this).addClass("selected");
+                    $(this).parent().find("li").removeClass("noselect");
+                    $(this).parent().find("li").addClass("select");
+                }
+                selectoption();
+            })
+            function selectoption() {
+                $("#hf_UID").val('');
+                $("#dxseclet").val('');
+                $("#hf_AllUsersText").val('');
+                $("#dxc .parentli li").each(function () {
+                    if ($(this).hasClass("select")) {
+                        $("#hf_UID").val($("#hf_UID").val() + this.id + ",");
+                        //$("#dxseclet").val($("#dxseclet").val() + this.title + ",");
+                        $("#hf_AllUsersText").val($("#hf_AllUsersText").val() + this.title + ",");
+                    }
+                });
+                if ($("#dxc .parentli").find("li").hasClass("noselect")) {
+                    $("#allselect span").removeClass("selected");
+                } else {
+                    $("#allselect span").addClass("selected");
+                }
+            }
+        })
+        function getAuditUser() {
+            //根据事件类型判断是否默认有终审人
+            $.ajax({
+                url: "../ashx/GetMainData.ashx",
+                cache: false, type: "GET",
+                data: "method=GetAuditLastUser&&events=" + $("#hf_EventNameID").val(),
+                dataType: "json",
+                success: function (d) {
+                    $("#LastAduitUser option[selected='selected']").attr("selected", false);
+                    if (d.result == "true") {
+                        $("#LastAduitUser").val(d.data[0].lastaduituser);
+                        //$("#LastAduitUser").find("option:contains('" + d.data[0].lastaduituser + "')").attr("selected", true);
+                        //$("#LastAduitUser option[value='" + d.data[0].lastaduituser + "']").attr("selected", true);
+                    }
+
+                    else {
+                        $("#LastAduitUser").val(-2);
+                        //$("#LastAduitUser option[value='-2']").attr("selected", true);
+                    }
+                },
+                error: function () { alert("查询出错，请稍候再试"); }
+            });
+        }
+    </script>
+    <style>
+        .mui-bar-tab {
+            position: absolute;
+            margin-bottom: 0px;
+            z-index: -1;
+        }
+
+        #demo2 {
+            width: 68%;
+            display: inline-block;
+            border: 0;
+            margin: 0;
+            margin-top: -10px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .ui-alert {
+            display: inline-block;
+            width: 70%;
+            background: #1296db;
+        }
+
+        .mui-content-padded {
+            margin-left: 3px;
+            margin-top: 20px !important;
+        }
+
+            .mui-content-padded:first-child {
+                margin-top: 12px !important;
+            }
+
+
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .sel {
+            width: 68% !important;
+        }
+
+        .mui-input-row .mui-btn {
+            padding: 0px;
+        }
+
+        .mui-input-row select {
+            font-size: 15px;
+        }
+
+        .xsuser {
+            display: block;
+        }
+
+        .selectdiv, .selectdivEventName {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            background: #fff;
+            color: #494949;
+            overflow-y: auto;
+            z-index: 999;
+        }
+
+        .allselect {
+            float: left;
+            margin: 5px;
+            margin-left: 10px;
+        }
+
+            .allselect span {
+                float: left;
+                display: inline-block;
+                border: 1px solid #989898;
+                width: 16px;
+                height: 16px;
+                margin-right: 5px;
+            }
+
+                .allselect span.selected {
+                    background: url(../images/selectinfo.png) center center no-repeat #f5faff;
+                }
+
+        .selectclose {
+            float: right;
+            display: block;
+            border: 1px solid #989898;
+            border-radius: 2px;
+            padding: 3px 10px;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .selectdiv ul, .selectdiv li {
+            margin: 0px;
+            list-style: none;
+            padding: 0px;
+        }
+
+        .selectdiv .parentli {
+            border-bottom: 1px solid #DDDDDD;
+            padding: 10px 10px;
+        }
+
+            .selectdiv .parentli li {
+                margin-left: 5px;
+            }
+
+            .selectdiv .parentli.selected ul {
+                display: block;
+            }
+
+            .selectdiv .parentli span.selected {
+                background: url(../images/selectinfo.png) center center no-repeat #f5faff;
+            }
+
+            .selectdiv .parentli ul {
+                display: none;
+            }
+
+        .parentli span {
+            display: inline-block;
+            border: 1px solid #989898;
+            width: 16px;
+            height: 16px;
+            float: left;
+            margin-right: 5px;
+        }
+
+        .selectdiv .parentli img {
+            float: left;
+            margin-right: 5px;
+        }
+
+        .selectdiv .parentli li {
+            width: 70px;
+            display: inline-block;
+            border: 1px solid #dedede;
+            margin-top: 10px;
+            padding: 3px 5px;
+            border-radius: 2px;
+        }
+
+            .selectdiv .parentli li.select {
+                background: url(../images/selectinfo.png) 50px center no-repeat #f5faff;
+                border-color: #1296db;
+                color: #1296db;
+            }
+
+        .mui-content-padded {
+            margin-top: 0px;
+        }
+
+        .mui-checkbox input[type=checkbox] {
+            display: inline-block;
+            position: relative;
+        }
+
+        .mui-checkbox.mui-left label {
+            padding: 10px 25px;
+            width: 170px;
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <!--切换按钮-->
+        <div style="padding: 10px 10px;">
+            <div id="segmentedControl" class="mui-segmented-control">
+                <a class="mui-control-item  mui-active" href="RegistrationEdit.html">奖扣添加</a>
+                <a class="mui-control-item" href="RegistrationSHZList.html">审核中</a>
+                <a class="mui-control-item " href="RegistrationYWCList.html">已完成</a>
+            </div>
+        </div>
+        <form class="mui-input-group">
+            <input type="hidden" id="hf_begin" />
+            <input type="hidden" id="hf_EventMark" />
+            <input type="hidden" id="hf_UID" />
+            <input type="hidden" id="hf_Score" />
+            <input type="hidden" id="hf_AllUsersText" />
+            <input type="hidden" id="hf_FirstAduitUser" />
+            <input type="hidden" id="hf_LastAduitUser" />
+            <input type="hidden" id="hf_EventNameID" />
+            <input type="hidden" id="hf_EventNameText" />
+
+            <div class="mui-input-row">
+                <label>事件</label>
+                <input type="text" id="dxsecletEventName" placeholder="点击此处选择事件(必选)" />
+                <div id="dxcEventName" class="selectdivEventName">
+                    <ul id="EventName" class="mui-table-view"></ul>
+                </div>
+            </div>
+            <div class="mui-input-row">
+                <label>日期</label>
+                <div class="mui-content-padded">
+                    <button id='demo2' data-options='{"type":"date"}' class="btn mui-btn mui-btn-block">选择日期 ...(必选)</button>
+                </div>
+            </div>
+            <div class="mui-input-row">
+                <label>
+                    主题
+                </label><input type="text" id="STitle" placeholder="请在此填写主题(必填)" />
+            </div>
+            <div class="mui-input-row">
+                <label>人员</label>
+                <input type="text" id="dxseclet" name="dxseclet" placeholder="点击此处选择人员(必选)" />
+                <div class="selectdiv" id="dxc">
+                    <div style="height: 30px">
+                        <div class="allselect" id="allselect"><span></span>全选</div>
+                        <span class="selectclose" id="selectclose">确定</span>
+                    </div>
+                    <ul id="dep"></ul>
+                </div>
+            </div>
+            <div class="xsuser" id="xs">
+            </div>
+            <div class="mui-input-row">
+                <label>初审人</label>
+                <select class="mui-btn mui-btn-block sel" id="FirstAduitUser"></select>
+            </div>
+            <div class="mui-input-row">
+                <label>终审人</label>
+                <select class="mui-btn mui-btn-block sel" id="LastAduitUser"></select>
+            </div>
+            <div class="mui-input-row">
+                <label>附件</label>
+                <div class="righttext">
+                    <span class="mui-icon mui-icon-paperclip file">
+                        <input id="ImgUrl" type="file" onchange='fj(this)' accept="image/*" />
+                    </span>
+                </div>
+                <div id="textName" style="width: 100%; padding: 0px 15px; clear: both; line-height: 20px;">
+                </div>
+            </div>
+            <div contenteditable="true" id="div_EventMark" style="height: 55px;" class="multipletext mui-input-row" placeholder="请在此填写事件说明(必填)"></div>
+            <div class="btn_Sumbit-a">
+                <input id="bt" type="button" class="mui-btn mui-btn-primary mui-btn-block bgcolor" onclick='tj()' value="提交">
+            </div>
+        </form>
+    </div>
+
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+    <script>
+
+        mui('#segmentedControl').on('tap', 'a', function () {
+            document.location.href = this.href;
+        });
+        (function ($) {
+            $.init();
+            var result = $('#demo2')[0];
+            var btns = $('.btn');
+            var curr_time = new Date();
+            result.innerText = myformatter(curr_time);
+            document.getElementById("hf_begin").value = myformatter(curr_time);
+            btns.each(function (i, btn) {
+                btn.addEventListener('tap', function () {
+                    var optionsJson = this.getAttribute('data-options') || '{}';
+                    var options = JSON.parse(optionsJson);
+                    var id = this.getAttribute('id');
+                    /*
+                     * 首次显示时实例化组件
+                     * 示例为了简洁，将 options 放在了按钮的 dom 上
+                     * 也可以直接通过代码声明 optinos 用于实例化 DtPicker
+                     */
+                    var picker = new $.DtPicker(options);
+                    picker.show(function (rs) {
+                        /*
+                         * rs.value 拼合后的 value
+                         * rs.text 拼合后的 text
+                         * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
+                         * rs.m 月，用法同年
+                         * rs.d 日，用法同年
+                         * rs.h 时，用法同年
+                         * rs.i 分（minutes 的第二个字母），用法同年
+                         */
+                        result.innerText = rs.text;
+                        document.getElementById("hf_begin").value = rs.value;
+                        /*
+                         * 返回 false 可以阻止选择框的关闭
+                         * return false;
+                         */
+                        /*
+                         * 释放组件资源，释放后将将不能再操作组件
+                         * 通常情况下，不需要示放组件，new DtPicker(options) 后，可以一直使用。
+                         * 当前示例，因为内容较多，如不进行资原释放，在某些设备上会较慢。
+                         * 所以每次用完便立即调用 dispose 进行释放，下次用时再创建新实例。
+                         */
+                        picker.dispose();
+                    });
+                }, false);
+            });
+        })(mui);
+        function myformatter(date) {
+            var y = date.getFullYear();
+            var m = date.getMonth() + 1;
+            var d = date.getDate();
+            return y + '-' + (m < 10 ? ('0' + m) : m) + '-' + (d < 10 ? ('0' + d) : d);
+        }
+    </script>
+</body>
+</html>
+<script type="text/javascript">
+    function tj() {
+        getuidorscore();
+        var bl = true;
+        if ($("#hf_EventNameID").val() == null || $("#hf_EventNameID").val() == "") {
+            alert("请选择事件");
+            bl = false;
+            return;
+        }
+        if ($("#hf_begin").val() == null || $("#hf_begin").val() == "") {
+            alert("请选择日期");
+            bl = false;
+            return;
+        }
+        if ($("#STitle").val() == null || $("#STitle").val() == "") {
+            alert("请填写主题");
+            bl = false;
+            return;
+        }
+        if ($("#hf_UID").val() == null || $("#hf_UID").val() == "") {
+            alert("请选择人员");
+            bl = false;
+            return;
+        }
+        if ($("#FirstAduitUser").find("option:selected").val() == null || $("#FirstAduitUser").find("option:selected").val() == "") {
+            alert("请选择初审人");
+            bl = false;
+            return;
+        }
+        if ($("#LastAduitUser").find("option:selected").val() == "-2") {
+            alert("请选择终审人");
+            bl = false;
+            return;
+        }
+        if ($("#div_EventMark").text() == null || $("#div_EventMark").text() == "") {
+            alert("请填写事件说明");
+            bl = false;
+            return;
+        }
+        if (bl) {
+            $("#bt").attr("style", "display:none");
+            var formFile = new FormData();
+            formFile.append("method", "RegistraAdd");
+            formFile.append("STitle", $("#STitle").val());
+            formFile.append("EventName", $("#hf_EventNameID").val());
+            formFile.append("EventMark", $("#div_EventMark").text());
+            formFile.append("FirstAduitUser", $("#FirstAduitUser").find("option:selected").val());
+            formFile.append("LastAduitUser", $("#LastAduitUser").find("option:selected").val());
+            formFile.append("begin", $("#hf_begin").val());
+            formFile.append("UIDS", $("#hf_UID").val());
+            formFile.append("Scores", $("#hf_Score").val());
+            if (document.getElementById("ImgUrl").files != null && document.getElementById("ImgUrl").files.length > 0) {
+                var imageFile = document.getElementById("ImgUrl").files[0];
+                if (imageFile.size > 1000000) {
+                    unity.photoCompress(imageFile, { quality: 0.2 }, function (base64Codes) {
+                        formFile.append("ImgUrl", base64Codes);
+                        $.ajax({
+                            url: "../ashx/GetMainData.ashx",
+                            type: "post",
+                            cache: false,
+                            async: false,
+                            processData: false,
+                            contentType: false,
+                            data: formFile,
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.result == 'true') {
+                                    alert("保存成功");
+                                    window.location.href = "../app/RegistrationSHZList.html";
+                                }
+                                else {
+                                    alert("保存失败");
+                                }
+                                $("#bt").attr("style", "display:block");
+                            }
+                        })
+                    })
+                }
+                else {
+                    unity.photoCompress(imageFile, { quality: 0.7 }, function (base64Codes) {
+                        formFile.append("ImgUrl", base64Codes);
+                        $.ajax({
+                            url: "../ashx/GetMainData.ashx",
+                            type: "post",
+                            cache: false,
+                            async: false,
+                            processData: false,
+                            contentType: false,
+                            data: formFile,
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.result == 'true') {
+                                    alert("保存成功");
+                                    window.location.href = "../app/RegistrationSHZList.html";
+                                }
+                                else {
+                                    alert("保存失败");
+                                }
+                                $("#bt").attr("style", "display:block");
+                            }
+                        })
+                    })
+                }
+            }
+            else {
+                formFile.append("ImgUrl", "");
+                $.ajax({
+                    url: "../ashx/GetMainData.ashx",
+                    type: "post",
+                    cache: false,
+                    async: false,
+                    processData: false,
+                    contentType: false,
+                    data: formFile,
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.result == 'true') {
+                            alert("保存成功");
+                            window.location.href = "../app/RegistrationSHZList.html";
+                        }
+                        else {
+                            alert("保存失败");
+                        }
+                        $("#bt").attr("style", "display:block");
+                    }
+                })
+            }
+        }
+    }
+    function fj(obj) {
+        var arr = $(obj).val().split('\\');
+        $("#textName").html(arr[arr.length - 1]);
+    }
+    function xsuser(uid, name) {
+        if (uid != "" || name != "") {
+            uid = jqzqorzhygzf(uid);
+            name = jqzqorzhygzf(name);
+            //uid = uid.substr(0, uid.length - 1);
+            //name = name.substr(0, name.length - 1);
+            var arruid = uid.split(',');
+            var arrname = name.split(',');
+            var item = "<div class=\"mui-input-row\" id=\"0\"><label>快捷设置</label> <img src=\"../images/allpic.png\" style=\"float:left;margin-top:10px;margin-left:8px;\" onclick=\"jiaorjian(this)\" /><input id=\"txt-0\" value=\"1\" type=\"text\" style=\"margin-left:5%;width:40%;float:left;\" onchange=\"kjsz()\" /></div>";
+            for (var i = 0; i < arruid.length; i++) {
+                item += "<div class=\"mui-input-row\" id=\"" + arruid[i] + "\"><label>" + arrname[i] + "</label> <img src=\"../images/allpic.png\" style=\"float:left;margin-top:10px;margin-left:8px;\" /><input id=\"txt-" + arruid[i] + "\"  type=\"text\" style=\"margin-left:5%;width:40%;float:left;\"  value=\"1\"/><img style=\"float: right;margin-top:3px;\" src=\"../images/del.png\"/></div>";
+            }
+
+            $("#xs").html(item);
+        }
+    }
+
+    function kjsz() {
+        $("#xs input").each(function () {
+            $(this).val($("#txt-0").val());
+        });
+    }
+    function jiaorjian(obj) {
+        if ($(obj).attr("src") == "../images/allpic.png") {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allinpic.png");
+                }
+            });
+        }
+        else {
+            $("#xs img").each(function () {
+                if ($(this).attr("src") != "../images/del.png") {
+                    $(this).attr("src", "../images/allpic.png");
+                }
+            });
+        }
+    }
+
+    function getuidorscore() {
+        $("#hf_Score").val("");
+        $("#hf_UID").val("");
+        $("#xs input").each(function () {
+            if ($(this).attr("id") != "txt-0") {
+                if ($(this).prev().attr("src") == "../images/allpic.png") {
+                    $("#hf_Score").val($("#hf_Score").val() + ',' + $("#" + $(this).attr("id")).val());
+                }
+                else {
+                    $("#hf_Score").val($("#hf_Score").val() + ',-' + $("#" + $(this).attr("id")).val());
+                }
+            }
+        });
+        $("#xs div").each(function () {
+
+            if ($(this).attr("id") != "0") {
+                $("#hf_UID").val($("#hf_UID").val() + ',' + $(this).attr("id"));
+            }
+        });
+        if ($("#hf_Score").val() != "") {
+            $("#hf_Score").val(jqzqorzhygzf($("#hf_Score").val()));
+        }
+        if ($("#hf_UID").val() != "") {
+            $("#hf_UID").val(jqzqorzhygzf($("#hf_UID").val()));
+            //$("#hf_UID").val($("#hf_UID").val().substr(1, $("#hf_UID").val().length - 1));
+        }
+    }
+
+    $("#xs").on("click", "img", function () {
+        if ($(this).parent().attr("id") != 0) {
+            if ($(this).attr("src") == "../images/del.png") {
+                $("#" + $(this).parent().attr("id")).attr("class", "noselect");
+                $("#hf_AllUsersText").val($("#hf_AllUsersText").val().replace($(this).prev().prev().prev().html() + ",", ""));
+                $(this).parent().remove();
+                getuidorscore();
+            }
+            else {
+                if ($(this).attr("src") == "../images/allpic.png") {
+                    $(this).attr("src", "../images/allinpic.png");
+                }
+                else {
+                    $(this).attr("src", "../images/allpic.png");
+                }
+            }
+        }
+    })
+    $("#dxsecletEventName").focus(function () {
+        document.activeElement.blur();
+    });
+    $("#dxseclet").focus(function () {
+        document.activeElement.blur();
+
+    });
+    function jqzqorzhygzf(ids) {
+        if (ids != "") {
+            if (ids.substr(0, 1) == ",") {
+                ids = ids.substr(1, ids.length - 1);
+            }
+            if (ids.substr(ids.length - 1, 1) == ",") {
+                ids = ids.substr(0, ids.length - 1);
+            }
+        }
+        return ids;
+    }
+</script>

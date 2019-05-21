@@ -1,0 +1,198 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>积分排名</title>
+    <link href="../css/mui.min.css" rel="stylesheet" />
+    <link href="../css/mui.picker.min.css" rel="stylesheet" />
+    <link href="../css/iconfont.css" rel="stylesheet" />
+    <link href="../css/jifenzhi.css" rel="stylesheet" />
+    <script src="../js/mui.min.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/jifenzhi.js"></script>
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/Common.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+        @media screen and (max-width: 319px) {
+            html {
+                font-size: 85.33333px;
+            }
+        }
+
+        @media screen and (min-width: 320px) and (max-width: 359px) {
+            html {
+                font-size: 96px;
+            }
+        }
+
+        @media screen and (min-width: 360px) and (max-width: 374px) {
+            html {
+                font-size: 100px;
+            }
+        }
+
+        @media screen and (min-width: 375px) and (max-width: 383px) {
+            html {
+                font-size: 102.4px;
+            }
+        }
+
+        @media screen and (min-width: 384px) and (max-width: 399px) {
+            html {
+                font-size: 106.66667px;
+            }
+        }
+
+        @media screen and (min-width: 400px) and (max-width: 413px) {
+            html {
+                font-size: 110.4px;
+            }
+        }
+
+        @media screen and (min-width: 414px) {
+            html {
+                font-size: 115px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mui-content">
+        <!--切换按钮-->
+        <div style="padding: 10px 10px;">
+            <div id="segmentedControl" class="mui-segmented-control">
+                <a class="mui-control-item " href="YearRanking.html?flag=1">年度</a>
+                <a class="mui-control-item" href="MonthRanking.html?flag=2">月度</a>
+                <a class="mui-control-item  mui-active" href="IntegralRanking.html?flag=3">累计</a>
+            </div>
+        </div>
+        <div class="rank-submain" style="padding-bottom:0.6rem;padding-top: 0.15rem">
+            <!--选择搜索-->
+            <select class="sel1" id="group"></select>
+            <div class="rank-p white f14">
+                <div class="show_rank">
+                    <div id="pm" class="flt rank-p-l">我的排名&nbsp;&nbsp;第<span class="f22" id="srank"> </span>名</div>
+                    <div id="zwpm" class="flt rank-p-l">暂无排名</div>
+                    <div class="frl rank-p-r f22" id="spoints"></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <table class="rank-sub-table" id="step1"></table>
+            <div class="clear">
+                <table class="no-rank-sub-table none" id="noRank" style="line-height: 0.38rem; font-size: 0.14rem; color: #838f9f; width: 100%"></table>
+            </div>
+        </div>
+
+    </div>
+    <!--下导航-->
+    <nav class="mui-bar mui-bar-tab">
+        <a class="mui-tab-item" href="../index.html">
+            <span class="mui-icon iconfont icon-zhuye"></span>
+            <span class="mui-tab-label">主页</span>
+        </a>
+        <a class="mui-tab-item" href="MyIntegral.html">
+            <span class="mui-icon iconfont icon-04"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+
+</body>
+</html>
+<script>
+    var flag = "", group = "";
+    $(function () {
+        document.body.addEventListener('touchstart', function () {
+        });
+    })
+    mui('body').on('tap', 'a', function () {
+        document.location.href = this.href;
+    });
+    mui("body").on("tap", ".list-btn span", function () {
+        show(this);
+    });
+
+    $(function () {
+        Group();
+        flag = getUrlParam("flag");
+        group = $("#group").find("option:selected").val();
+        DateBind(flag, group);
+    })
+
+    function DateBind(flag, group) {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false,
+            type: "GET",
+            data: "method=GetPM&flag=" + flag + "&group=" + group,
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                if (data.result == 'true') {
+                    $("#step1").empty();
+                    $("#srank").html(0);
+                    var item = "<tbody>";
+                    for (var i in data.data) {
+                        if (data.data[i].isbr == 1) {
+                            $("#pm").show();
+                            $("#zwpm").hide();
+                            $("#srank").html(parseInt(i) + 1);
+                            $("#spoints").html(data.data[i].score);
+                        }
+                        if (i < 3) {
+                            item += "<tr class=\"tr\" style=\"font-size:15px;\"><td class=\"sort rank-red\">" + (parseInt(i) + 1) + "</td><td class=\"name\" style=\"" + (data.data[i].isbr == 1 ? "color:#c68545" : "color:#333") + "\">" + data.data[i].name + "</td><td class=\"score\">" + data.data[i].score + "</td></tr>";
+                        }
+                        else {
+                            item += "<tr class=\"tr\" style=\"font-size:15px;\"><td class=\"sort\">" + (parseInt(i) + 1) + "</td><td class=\"name\" style=\"" + (data.data[i].isbr == 1 ? "color:#c68545" : "color:#333") + "\">" + data.data[i].name + "</td><td class=\"score\">" + data.data[i].score + "</td></tr>";
+                        }
+                    }
+                    if ($("#srank").text() == 0) {
+                        $("#pm").hide();
+                        $("#zwpm").show();
+                        $("#spoints").empty();
+                    }
+                    item += "<tbody>";
+                    $("#step1").append(item);
+
+                }
+                else {
+                    //$("#pullrefresh").addClass("zwsj").append("<img src=\"../images/zwsj.png\">");
+                }
+                jsondata = data.data;
+            }
+        });
+    }
+    function Group() {
+        $.ajax({
+            url: "../ashx/GetMainData.ashx",
+            cache: false, type: "GET",
+            async: false,
+            data: "method=GetGroup",
+            dataType: "json",
+            success: function (d) {
+                if (d.result == "true") {
+                    var item = "";
+                    for (var i = 0; i < d.data.length; i++) {
+                        if (i == 0) {
+                            item += "  <option selected=\"selected\" value=\"" + d.data[i].SDID + "\">" + d.data[i].DataName + "</option>";
+                        }
+                        else {
+                            item += "  <option value=\"" + d.data[i].SDID + "\">" + d.data[i].DataName + "</option>";
+                        }
+                    }
+                    $("#group").html(item);
+                }
+            },
+            error: function () { alert("查询出错，请稍候再试"); }
+        });
+    }
+    $("#group").change(function () {
+        flag = getUrlParam("flag");
+        group = $("#group").find("option:selected").val();
+        DateBind(flag, group);
+    })
+</script>

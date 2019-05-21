@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>飞龙大屏</title>
+    <link href="css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <div onclick="Change()"><img src="images/fl_03_1.png" /> </div>
+    <div class="layui-carousel" id="test1">
+        <div id="PicShow" carousel-item>
+
+        </div>
+    </div>
+</body>
+</html>
+<script src="js/layui.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        InitPic();
+    })
+
+    function InitPic() {
+        $.ajax({
+            url: "../ashx/BaseData.ashx",
+            type: "GET",
+            dataType: "json",
+            async: false,
+            data: {
+                "method": "GetPic",
+            },
+            success: function (data) {
+                if (data.result == "success") {
+                    console.log(data.PicList);
+                    var html = "";
+                    for (var i = 0; i < data.PicList.length; i++) {
+                        html = html + "<img onclick=\"Show(this)\" src=\"/resource/" + data.PicList[i].Name + "\"  alt=\"" + data.PicList[i].Name + "\" />";
+                    }
+                    $("#PicShow").html(html);
+
+                    layui.use('carousel', function () {
+                        var carousel = layui.carousel;
+                        //建造实例
+                        carousel.render({
+                            elem: '#test1'
+                            //, height: '60%'
+                            , width: '100%' //设置容器宽度
+                            , arrow: 'always' //始终显示箭头
+                            //,anim: 'updown' //切换动画方式
+                        });
+                    });
+                }
+            }
+        })
+
+
+    }
+
+
+</script>

@@ -1,0 +1,12 @@
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\IFMPLibrary.dll.config
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\IFMPLibrary.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\IFMPLibrary.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.SqlServer.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\Newtonsoft.Json.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.xml
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\EntityFramework.SqlServer.xml
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\bin\Release\Newtonsoft.Json.xml
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.csprojResolveAssemblyReference.cache
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\IFMPLibrary\obj\Release\IFMPLibrary.pdb

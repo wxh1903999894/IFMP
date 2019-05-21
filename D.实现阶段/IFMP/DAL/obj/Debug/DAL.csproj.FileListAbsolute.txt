@@ -10,3 +10,15 @@ C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\Entities.p
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\DAL\obj\Debug\DAL.dll
 C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\DAL\obj\Debug\DAL.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\DAL.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\DAL.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\Entities.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\gk.rjb_Y.DatabaseProvider.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\gk.rjb_Y.DataEntityProvider.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\gk.rjb_Y.DBAccessConvertorProvider.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\gk.rjb_Y.Libraries.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\MySql.Data.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\bin\Debug\Entities.pdb
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\obj\Debug\DAL.dll
+D:\mygit\IFMP\D.实现阶段\IFMP\DAL\obj\Debug\DAL.pdb

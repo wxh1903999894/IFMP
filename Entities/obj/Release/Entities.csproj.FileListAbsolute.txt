@@ -1,0 +1,5 @@
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\bin\Release\Entities.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\bin\Release\Entities.pdb
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\obj\Release\Entities.csprojResolveAssemblyReference.cache
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\obj\Release\Entities.dll
+C:\Users\wws\Source\Workspaces\IFMP\D.实现阶段\IFMP\Entities\obj\Release\Entities.pdb

@@ -44,6 +44,12 @@ namespace IFMP.dormitory
                 {
                     InfoBind();
                 }
+                else
+                {
+                    CommonFunction.BindEnum<CommonEnum.IsorNot>(this.rbl_IsCheck);
+                    this.rbl_IsCheck.SelectedIndex = 1;
+                    //this.rbl_Check.Checked = true;
+                }
             }
         }
         #endregion
@@ -58,6 +64,9 @@ namespace IFMP.dormitory
                 this.txt_code.Text = model.DormiCode.ToString();
                 this.txt_memo.Text = model.DormiDesc.ToString();
                 this.txt_SysID.Text = model.DormiUser.ToString();
+                CommonFunction.BindEnum<CommonEnum.IsorNot>(this.rbl_IsCheck);
+                this.rbl_IsCheck.SelectedIndex = Convert.ToInt32(model.IsCheck);
+                //this.rbl_Check.Checked = model.IsCheck;
             }
         }
         #endregion
@@ -80,6 +89,9 @@ namespace IFMP.dormitory
                             Dormitory NewDormitory = new IFMPLibrary.Entities.Dormitory();
                             NewDormitory.DormiDesc = this.txt_memo.Text.ToString();
                             NewDormitory.DormiUser = uids;
+                            int iisreward = Convert.ToInt32(this.rbl_IsCheck.SelectedValue.ToString());
+                            model.IsCheck = Convert.ToBoolean(iisreward);
+                            //model.IsCheck = this.rbl_Check.Checked;
                             NewDormitory.DormiName = this.txt_User.Text.ToString();
                             NewDormitory.DormiCode = this.txt_code.Text.ToString();
                             NewDormitory.CreateUser = UserID.ToString();
@@ -118,10 +130,22 @@ namespace IFMP.dormitory
                         }
                         else
                         {
+                            if (db.Dormitory.FirstOrDefault(t => t.DormiName == this.txt_User.Text.ToString() && t.ID != model.ID) != null)
+                            {
+                                ShowMessage("该宿舍名称已存在，请检查后重新添加");
+                                return;
+                            }
+                            if (db.Dormitory.FirstOrDefault(t => t.DormiCode == this.txt_code.Text.ToString() && t.ID != model.ID) != null)
+                            {
+                                ShowMessage("该宿舍编号已存在，请检查后重新添加");
+                                return;
+                            }
                             model.DormiName = this.txt_User.Text.ToString();
                             model.DormiDesc = this.txt_memo.Text.ToString();
                             model.DormiCode = this.txt_code.Text.ToString();
-                            //model.DormiUser = uids;
+                            int iisreward = Convert.ToInt32(this.rbl_IsCheck.SelectedValue.ToString());
+                            model.IsCheck = Convert.ToBoolean(iisreward);
+                            //model.IsCheck = this.rbl_Check.Checked;
                             model.CreateUser = UserID.ToString(); ;
                             model.CreateDate = DateTime.Now;
                             var user = model.DormiUser.Split(',');
@@ -133,7 +157,7 @@ namespace IFMP.dormitory
                                 newuser += v + ",";
                             }
 
-                            if (!string.IsNullOrEmpty(uids))
+                            if (!string.IsNullOrEmpty(uids) && !string.IsNullOrEmpty(newuser))
                             {
                                 foreach (var userid in newuser.TrimEnd(',').Split(','))
                                 {
